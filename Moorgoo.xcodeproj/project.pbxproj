@@ -15,12 +15,12 @@
 		1359799E1AA37C2E0037862A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359799D1AA37C2E0037862A /* AudioToolbox.framework */; };
 		135979A01AA37C5A0037862A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359799F1AA37C5A0037862A /* SystemConfiguration.framework */; };
 		135979A21AA37C8C0037862A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135979A11AA37C8C0037862A /* MobileCoreServices.framework */; };
-		135979A41AA37CAD0037862A /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135979A31AA37CAD0037862A /* Parse.framework */; };
 		135979AC1AA4316A0037862A /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 135979AB1AA4316A0037862A /* KeychainItemWrapper.m */; };
 		135979AF1AA459220037862A /* AccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 135979AE1AA459220037862A /* AccountTableViewController.m */; };
 		1388CF1E1AA2344E0064BFE5 /* EntranceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1388CF1D1AA2344E0064BFE5 /* EntranceViewController.m */; };
 		1388CF211AA2345A0064BFE5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1388CF201AA2345A0064BFE5 /* LoginViewController.m */; };
 		1388CF241AA234660064BFE5 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1388CF231AA234660064BFE5 /* RegisterViewController.m */; };
+		13D287451AA54BED008B5D53 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D287441AA54BED008B5D53 /* Parse.framework */; };
 		13EBBE3C1AA19B1200495F8A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBE3B1AA19B1200495F8A /* main.m */; };
 		13EBBE3F1AA19B1200495F8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBE3E1AA19B1200495F8A /* AppDelegate.m */; };
 		13EBBE421AA19B1200495F8A /* SelectCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBE411AA19B1200495F8A /* SelectCategoriesViewController.m */; };
@@ -28,18 +28,7 @@
 		13EBBE481AA19B1200495F8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE461AA19B1200495F8A /* Main.storyboard */; };
 		13EBBE4A1AA19B1200495F8A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE491AA19B1200495F8A /* Images.xcassets */; };
 		13EBBE4D1AA19B1200495F8A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE4B1AA19B1200495F8A /* LaunchScreen.xib */; };
-		13EBBE591AA19B1200495F8A /* MoorgooTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBE581AA19B1200495F8A /* MoorgooTests.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		13EBBE531AA19B1200495F8A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 13EBBE2E1AA19B1200495F8A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 13EBBE351AA19B1200495F8A;
-			remoteInfo = Moorgoo;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		135979921AA378DA0037862A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -50,7 +39,6 @@
 		1359799D1AA37C2E0037862A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		1359799F1AA37C5A0037862A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		135979A11AA37C8C0037862A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		135979A31AA37CAD0037862A /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../MoorgooTutoring/Parse.framework; sourceTree = "<group>"; };
 		135979AA1AA4316A0037862A /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
 		135979AB1AA4316A0037862A /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		135979AD1AA459220037862A /* AccountTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewController.h; sourceTree = "<group>"; };
@@ -61,6 +49,7 @@
 		1388CF201AA2345A0064BFE5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		1388CF221AA234660064BFE5 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		1388CF231AA234660064BFE5 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		13D287441AA54BED008B5D53 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		13EBBE361AA19B1200495F8A /* Moorgoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moorgoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13EBBE3A1AA19B1200495F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13EBBE3B1AA19B1200495F8A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -73,9 +62,6 @@
 		13EBBE471AA19B1200495F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		13EBBE491AA19B1200495F8A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		13EBBE4C1AA19B1200495F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13EBBE521AA19B1200495F8A /* MoorgooTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoorgooTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		13EBBE571AA19B1200495F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		13EBBE581AA19B1200495F8A /* MoorgooTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoorgooTests.m; sourceTree = "<group>"; };
 		13EBBE641AA19EBA00495F8A /* AppConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstant.h; sourceTree = "<group>"; };
 		13EBBE671AA1A1CB00495F8A /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				135979A21AA37C8C0037862A /* MobileCoreServices.framework in Frameworks */,
+				13D287451AA54BED008B5D53 /* Parse.framework in Frameworks */,
 				135979A01AA37C5A0037862A /* SystemConfiguration.framework in Frameworks */,
 				1359799E1AA37C2E0037862A /* AudioToolbox.framework in Frameworks */,
 				1359799C1AA37BDC0037862A /* libsqlite3.dylib in Frameworks */,
@@ -96,21 +83,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		13EBBE4F1AA19B1200495F8A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				135979A41AA37CAD0037862A /* Parse.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		135979961AA3790C0037862A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				135979A31AA37CAD0037862A /* Parse.framework */,
+				13D287441AA54BED008B5D53 /* Parse.framework */,
 				135979A11AA37C8C0037862A /* MobileCoreServices.framework */,
 				1359799F1AA37C5A0037862A /* SystemConfiguration.framework */,
 				1359799D1AA37C2E0037862A /* AudioToolbox.framework */,
@@ -136,7 +115,6 @@
 			isa = PBXGroup;
 			children = (
 				13EBBE381AA19B1200495F8A /* Moorgoo */,
-				13EBBE551AA19B1200495F8A /* MoorgooTests */,
 				13EBBE371AA19B1200495F8A /* Products */,
 				135979961AA3790C0037862A /* Frameworks */,
 			);
@@ -146,7 +124,6 @@
 			isa = PBXGroup;
 			children = (
 				13EBBE361AA19B1200495F8A /* Moorgoo.app */,
-				13EBBE521AA19B1200495F8A /* MoorgooTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -174,23 +151,6 @@
 				13EBBE3A1AA19B1200495F8A /* Info.plist */,
 				13EBBE3B1AA19B1200495F8A /* main.m */,
 				13EBBE671AA1A1CB00495F8A /* PrefixHeader.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		13EBBE551AA19B1200495F8A /* MoorgooTests */ = {
-			isa = PBXGroup;
-			children = (
-				13EBBE581AA19B1200495F8A /* MoorgooTests.m */,
-				13EBBE561AA19B1200495F8A /* Supporting Files */,
-			);
-			path = MoorgooTests;
-			sourceTree = "<group>";
-		};
-		13EBBE561AA19B1200495F8A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				13EBBE571AA19B1200495F8A /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -273,24 +233,6 @@
 			productReference = 13EBBE361AA19B1200495F8A /* Moorgoo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		13EBBE511AA19B1200495F8A /* MoorgooTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 13EBBE5F1AA19B1200495F8A /* Build configuration list for PBXNativeTarget "MoorgooTests" */;
-			buildPhases = (
-				13EBBE4E1AA19B1200495F8A /* Sources */,
-				13EBBE4F1AA19B1200495F8A /* Frameworks */,
-				13EBBE501AA19B1200495F8A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				13EBBE541AA19B1200495F8A /* PBXTargetDependency */,
-			);
-			name = MoorgooTests;
-			productName = MoorgooTests;
-			productReference = 13EBBE521AA19B1200495F8A /* MoorgooTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -302,10 +244,6 @@
 				TargetAttributes = {
 					13EBBE351AA19B1200495F8A = {
 						CreatedOnToolsVersion = 6.1.1;
-					};
-					13EBBE511AA19B1200495F8A = {
-						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = 13EBBE351AA19B1200495F8A;
 					};
 				};
 			};
@@ -323,7 +261,6 @@
 			projectRoot = "";
 			targets = (
 				13EBBE351AA19B1200495F8A /* Moorgoo */,
-				13EBBE511AA19B1200495F8A /* MoorgooTests */,
 			);
 		};
 /* End PBXProject section */
@@ -336,13 +273,6 @@
 				13EBBE481AA19B1200495F8A /* Main.storyboard in Resources */,
 				13EBBE4D1AA19B1200495F8A /* LaunchScreen.xib in Resources */,
 				13EBBE4A1AA19B1200495F8A /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		13EBBE501AA19B1200495F8A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,23 +295,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		13EBBE4E1AA19B1200495F8A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				13EBBE591AA19B1200495F8A /* MoorgooTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		13EBBE541AA19B1200495F8A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 13EBBE351AA19B1200495F8A /* Moorgoo */;
-			targetProxy = 13EBBE531AA19B1200495F8A /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		13EBBE461AA19B1200495F8A /* Main.storyboard */ = {
@@ -515,42 +429,6 @@
 			};
 			name = Release;
 		};
-		13EBBE601AA19B1200495F8A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(PROJECT_DIR)Tutoring",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = MoorgooTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moorgoo.app/Moorgoo";
-			};
-			name = Debug;
-		};
-		13EBBE611AA19B1200495F8A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(PROJECT_DIR)Tutoring",
-				);
-				INFOPLIST_FILE = MoorgooTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moorgoo.app/Moorgoo";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -568,15 +446,6 @@
 			buildConfigurations = (
 				13EBBE5D1AA19B1200495F8A /* Debug */,
 				13EBBE5E1AA19B1200495F8A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		13EBBE5F1AA19B1200495F8A /* Build configuration list for PBXNativeTarget "MoorgooTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				13EBBE601AA19B1200495F8A /* Debug */,
-				13EBBE611AA19B1200495F8A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
