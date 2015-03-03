@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Moorgoo. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @interface SecondViewController : UIViewController
 
 

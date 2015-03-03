@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,38 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    [Parse setApplicationId:PARSE_APPLICATION_ID clientKey:PARSE_CLIENT_KEY];
+    
+    /********************************************************************************************************/
+    KeychainItemWrapper* keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"KeychainTest" accessGroup:nil];
+    [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
+    
+    NSString *username = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSString *password = [keychain objectForKey:(__bridge id)(kSecValueData)];
+    
+    keychain = nil;
+    
+    BOOL isLoggedIn = (![username isEqualToString:@""]) && (![password isEqualToString:@""]);
+    
+    if(isLoggedIn){
+        [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error) {
+            if (user) {
+            }
+            else {
+                [[[UIAlertView alloc] initWithTitle:@"Error" message:[error userInfo][@"error"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            }
+        }];
+    }
+    
+    NSString *storyboardId = isLoggedIn ? @"MainIdentifier" : @"LoginIdentifier";
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:storyboardId];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.rootViewController = initViewController;
+    [self.window makeKeyAndVisible];
+    /********************************************************************************************************/
+    
     return YES;
 }
 
