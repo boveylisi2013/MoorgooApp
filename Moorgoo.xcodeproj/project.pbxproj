@@ -17,13 +17,17 @@
 		135979A21AA37C8C0037862A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135979A11AA37C8C0037862A /* MobileCoreServices.framework */; };
 		135979AC1AA4316A0037862A /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 135979AB1AA4316A0037862A /* KeychainItemWrapper.m */; };
 		135979AF1AA459220037862A /* AccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 135979AE1AA459220037862A /* AccountTableViewController.m */; };
+		137A41C31AA56376008BF591 /* FindTutorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137A41C21AA56376008BF591 /* FindTutorTableViewController.m */; };
+		137A41C81AA57036008BF591 /* CollegeClassTutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 137A41C71AA57036008BF591 /* CollegeClassTutor.m */; };
+		1386074D1AA6C9CB002A840A /* 05a8e17.png in Resources */ = {isa = PBXBuildFile; fileRef = 1386074C1AA6C9CB002A840A /* 05a8e17.png */; };
+		138607501AA6DC14002A840A /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1386074F1AA6DC14002A840A /* FilterViewController.m */; };
+		138607521AA6E2BD002A840A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 138607511AA6E2BD002A840A /* QuartzCore.framework */; };
 		1388CF1E1AA2344E0064BFE5 /* EntranceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1388CF1D1AA2344E0064BFE5 /* EntranceViewController.m */; };
 		1388CF211AA2345A0064BFE5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1388CF201AA2345A0064BFE5 /* LoginViewController.m */; };
 		1388CF241AA234660064BFE5 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1388CF231AA234660064BFE5 /* RegisterViewController.m */; };
 		13D287451AA54BED008B5D53 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D287441AA54BED008B5D53 /* Parse.framework */; };
 		13EBBE3C1AA19B1200495F8A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBE3B1AA19B1200495F8A /* main.m */; };
 		13EBBE3F1AA19B1200495F8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBE3E1AA19B1200495F8A /* AppDelegate.m */; };
-		13EBBE421AA19B1200495F8A /* SelectCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBE411AA19B1200495F8A /* SelectCategoriesViewController.m */; };
 		13EBBE451AA19B1200495F8A /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBE441AA19B1200495F8A /* SecondViewController.m */; };
 		13EBBE481AA19B1200495F8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE461AA19B1200495F8A /* Main.storyboard */; };
 		13EBBE4A1AA19B1200495F8A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE491AA19B1200495F8A /* Images.xcassets */; };
@@ -43,6 +47,14 @@
 		135979AB1AA4316A0037862A /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		135979AD1AA459220037862A /* AccountTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewController.h; sourceTree = "<group>"; };
 		135979AE1AA459220037862A /* AccountTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountTableViewController.m; sourceTree = "<group>"; };
+		137A41C11AA56376008BF591 /* FindTutorTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindTutorTableViewController.h; sourceTree = "<group>"; };
+		137A41C21AA56376008BF591 /* FindTutorTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindTutorTableViewController.m; sourceTree = "<group>"; };
+		137A41C61AA57036008BF591 /* CollegeClassTutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegeClassTutor.h; sourceTree = "<group>"; };
+		137A41C71AA57036008BF591 /* CollegeClassTutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollegeClassTutor.m; sourceTree = "<group>"; };
+		1386074C1AA6C9CB002A840A /* 05a8e17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 05a8e17.png; sourceTree = "<group>"; };
+		1386074E1AA6DC14002A840A /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
+		1386074F1AA6DC14002A840A /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
+		138607511AA6E2BD002A840A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1388CF1C1AA2344E0064BFE5 /* EntranceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntranceViewController.h; sourceTree = "<group>"; };
 		1388CF1D1AA2344E0064BFE5 /* EntranceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntranceViewController.m; sourceTree = "<group>"; };
 		1388CF1F1AA2345A0064BFE5 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -55,8 +67,6 @@
 		13EBBE3B1AA19B1200495F8A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		13EBBE3D1AA19B1200495F8A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		13EBBE3E1AA19B1200495F8A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		13EBBE401AA19B1200495F8A /* SelectCategoriesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectCategoriesViewController.h; sourceTree = "<group>"; };
-		13EBBE411AA19B1200495F8A /* SelectCategoriesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectCategoriesViewController.m; sourceTree = "<group>"; };
 		13EBBE431AA19B1200495F8A /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		13EBBE441AA19B1200495F8A /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		13EBBE471AA19B1200495F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -71,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				138607521AA6E2BD002A840A /* QuartzCore.framework in Frameworks */,
 				135979A21AA37C8C0037862A /* MobileCoreServices.framework in Frameworks */,
 				13D287451AA54BED008B5D53 /* Parse.framework in Frameworks */,
 				135979A01AA37C5A0037862A /* SystemConfiguration.framework in Frameworks */,
@@ -89,6 +100,7 @@
 		135979961AA3790C0037862A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				138607511AA6E2BD002A840A /* QuartzCore.framework */,
 				13D287441AA54BED008B5D53 /* Parse.framework */,
 				135979A11AA37C8C0037862A /* MobileCoreServices.framework */,
 				1359799F1AA37C5A0037862A /* SystemConfiguration.framework */,
@@ -109,6 +121,26 @@
 				135979AB1AA4316A0037862A /* KeychainItemWrapper.m */,
 			);
 			name = KeyChain;
+			sourceTree = "<group>";
+		};
+		137A41C41AA56FE5008BF591 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				13EBBE6A1AA1A84800495F8A /* User */,
+				13EBBE661AA19FD400495F8A /* FirstTab */,
+				13EBBE681AA1A61200495F8A /* SecondTab */,
+				13EBBE691AA1A61B00495F8A /* ThirdTab */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		137A41C51AA56FF0008BF591 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				137A41C61AA57036008BF591 /* CollegeClassTutor.h */,
+				137A41C71AA57036008BF591 /* CollegeClassTutor.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		13EBBE2D1AA19B1200495F8A = {
@@ -132,10 +164,8 @@
 			isa = PBXGroup;
 			children = (
 				13EBBE631AA19E2000495F8A /* App */,
-				13EBBE6A1AA1A84800495F8A /* User */,
-				13EBBE661AA19FD400495F8A /* FirstTab */,
-				13EBBE681AA1A61200495F8A /* SecondTab */,
-				13EBBE691AA1A61B00495F8A /* ThirdTab */,
+				137A41C51AA56FF0008BF591 /* View */,
+				137A41C41AA56FE5008BF591 /* Controller */,
 				13EBBE621AA19E0200495F8A /* Vendors */,
 				13EBBE461AA19B1200495F8A /* Main.storyboard */,
 				13EBBE491AA19B1200495F8A /* Images.xcassets */,
@@ -148,6 +178,7 @@
 		13EBBE391AA19B1200495F8A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1386074C1AA6C9CB002A840A /* 05a8e17.png */,
 				13EBBE3A1AA19B1200495F8A /* Info.plist */,
 				13EBBE3B1AA19B1200495F8A /* main.m */,
 				13EBBE671AA1A1CB00495F8A /* PrefixHeader.pch */,
@@ -176,8 +207,10 @@
 		13EBBE661AA19FD400495F8A /* FirstTab */ = {
 			isa = PBXGroup;
 			children = (
-				13EBBE401AA19B1200495F8A /* SelectCategoriesViewController.h */,
-				13EBBE411AA19B1200495F8A /* SelectCategoriesViewController.m */,
+				137A41C11AA56376008BF591 /* FindTutorTableViewController.h */,
+				137A41C21AA56376008BF591 /* FindTutorTableViewController.m */,
+				1386074E1AA6DC14002A840A /* FilterViewController.h */,
+				1386074F1AA6DC14002A840A /* FilterViewController.m */,
 			);
 			name = FirstTab;
 			sourceTree = "<group>";
@@ -271,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13EBBE481AA19B1200495F8A /* Main.storyboard in Resources */,
+				1386074D1AA6C9CB002A840A /* 05a8e17.png in Resources */,
 				13EBBE4D1AA19B1200495F8A /* LaunchScreen.xib in Resources */,
 				13EBBE4A1AA19B1200495F8A /* Images.xcassets in Resources */,
 			);
@@ -284,12 +318,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				13EBBE451AA19B1200495F8A /* SecondViewController.m in Sources */,
+				137A41C81AA57036008BF591 /* CollegeClassTutor.m in Sources */,
 				13EBBE3F1AA19B1200495F8A /* AppDelegate.m in Sources */,
+				138607501AA6DC14002A840A /* FilterViewController.m in Sources */,
 				1388CF211AA2345A0064BFE5 /* LoginViewController.m in Sources */,
 				135979AF1AA459220037862A /* AccountTableViewController.m in Sources */,
-				13EBBE421AA19B1200495F8A /* SelectCategoriesViewController.m in Sources */,
 				135979AC1AA4316A0037862A /* KeychainItemWrapper.m in Sources */,
 				1388CF241AA234660064BFE5 /* RegisterViewController.m in Sources */,
+				137A41C31AA56376008BF591 /* FindTutorTableViewController.m in Sources */,
 				13EBBE3C1AA19B1200495F8A /* main.m in Sources */,
 				1388CF1E1AA2344E0064BFE5 /* EntranceViewController.m in Sources */,
 			);

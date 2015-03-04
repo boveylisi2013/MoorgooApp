@@ -10,8 +10,11 @@
 #define Moorgoo_PrefixHeader_pch
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import <QuartzCore/QuartzCore.h>
 #import "AppConstant.h"
 #import "KeychainItemWrapper.h"
+
 
 #endif
