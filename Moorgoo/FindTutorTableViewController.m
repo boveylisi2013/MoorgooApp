@@ -22,24 +22,19 @@
     
     tutorSource = [[NSMutableArray alloc] init];
     
+    /**************************************************************************************/
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor purpleColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(fetchAllCollegeClassTutors)
+                  forControlEvents:UIControlEventValueChanged];
+    /**************************************************************************************/
     
+    self.hud = [[MBProgressHUD alloc] init];
+    [self.view addSubview:self.hud];
+    [self.hud show:YES];
     
-//    UIImage *profileImage = [UIImage imageNamed:@"05a8e17.png"];
-//    
-//    NSData *imageData = UIImagePNGRepresentation(profileImage);
-//    PFFile *imageFile = [PFFile fileWithName:@"Profileimage.png" data:imageData];
-//    [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//        if (!error) {
-//            if (succeeded) {
-//                PFUser *user = [PFUser currentUser];
-//                user[@"profilePicture"] = imageFile;
-//                [user saveInBackground];
-//            }
-//        } else {
-//            // Handle error
-//        }        
-//    }];
-
     [self fetchAllCollegeClassTutors];
 }
 
@@ -50,6 +45,7 @@
 
 /**************************************************************************************/
 - (void)fetchAllCollegeClassTutors {
+    [tutorSource removeAllObjects];
     PFQuery *query = [PFQuery queryWithClassName:@"CollegeClassTutor"];
     [query includeKey:@"userId"];
     [query includeKey:@"departmentId"];
@@ -70,6 +66,7 @@
                 tutor.price = [object objectForKey:@"price"];
                 tutor.department = [department objectForKey:@"department"];
                 tutor.school = [school objectForKey:@"schoolName"];
+                tutor.schoolAbbreviation = [object objectForKey:@"schoolAbbreviation"];
                 tutor.goodRating = [object objectForKey:@"goodRating"];
                 tutor.badRating = [object objectForKey:@"badRating"];
                 [tutorSource addObject:tutor];
@@ -77,6 +74,8 @@
                 [[user objectForKey:@"profilePicture"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                     tutor.profileImage = [UIImage imageWithData:data];
                     [self.tableView reloadData];
+                    [self.hud hide:YES];
+                    [self.refreshControl endRefreshing];
                 }];
             }
         }
@@ -130,9 +129,12 @@
     [fullName appendString:((CollegeClassTutor *)[tutorSource objectAtIndex:indexPath.row]).lastName];
     nameLabel.text = fullName;
     
-    //department
+    //school + department
     UILabel *departmentLabel = (UILabel *)[cell.contentView viewWithTag:300];
-    NSString *department = ((CollegeClassTutor *)[tutorSource objectAtIndex:indexPath.row]).department;
+    NSMutableString *department = [NSMutableString new];
+    [department appendString:((CollegeClassTutor *)[tutorSource objectAtIndex:indexPath.row]).schoolAbbreviation];
+    [department appendString:@" "];
+    [department appendString:((CollegeClassTutor *)[tutorSource objectAtIndex:indexPath.row]).department];
     departmentLabel.text = department;
     
     //price
@@ -144,18 +146,19 @@
     priceLabel.text = price;
 
     //rating
-    UILabel *rateLabel = (UILabel *)[cell.contentView viewWithTag:500];
-    NSMutableString *rating = [NSMutableString new];
-    [rating appendString:@"Up: "];
-    [rating appendString:((CollegeClassTutor *)[tutorSource objectAtIndex:indexPath.row]).goodRating];
-    [rating appendString:@"    Down: "];
-    [rating appendString:((CollegeClassTutor *)[tutorSource objectAtIndex:indexPath.row]).badRating];
-    rateLabel.text = rating;
+    UILabel *goodLabel = (UILabel *)[cell.contentView viewWithTag:500];
+    NSMutableString *goodrating = [NSMutableString new];
+    [goodrating appendString:((CollegeClassTutor *)[tutorSource objectAtIndex:indexPath.row]).goodRating];
+    goodLabel.text = goodrating;
+    
+    UILabel *badLabel = (UILabel *)[cell.contentView viewWithTag:600];
+    NSMutableString *badrating = [NSMutableString new];
+    [badrating appendString:((CollegeClassTutor *)[tutorSource objectAtIndex:indexPath.row]).badRating];
+    badLabel.text = badrating;
     
     
     return cell;
 }
-
 
 /*
 // Override to support conditional editing of the table view.

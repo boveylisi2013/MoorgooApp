@@ -25,6 +25,7 @@
 		1388CF1E1AA2344E0064BFE5 /* EntranceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1388CF1D1AA2344E0064BFE5 /* EntranceViewController.m */; };
 		1388CF211AA2345A0064BFE5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1388CF201AA2345A0064BFE5 /* LoginViewController.m */; };
 		1388CF241AA234660064BFE5 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1388CF231AA234660064BFE5 /* RegisterViewController.m */; };
+		13934C431AA7996C0095E818 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 13934C421AA7996C0095E818 /* MBProgressHUD.m */; };
 		13D287451AA54BED008B5D53 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D287441AA54BED008B5D53 /* Parse.framework */; };
 		13EBBE3C1AA19B1200495F8A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBE3B1AA19B1200495F8A /* main.m */; };
 		13EBBE3F1AA19B1200495F8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBE3E1AA19B1200495F8A /* AppDelegate.m */; };
@@ -61,6 +62,8 @@
 		1388CF201AA2345A0064BFE5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		1388CF221AA234660064BFE5 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		1388CF231AA234660064BFE5 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		13934C411AA7996C0095E818 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		13934C421AA7996C0095E818 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		13D287441AA54BED008B5D53 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		13EBBE361AA19B1200495F8A /* Moorgoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moorgoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13EBBE3A1AA19B1200495F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -143,6 +146,15 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		13934C401AA7996C0095E818 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				13934C411AA7996C0095E818 /* MBProgressHUD.h */,
+				13934C421AA7996C0095E818 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		13EBBE2D1AA19B1200495F8A = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +201,7 @@
 		13EBBE621AA19E0200495F8A /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				13934C401AA7996C0095E818 /* MBProgressHUD */,
 				135979A91AA431420037862A /* KeyChain */,
 			);
 			name = Vendors;
@@ -324,6 +337,7 @@
 				1388CF211AA2345A0064BFE5 /* LoginViewController.m in Sources */,
 				135979AF1AA459220037862A /* AccountTableViewController.m in Sources */,
 				135979AC1AA4316A0037862A /* KeychainItemWrapper.m in Sources */,
+				13934C431AA7996C0095E818 /* MBProgressHUD.m in Sources */,
 				1388CF241AA234660064BFE5 /* RegisterViewController.m in Sources */,
 				137A41C31AA56376008BF591 /* FindTutorTableViewController.m in Sources */,
 				13EBBE3C1AA19B1200495F8A /* main.m in Sources */,

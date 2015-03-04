@@ -10,7 +10,7 @@
 
 @implementation CollegeClassTutor
 
-@synthesize firstName, lastName, profileImage, userId, courses, availableDays, price, description, school, goodRating, badRating;
+@synthesize firstName, lastName, profileImage, userId, courses, availableDays, price, department, description, school, schoolAbbreviation, goodRating, badRating;
 
 
 @end

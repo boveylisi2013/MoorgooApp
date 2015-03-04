@@ -44,14 +44,13 @@
 {
     [PFUser logInWithUsernameInBackground:self.userTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error) {
         if (user) {
-            
+            /************************************************************************/
             KeychainItemWrapper* keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"KeychainTest" accessGroup:nil];
             [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
-            
-            
             [keychain setObject:self.userTextField.text forKey:(__bridge id)(kSecAttrAccount)];
             [keychain setObject:self.passwordTextField.text forKey:(__bridge id)(kSecValueData)];
-            
+            /************************************************************************/
+
             [self performSegueWithIdentifier:@"LoginSuccesful" sender:self];
         }
         else {

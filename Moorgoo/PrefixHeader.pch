@@ -15,6 +15,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AppConstant.h"
 #import "KeychainItemWrapper.h"
+#import "MBProgressHUD.h"
 
 
 #endif

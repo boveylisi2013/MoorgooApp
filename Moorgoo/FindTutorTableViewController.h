@@ -11,6 +11,8 @@
 @interface FindTutorTableViewController : UITableViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property NSMutableArray *tutorSource;
+@property (nonatomic, strong)UIRefreshControl *refreshControl;
+@property (nonatomic, strong) MBProgressHUD *hud;
 
 - (IBAction)filterButtonClicked:(id)sender;
 

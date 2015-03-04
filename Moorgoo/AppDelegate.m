@@ -49,6 +49,8 @@
     [self.window makeKeyAndVisible];
     /********************************************************************************************************/
     
+    [[UINavigationBar appearance] setBarTintColor:[UIColor yellowColor]];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     return YES;
 }
 

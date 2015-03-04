@@ -8,8 +8,9 @@
 
 #import "RegisterViewController.h"
 
-@interface RegisterViewController () <UITextFieldDelegate>
+@interface RegisterViewController ()
 {
+    NSData *imageData;
 }
 
 @end
@@ -87,7 +88,6 @@
     user.username = self.emailRegisterTextField.text;  //use email as login username
     user.password = self.passwordRegisterTextField.text;
     [user setObject:self.phoneRegisterTextField.text forKey:@"phone"];
-    [user setObject: [NSNumber numberWithBool:NO] forKey:@"isTutor"];
     
     // Check whether the user inputs their information correctly or not
     if ([errorString length] != 0) {
@@ -102,6 +102,26 @@
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
+            /************************************************************************/
+            PFFile *imageFile = [PFFile fileWithName:@"Profileimage.png" data:imageData];
+                [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (!error) {
+                        if (succeeded) {
+                            PFUser *user = [PFUser currentUser];
+                            user[@"profilePicture"] = imageFile;
+                            [user saveInBackground];
+                        }
+                    } else {
+                        // Handle error
+                    }        
+                }];
+            /************************************************************************/
+            KeychainItemWrapper* keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"KeychainTest" accessGroup:nil];
+            [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
+            [keychain setObject:self.emailRegisterTextField.text forKey:(__bridge id)(kSecAttrAccount)];
+            [keychain setObject:self.passwordRegisterTextField.text forKey:(__bridge id)(kSecValueData)];
+            /************************************************************************/
+
             [self performSegueWithIdentifier:@"SignupSuccesful" sender:self];
         } else {
             [[[UIAlertView alloc] initWithTitle:@"Error" message:[error userInfo][@"error"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
@@ -109,4 +129,31 @@
     }];
 
 }
+
+- (IBAction)pickImageButtonClicked:(id)sender {
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    [picker setDelegate:self];
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+#pragma uiimagepicker delegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    image = [self imageWithImage:image scaledToSize:CGSizeMake(200, 200)];
+    imageData = UIImagePNGRepresentation(image);
+    [picker dismissViewControllerAnimated:YES completion:^{
+        self.profileImageView.image = image;
+        [self.pickImageButton setTitle:@"Change Picture" forState:UIControlStateNormal];
+    }];
+}
+
 @end

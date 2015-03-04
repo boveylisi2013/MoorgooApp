@@ -17,6 +17,7 @@
 @property NSString *price;
 @property NSString *department;
 @property NSString *school;
+@property NSString *schoolAbbreviation;
 @property NSString *goodRating;
 @property NSString *badRating;
 
