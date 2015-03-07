@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13356FD51AAA48CB00C6B424 /* SearchFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13356FD41AAA48CB00C6B424 /* SearchFilter.m */; };
 		135979931AA378DA0037862A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135979921AA378DA0037862A /* Security.framework */; };
 		135979951AA378E20037862A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135979941AA378E20037862A /* UIKit.framework */; };
 		135979981AA379A20037862A /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135979971AA379A20037862A /* Parse.framework */; };
@@ -25,6 +26,7 @@
 		1388CF1E1AA2344E0064BFE5 /* EntranceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1388CF1D1AA2344E0064BFE5 /* EntranceViewController.m */; };
 		1388CF211AA2345A0064BFE5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1388CF201AA2345A0064BFE5 /* LoginViewController.m */; };
 		1388CF241AA234660064BFE5 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1388CF231AA234660064BFE5 /* RegisterViewController.m */; };
+		138D42A11AAA7C3A000E437B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 138D42A01AAA7C3A000E437B /* Reachability.m */; };
 		13934C431AA7996C0095E818 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 13934C421AA7996C0095E818 /* MBProgressHUD.m */; };
 		13D287451AA54BED008B5D53 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D287441AA54BED008B5D53 /* Parse.framework */; };
 		13EBBE3C1AA19B1200495F8A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBE3B1AA19B1200495F8A /* main.m */; };
@@ -36,6 +38,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		13356FD31AAA48CB00C6B424 /* SearchFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchFilter.h; sourceTree = "<group>"; };
+		13356FD41AAA48CB00C6B424 /* SearchFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchFilter.m; sourceTree = "<group>"; };
 		135979921AA378DA0037862A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		135979941AA378E20037862A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		135979971AA379A20037862A /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -62,6 +66,8 @@
 		1388CF201AA2345A0064BFE5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		1388CF221AA234660064BFE5 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		1388CF231AA234660064BFE5 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		138D429F1AAA7C3A000E437B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		138D42A01AAA7C3A000E437B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		13934C411AA7996C0095E818 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		13934C421AA7996C0095E818 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		13D287441AA54BED008B5D53 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -142,8 +148,19 @@
 			children = (
 				137A41C61AA57036008BF591 /* CollegeClassTutor.h */,
 				137A41C71AA57036008BF591 /* CollegeClassTutor.m */,
+				13356FD31AAA48CB00C6B424 /* SearchFilter.h */,
+				13356FD41AAA48CB00C6B424 /* SearchFilter.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		138D429E1AAA7C10000E437B /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				138D429F1AAA7C3A000E437B /* Reachability.h */,
+				138D42A01AAA7C3A000E437B /* Reachability.m */,
+			);
+			name = Reachability;
 			sourceTree = "<group>";
 		};
 		13934C401AA7996C0095E818 /* MBProgressHUD */ = {
@@ -201,6 +218,7 @@
 		13EBBE621AA19E0200495F8A /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				138D429E1AAA7C10000E437B /* Reachability */,
 				13934C401AA7996C0095E818 /* MBProgressHUD */,
 				135979A91AA431420037862A /* KeyChain */,
 			);
@@ -340,7 +358,9 @@
 				13934C431AA7996C0095E818 /* MBProgressHUD.m in Sources */,
 				1388CF241AA234660064BFE5 /* RegisterViewController.m in Sources */,
 				137A41C31AA56376008BF591 /* FindTutorTableViewController.m in Sources */,
+				138D42A11AAA7C3A000E437B /* Reachability.m in Sources */,
 				13EBBE3C1AA19B1200495F8A /* main.m in Sources */,
+				13356FD51AAA48CB00C6B424 /* SearchFilter.m in Sources */,
 				1388CF1E1AA2344E0064BFE5 /* EntranceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

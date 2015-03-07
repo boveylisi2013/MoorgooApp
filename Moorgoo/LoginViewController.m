@@ -54,7 +54,7 @@
             [self performSegueWithIdentifier:@"LoginSuccesful" sender:self];
         }
         else {
-            [[[UIAlertView alloc] initWithTitle:@"Error" message:[error userInfo][@"error"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }
     }];
 }

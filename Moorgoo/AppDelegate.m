@@ -10,10 +10,12 @@
 #import "LoginViewController.h"
 
 @interface AppDelegate ()
+- (void)networkChanged:(NSNotification *)notification;
 
 @end
 
 @implementation AppDelegate
+@synthesize noInternetAlert;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -22,23 +24,11 @@
     /********************************************************************************************************/
     KeychainItemWrapper* keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"KeychainTest" accessGroup:nil];
     [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
-    
     NSString *username = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
     NSString *password = [keychain objectForKey:(__bridge id)(kSecValueData)];
-    
     keychain = nil;
     
     BOOL isLoggedIn = (![username isEqualToString:@""]) && (![password isEqualToString:@""]);
-    
-    if(isLoggedIn){
-        [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error) {
-            if (user) {
-            }
-            else {
-                [[[UIAlertView alloc] initWithTitle:@"Error" message:[error userInfo][@"error"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-            }
-        }];
-    }
     
     NSString *storyboardId = isLoggedIn ? @"MainIdentifier" : @"LoginIdentifier";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -48,9 +38,25 @@
     self.window.rootViewController = initViewController;
     [self.window makeKeyAndVisible];
     /********************************************************************************************************/
+    noInternetAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"No Internet Connection!" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(networkChanged:)
+                                                 name:kReachabilityChangedNotification object:nil];
+    
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    if([reachability currentReachabilityStatus] == NotReachable){
+        NSLog(@"not reachable at appdelegate");
+        [noInternetAlert show];
+    }
+    
+    [reachability startNotifier];
+    /******************************************************************************/
+    
     
     [[UINavigationBar appearance] setBarTintColor:[UIColor yellowColor]];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     return YES;
 }
 
@@ -60,8 +66,6 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -76,4 +80,15 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)networkChanged:(NSNotification *)notification{
+    Reachability * reachability = [notification object];
+    NetworkStatus remoteHostStatus = [reachability currentReachabilityStatus];
+    
+    if(remoteHostStatus == NotReachable) {
+        [noInternetAlert show];
+    }
+    else{
+        [noInternetAlert dismissWithClickedButtonIndex:0 animated:NO];
+    }
+}
 @end

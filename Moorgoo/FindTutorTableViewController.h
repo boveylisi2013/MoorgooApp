@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SearchFilter.h"
 
 @interface FindTutorTableViewController : UITableViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property NSMutableArray *tutorSource;
+@property SearchFilter *searchFilter;
 @property (nonatomic, strong)UIRefreshControl *refreshControl;
 @property (nonatomic, strong) MBProgressHUD *hud;
 

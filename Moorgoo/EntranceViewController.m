@@ -30,33 +30,33 @@
     
     [self.view addSubview:self.signinButton];
     [self.view addSubview:self.registerButton];
-    
-    /////////////////////////////////////
-    PFQuery *query = [PFQuery queryWithClassName:@"dictbase"];
-    [query whereKey:@"keyColumn" equalTo:@"currentVersion"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            NSString *current_version = [NSString stringWithFormat:@"%@", [[objects valueForKey:@"valueColumn"] objectAtIndex:0]];
-            
-            NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-            NSString* local_version = [infoDict objectForKey:@"CFBundleVersion"];
-            if(![current_version isEqualToString:local_version]) {
-                self.signinButton.hidden = true;
-                self.registerButton.hidden = true;
-                
-                NSString *download = @"In order to continue, please download the new version of Moorgoo App in the Apple Store!";
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention"
-                                                                message:download
-                                                               delegate:self
-                                                      cancelButtonTitle:@"Go To Apple Store to update!"
-                                                      otherButtonTitles:nil];
-                [alert show];
-            }
-        }
-        else {
-            [[[UIAlertView alloc] initWithTitle:@"Error" message:[error userInfo][@"error"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        }
-    }];
+
+//    /////////////////////////////////////
+//    PFQuery *query = [PFQuery queryWithClassName:@"dictbase"];
+//    [query whereKey:@"keyColumn" equalTo:@"currentVersion"];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        if (!error) {
+//            NSString *current_version = [NSString stringWithFormat:@"%@", [[objects valueForKey:@"valueColumn"] objectAtIndex:0]];
+//            
+//            NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+//            NSString* local_version = [infoDict objectForKey:@"CFBundleVersion"];
+//            if(![current_version isEqualToString:local_version]) {
+//                self.signinButton.hidden = true;
+//                self.registerButton.hidden = true;
+//                
+//                NSString *download = @"In order to continue, please download the new version of Moorgoo App in the Apple Store!";
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention"
+//                                                                message:download
+//                                                               delegate:self
+//                                                      cancelButtonTitle:@"Go To Apple Store to update!"
+//                                                      otherButtonTitles:nil];
+//                [alert show];
+//            }
+//        }
+//        else {
+//            [[[UIAlertView alloc] initWithTitle:@"Error" message:[error userInfo][@"error"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//        }
+//    }];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
