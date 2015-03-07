@@ -210,29 +210,70 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your School" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NPF-KE-I2V">
-                                <rect key="frame" x="16" y="86" width="568" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your School" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NPF-KE-I2V">
+                                <rect key="frame" x="16" y="91" width="568" height="30"/>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Oq5-md-2TD"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Which class" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eIe-GJ-CiN">
-                                <rect key="frame" x="16" y="134" width="568" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Which class" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eIe-GJ-CiN">
+                                <rect key="frame" x="16" y="139" width="568" height="30"/>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="ryp-KK-Kil"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MAX PRICE ($ PER HOUR)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wYh-3a-JWX">
+                                <rect key="frame" x="130" y="185" width="454" height="30"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="FIN-1G-BAt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ PER HOUR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nC0-cD-roJ">
+                                <rect key="frame" x="16" y="185" width="106" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="aY5-tf-vbg"/>
+                                    <constraint firstAttribute="width" constant="106" id="gaf-Av-lJH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wYh-3a-JWX" firstAttribute="trailing" secondItem="SLD-x2-hLi" secondAttribute="trailingMargin" id="1C1-pA-ZuZ"/>
+                            <constraint firstItem="wYh-3a-JWX" firstAttribute="leading" secondItem="nC0-cD-roJ" secondAttribute="trailing" constant="8" id="1rD-l2-hab"/>
+                            <constraint firstItem="eIe-GJ-CiN" firstAttribute="top" secondItem="NPF-KE-I2V" secondAttribute="bottom" constant="18" id="5ff-zF-k0M"/>
+                            <constraint firstItem="eIe-GJ-CiN" firstAttribute="trailing" secondItem="SLD-x2-hLi" secondAttribute="trailingMargin" id="Blm-IU-JJb"/>
+                            <constraint firstItem="wYh-3a-JWX" firstAttribute="top" secondItem="eIe-GJ-CiN" secondAttribute="bottom" constant="16" id="K50-WW-cWo"/>
+                            <constraint firstItem="NPF-KE-I2V" firstAttribute="leading" secondItem="SLD-x2-hLi" secondAttribute="leadingMargin" id="dWi-ZF-qkr"/>
+                            <constraint firstItem="NPF-KE-I2V" firstAttribute="trailing" secondItem="SLD-x2-hLi" secondAttribute="trailingMargin" id="f44-a6-Zdt"/>
+                            <constraint firstItem="NPF-KE-I2V" firstAttribute="top" secondItem="dbN-rv-YNn" secondAttribute="bottom" constant="27" id="mKO-KB-Gkx"/>
+                            <constraint firstItem="nC0-cD-roJ" firstAttribute="top" secondItem="eIe-GJ-CiN" secondAttribute="bottom" constant="16" id="oat-xA-INg"/>
+                            <constraint firstItem="nC0-cD-roJ" firstAttribute="leading" secondItem="SLD-x2-hLi" secondAttribute="leadingMargin" id="pfi-Im-Nak"/>
+                            <constraint firstItem="eIe-GJ-CiN" firstAttribute="leading" secondItem="SLD-x2-hLi" secondAttribute="leadingMargin" id="skU-eo-g1W"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Filters" id="UHY-2s-7oa">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="GTA-xV-zFP">
+                        <barButtonItem key="rightBarButtonItem" title="Search" id="GTA-xV-zFP">
                             <connections>
                                 <action selector="saveButtonClicked:" destination="Azf-Wu-U4n" id="yuC-bu-T1U"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="classTextField" destination="eIe-GJ-CiN" id="wyu-Jc-hk8"/>
+                        <outlet property="priceTextField" destination="wYh-3a-JWX" id="Le5-tA-0sx"/>
+                        <outlet property="schoolTextField" destination="NPF-KE-I2V" id="ERS-kR-EH3"/>
                         <segue destination="49e-Tb-3d3" kind="presentation" identifier="backToTutorList" modalTransitionStyle="crossDissolve" id="nj5-9I-R6r"/>
                     </connections>
                 </viewController>

@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FilterViewController : UIViewController
+@interface FilterViewController : UIViewController<UIPickerViewDelegate, UIPickerViewDataSource>
+
+@property SearchFilter *filter;
+@property NSMutableArray *tutorArray;
 
 @end

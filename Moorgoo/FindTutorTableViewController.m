@@ -7,7 +7,7 @@
 //
 
 #import "FindTutorTableViewController.h"
-#import "CollegeClassTutor.h"
+#import "FilterViewController.h"
 
 @interface FindTutorTableViewController ()
 - (void)networkChanged2:(NSNotification *)notification;
@@ -35,18 +35,18 @@
     /**************************************************************************************/
     searchFilter = [[SearchFilter alloc] init];
     
-    
     /**************************************************************************************/
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(networkChanged2:)
-                                                 name:kReachabilityChangedNotification object:nil];
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
     /**************************************************************************************/
     tutorSource = [[NSMutableArray alloc] init];
     Reachability *reachability2 = [Reachability reachabilityForInternetConnection];
     [reachability2 startNotifier];
 
     if([reachability2 currentReachabilityStatus] != NotReachable){
-        NSLog(@"i have internet");
         KeychainItemWrapper* keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"KeychainTest" accessGroup:nil];
         [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
         NSString *username = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
@@ -55,7 +55,6 @@
         
         [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error) {
             if (user) {
-                NSLog(@"log in in the viewdidload");
             }
             else {
                 [[[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedFailureReason] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
@@ -73,10 +72,10 @@
 
 /**************************************************************************************/
 - (void)fetchAllCollegeClassTutors {
-    
     [tutorSource removeAllObjects];
     
     PFQuery *query = [PFQuery queryWithClassName:@"CollegeClassTutor"];
+    [query setLimit:1000];
     [query includeKey:@"userId"];
     [query includeKey:@"departmentId"];
     [query includeKey:@"schoolId"];
@@ -89,7 +88,6 @@
                 if(user != nil){
                     PFObject *department = [object objectForKey:@"departmentId"];
                     PFObject *school = [object objectForKey:@"schoolId"];
-
                     CollegeClassTutor *tutor = [[CollegeClassTutor alloc] init];
                     tutor.firstName = [user objectForKey:@"firstName"];
                     tutor.lastName = [user objectForKey:@"lastName"];
@@ -102,7 +100,12 @@
                     tutor.schoolAbbreviation = ([object objectForKey:@"schoolAbbreviation"] == nil) ? @"" : [object objectForKey:@"schoolAbbreviation"];
                     tutor.goodRating = ([object objectForKey:@"goodRating"] == nil) ? @"" : [object objectForKey:@"goodRating"];
                     tutor.badRating = ([object objectForKey:@"badRating"] == nil) ? @"" : [object objectForKey:@"badRating"];
-                    [tutorSource addObject:tutor];
+                    
+                    if((searchFilter.collegeClassTutorSchool == nil || [searchFilter.collegeClassTutorSchool isEqualToString:tutor.school])
+                       && (searchFilter.collegeClassTutorCourse == nil || [tutor.courses containsObject:searchFilter.collegeClassTutorCourse])
+                       && (searchFilter.collegeClassTutorPrice == nil || [tutor.price intValue] <= [searchFilter.collegeClassTutorPrice intValue])){
+                        [tutorSource addObject:tutor];
+                    }
                 
                     [[user objectForKey:@"profilePicture"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                         tutor.profileImage = [UIImage imageWithData:data];
@@ -132,7 +135,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
     return [tutorSource count];
 }
 
@@ -194,21 +196,24 @@
     return cell;
 }
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString:@"goToFilterView"]){
+        UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
+        FilterViewController *dest = (FilterViewController *)navController.topViewController;
+        dest.tutorArray = tutorSource;
+    }
 }
-*/
+
 
 - (IBAction)filterButtonClicked:(id)sender {
-    [self performSegueWithIdentifier:@"goToFilterView" sender:self];
+    [self performSegueWithIdentifier:@"goToFilterView" sender:nil];
 }
 
 - (void)networkChanged2:(NSNotification *)notification{
+
     Reachability * reachability = [notification object];
     NetworkStatus remoteHostStatus = [reachability currentReachabilityStatus];
     
@@ -230,7 +235,9 @@
                 }];
         }
         
-        [self fetchAllCollegeClassTutors];
+        if([tutorSource count] == 0) {
+            [self fetchAllCollegeClassTutors];
+        }
     }
 }
 

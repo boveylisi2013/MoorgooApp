@@ -46,7 +46,6 @@
     
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     if([reachability currentReachabilityStatus] == NotReachable){
-        NSLog(@"not reachable at appdelegate");
         [noInternetAlert show];
     }
     

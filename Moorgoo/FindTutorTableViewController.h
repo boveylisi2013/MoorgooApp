@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SearchFilter.h"
 
 @interface FindTutorTableViewController : UITableViewController<UITableViewDelegate, UITableViewDataSource>
 
