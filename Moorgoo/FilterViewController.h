@@ -8,9 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FilterViewController : UIViewController<UIPickerViewDelegate, UIPickerViewDataSource>
+@protocol FilterViewControllerDelegate <NSObject>
+@required
+- (void)applyFilterToFetchTutors:(SearchFilter *)filter;
+
+@end
+
+@interface FilterViewController : UIViewController<UIPickerViewDelegate, UIPickerViewDataSource>{
+    id<FilterViewControllerDelegate> delegate;
+}
 
 @property SearchFilter *filter;
 @property NSMutableArray *tutorArray;
+@property id<FilterViewControllerDelegate> delegate;
 
 @end

@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FilterViewController.h"
 
-@interface FindTutorTableViewController : UITableViewController<UITableViewDelegate, UITableViewDataSource>
+@interface FindTutorTableViewController : UITableViewController<FilterViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>{
+}
 
 @property NSMutableArray *tutorSource;
 @property SearchFilter *searchFilter;

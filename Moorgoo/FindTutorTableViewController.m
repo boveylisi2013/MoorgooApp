@@ -7,7 +7,6 @@
 //
 
 #import "FindTutorTableViewController.h"
-#import "FilterViewController.h"
 
 @interface FindTutorTableViewController ()
 - (void)networkChanged2:(NSNotification *)notification;
@@ -20,7 +19,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     /**************************************************************************************/
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor purpleColor];
@@ -31,7 +29,6 @@
     /**************************************************************************************/
     self.hud = [[MBProgressHUD alloc] init];
     [self.view addSubview:self.hud];
-    [self.hud show:YES];
     /**************************************************************************************/
     searchFilter = [[SearchFilter alloc] init];
     
@@ -72,6 +69,8 @@
 
 /**************************************************************************************/
 - (void)fetchAllCollegeClassTutors {
+    [self.hud show:YES];
+
     [tutorSource removeAllObjects];
     
     PFQuery *query = [PFQuery queryWithClassName:@"CollegeClassTutor"];
@@ -92,7 +91,7 @@
                     tutor.firstName = [user objectForKey:@"firstName"];
                     tutor.lastName = [user objectForKey:@"lastName"];
                     tutor.userId = user.objectId;
-                    tutor.courses = [user objectForKey:@"courses"];
+                    tutor.courses = [object objectForKey:@"courses"];
                     tutor.availableDays = [user objectForKey:@"availableDays"];
                     tutor.price = ([object objectForKey:@"price"] == nil) ? @"" : [object objectForKey:@"price"];
                     tutor.department = (department == nil) ? @"" : [department objectForKey:@"department"];
@@ -204,6 +203,7 @@
         UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
         FilterViewController *dest = (FilterViewController *)navController.topViewController;
         dest.tutorArray = tutorSource;
+        dest.delegate = self;
     }
 }
 
@@ -239,6 +239,16 @@
             [self fetchAllCollegeClassTutors];
         }
     }
+}
+
+#pragma filterViewProtocol
+- (void)applyFilterToFetchTutors:(SearchFilter *)filter{
+    searchFilter = filter;
+    NSLog(@"protocol works");
+    NSLog(@"%@", searchFilter.collegeClassTutorSchool);
+    NSLog(@"%@", searchFilter.collegeClassTutorCourse);
+    NSLog(@"%@", searchFilter.collegeClassTutorPrice);
+    [self fetchAllCollegeClassTutors];
 }
 
 @end

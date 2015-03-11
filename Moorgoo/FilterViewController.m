@@ -7,6 +7,7 @@
 //
 
 #import "FilterViewController.h"
+#import "FindTutorTableViewController.h"
 
 @interface FilterViewController (){
     UIPickerView *schoolPicker;
@@ -21,21 +22,27 @@
 @end
 
 @implementation FilterViewController
-@synthesize filter, tutorArray;
+@synthesize filter, tutorArray, delegate;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     /*******************************************************************************/
     //keyboard disappear when tapping outside of text field
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
     /*******************************************************************************/
     
+    filter = [[SearchFilter alloc] init];
     [self addSchoolPicker];
-    //[self addClassPicker];
+    [self addClassPicker];
     
     //self.schoolTextField.delegate = self;
-    //self.TextField.delegate = self;
+    //self.classTextField.delegate = self;
+}
+
+-(void)dismissKeyboard {
+    [self.view endEditing:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,17 +61,6 @@
         self.priceTextField.text = filter.collegeClassTutorPrice;
     }
 }
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 /*************************************************************************************/
 #pragma mark - Picker View Data source
@@ -135,46 +131,49 @@
             [pickerSchoolArray addObject:tutor.school];
         }
     }
+    
+    [pickerSchoolArray sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 }
 
 -(void)pickerDoneClicked
 {
     [self.schoolTextField resignFirstResponder];
 }
-/*************************************************************************************/
-//UIpicker view replace keyborad for department
-//-(void)addDepartmentPicker{
-//    pickerClassArray = [[NSMutableArray alloc]init];
-//    [self getDepartments];
-//    
-//    departmentPicker = [[UIPickerView alloc] initWithFrame:CGRectZero];
-//    departmentPicker.delegate = self;
-//    departmentPicker.dataSource = self;
-//    [departmentPicker setShowsSelectionIndicator:YES];
-//    departmentRegisterTextField.inputView = departmentPicker;
-//    
-//    // Create done button in UIPickerView
-//    UIToolbar*  mypickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
-//    mypickerToolbar.barStyle = UIBarStyleBlackOpaque;
-//    [mypickerToolbar sizeToFit];
-//    NSMutableArray *barItems = [[NSMutableArray alloc] init];
-//    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-//    [barItems addObject:flexSpace];
-//    
-//    UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(pickerDoneClicked2)];
-//    [barItems addObject:doneBtn];
-//    
-//    [mypickerToolbar setItems:barItems animated:YES];
-//    departmentRegisterTextField.inputAccessoryView = mypickerToolbar;
-//}
-//
-//-(void)pickerDoneClicked2
-//{
-//    //NSLog(@"Done Clicked");
-//    [departmentRegisterTextField resignFirstResponder];
-//}
-//
+/***********************************************************************************/
+-(void)addClassPicker{
+    pickerClassArray = [[NSMutableArray alloc]init];
+    [self getCourses];
+    
+    classPicker = [[UIPickerView alloc] initWithFrame:CGRectZero];
+    classPicker.delegate = self;
+    classPicker.dataSource = self;
+    [classPicker setShowsSelectionIndicator:YES];
+    self.classTextField.inputView = classPicker;
+    
+    // Create done button in UIPickerView
+    UIToolbar*  mypickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    mypickerToolbar.barStyle = UIBarStyleBlackOpaque;
+    [mypickerToolbar sizeToFit];
+    NSMutableArray *barItems = [[NSMutableArray alloc] init];
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    [barItems addObject:flexSpace];
+    
+    UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(pickerDoneClicked2)];
+    [barItems addObject:doneBtn];
+    
+    [mypickerToolbar setItems:barItems animated:YES];
+    self.classTextField.inputAccessoryView = mypickerToolbar;
+}
+
+-(void)pickerDoneClicked2
+{
+    //NSLog(@"Done Clicked");
+    [self.classTextField resignFirstResponder];
+}
+
 -(void)getCourses{
+    [pickerClassArray addObject:@""];
+    
     for(CollegeClassTutor *tutor in tutorArray){
         for(NSString *course in tutor.courses){
             if(![pickerClassArray containsObject:course]){
@@ -182,10 +181,20 @@
             }
         }
     }
+    //sort the array according to character
+    [pickerClassArray sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 }
 /*************************************************************************************/
 
 - (IBAction)saveButtonClicked:(UIBarButtonItem *)sender {
+    filter.collegeClassTutorSchool = self.schoolTextField.text;
+    filter.collegeClassTutorCourse = self.classTextField.text;
+    filter.collegeClassTutorPrice = self.priceTextField.text;
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(applyFilterToFetchTutors:)]) {
+        [self.delegate applyFilterToFetchTutors:filter];
+    }
+    
     [self performSegueWithIdentifier:@"backToTutorList" sender:self];
 }
 
