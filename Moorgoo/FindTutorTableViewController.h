@@ -13,8 +13,8 @@
 }
 
 @property NSMutableArray *tutorSource;
-@property SearchFilter *searchFilter;
-@property (nonatomic, strong)UIRefreshControl *refreshControl;
+@property (nonatomic, strong) SearchFilter *searchFilter;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) MBProgressHUD *hud;
 
 - (IBAction)filterButtonClicked:(id)sender;

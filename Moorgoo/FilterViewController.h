@@ -18,7 +18,7 @@
     id<FilterViewControllerDelegate> delegate;
 }
 
-@property SearchFilter *filter;
+@property (atomic, strong) SearchFilter *filter;
 @property NSMutableArray *tutorArray;
 @property id<FilterViewControllerDelegate> delegate;
 

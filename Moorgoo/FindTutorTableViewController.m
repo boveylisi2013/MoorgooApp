@@ -31,7 +31,11 @@
     [self.view addSubview:self.hud];
     /**************************************************************************************/
     searchFilter = [[SearchFilter alloc] init];
-    
+    searchFilter.collegeClassTutorSchool = @"";
+    searchFilter.collegeClassTutorCourse = @"";
+    searchFilter.collegeClassTutorPrice = @"";
+
+    NSLog(@"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     /**************************************************************************************/
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -68,7 +72,9 @@
 }
 
 /**************************************************************************************/
-- (void)fetchAllCollegeClassTutors {
+- (void)fetchAllCollegeClassTutors{
+    //searchFilter = [[SearchFilter alloc] init];
+    
     [self.hud show:YES];
 
     [tutorSource removeAllObjects];
@@ -100,18 +106,24 @@
                     tutor.goodRating = ([object objectForKey:@"goodRating"] == nil) ? @"" : [object objectForKey:@"goodRating"];
                     tutor.badRating = ([object objectForKey:@"badRating"] == nil) ? @"" : [object objectForKey:@"badRating"];
                     
-                    if((searchFilter.collegeClassTutorSchool == nil || [searchFilter.collegeClassTutorSchool isEqualToString:tutor.school])
-                       && (searchFilter.collegeClassTutorCourse == nil || [tutor.courses containsObject:searchFilter.collegeClassTutorCourse])
-                       && (searchFilter.collegeClassTutorPrice == nil || [tutor.price intValue] <= [searchFilter.collegeClassTutorPrice intValue])){
+                    NSLog(@"tutor's price: %@", tutor.price);
+                    NSLog(@"filter's price: %@", searchFilter.collegeClassTutorPrice);
+                    
+                    /**************************************************************************************/
+                    if(([searchFilter.collegeClassTutorSchool isEqual: @""] || [searchFilter.collegeClassTutorSchool isEqualToString:tutor.school])
+                       && ([searchFilter.collegeClassTutorCourse  isEqual: @""] || [tutor.courses containsObject:searchFilter.collegeClassTutorCourse])
+                       && ([searchFilter.collegeClassTutorPrice  isEqual: @""] || [tutor.price intValue] <= [searchFilter.collegeClassTutorPrice intValue])){
                         [tutorSource addObject:tutor];
                     }
-                
+                    
+                    /**************************************************************************************/
                     [[user objectForKey:@"profilePicture"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                         tutor.profileImage = [UIImage imageWithData:data];
                         [self.tableView reloadData];
                         [self.hud hide:YES];
                         [self.refreshControl endRefreshing];
                     }];
+                    /**************************************************************************************/
                 }
             }
         }
@@ -202,6 +214,7 @@
     if([segue.identifier isEqualToString:@"goToFilterView"]){
         UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
         FilterViewController *dest = (FilterViewController *)navController.topViewController;
+        dest.filter = searchFilter;
         dest.tutorArray = tutorSource;
         dest.delegate = self;
     }
@@ -243,7 +256,8 @@
 
 #pragma filterViewProtocol
 - (void)applyFilterToFetchTutors:(SearchFilter *)filter{
-    searchFilter = filter;
+    self.searchFilter = filter;
+    
     NSLog(@"protocol works");
     NSLog(@"%@", searchFilter.collegeClassTutorSchool);
     NSLog(@"%@", searchFilter.collegeClassTutorCourse);

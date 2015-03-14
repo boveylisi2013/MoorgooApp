@@ -26,6 +26,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"school: %@", filter.collegeClassTutorSchool);
+    NSLog(@"course: %@", filter.collegeClassTutorCourse);
+    NSLog(@"price: %@", filter.collegeClassTutorPrice);
+    self.schoolTextField.text = filter.collegeClassTutorSchool;
+    self.classTextField.text = filter.collegeClassTutorCourse;
+    self.priceTextField.text = filter.collegeClassTutorPrice;
     
     /*******************************************************************************/
     //keyboard disappear when tapping outside of text field
@@ -36,6 +42,8 @@
     filter = [[SearchFilter alloc] init];
     [self addSchoolPicker];
     [self addClassPicker];
+    
+    
     
     //self.schoolTextField.delegate = self;
     //self.classTextField.delegate = self;
@@ -186,16 +194,19 @@
 }
 /*************************************************************************************/
 
+
+/*************************************************************************************/
 - (IBAction)saveButtonClicked:(UIBarButtonItem *)sender {
     filter.collegeClassTutorSchool = self.schoolTextField.text;
     filter.collegeClassTutorCourse = self.classTextField.text;
     filter.collegeClassTutorPrice = self.priceTextField.text;
     
+    //[self performSegueWithIdentifier:@"backToTutorList" sender:self];
+    [self dismissViewControllerAnimated:NO completion:nil];
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(applyFilterToFetchTutors:)]) {
         [self.delegate applyFilterToFetchTutors:filter];
     }
-    
-    [self performSegueWithIdentifier:@"backToTutorList" sender:self];
 }
 
 @end

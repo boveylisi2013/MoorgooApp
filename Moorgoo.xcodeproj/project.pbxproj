@@ -10,7 +10,6 @@
 		13356FD51AAA48CB00C6B424 /* SearchFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13356FD41AAA48CB00C6B424 /* SearchFilter.m */; };
 		135979931AA378DA0037862A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135979921AA378DA0037862A /* Security.framework */; };
 		135979951AA378E20037862A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135979941AA378E20037862A /* UIKit.framework */; };
-		135979981AA379A20037862A /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135979971AA379A20037862A /* Parse.framework */; };
 		1359799A1AA379BC0037862A /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135979991AA379BC0037862A /* Bolts.framework */; };
 		1359799C1AA37BDC0037862A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359799B1AA37BDC0037862A /* libsqlite3.dylib */; };
 		1359799E1AA37C2E0037862A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359799D1AA37C2E0037862A /* AudioToolbox.framework */; };
@@ -97,7 +96,6 @@
 				1359799E1AA37C2E0037862A /* AudioToolbox.framework in Frameworks */,
 				1359799C1AA37BDC0037862A /* libsqlite3.dylib in Frameworks */,
 				135979951AA378E20037862A /* UIKit.framework in Frameworks */,
-				135979981AA379A20037862A /* Parse.framework in Frameworks */,
 				135979931AA378DA0037862A /* Security.framework in Frameworks */,
 				1359799A1AA379BC0037862A /* Bolts.framework in Frameworks */,
 			);
@@ -303,7 +301,7 @@
 		13EBBE2E1AA19B1200495F8A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = Moorgoo;
 				TargetAttributes = {
 					13EBBE351AA19B1200495F8A = {

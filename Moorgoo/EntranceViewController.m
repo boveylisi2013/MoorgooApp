@@ -21,15 +21,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    /*************************************************************************/
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [[UIImage imageNamed:@"TutorBackground"] drawInRect:self.view.bounds];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
     
-    self.signinButton.layer.borderColor = [[UIColor whiteColor] CGColor];
-    self.signinButton.layer.borderWidth = 2.0f;
+    UIColor *color = [[UIColor colorWithPatternImage:image] colorWithAlphaComponent:0.9f];
+    self.view.backgroundColor = color;
+    /*************************************************************************/
 
-    self.registerButton.layer.borderColor = [[UIColor whiteColor] CGColor];
-    self.registerButton.layer.borderWidth = 2.0f;
+//    self.signinButton.layer.borderColor = [[UIColor whiteColor] CGColor];
+//    self.signinButton.layer.borderWidth = 2.0f;
+//
+//    self.registerButton.layer.borderColor = [[UIColor whiteColor] CGColor];
+//    self.registerButton.layer.borderWidth = 2.0f;
     
     [self.view addSubview:self.signinButton];
     [self.view addSubview:self.registerButton];
+    
 
 //    /////////////////////////////////////
 //    PFQuery *query = [PFQuery queryWithClassName:@"dictbase"];

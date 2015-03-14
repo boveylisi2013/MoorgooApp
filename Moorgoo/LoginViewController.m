@@ -17,14 +17,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    /************************************************************************************/
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [[UIImage imageNamed:@"TutorBackground"] drawInRect:self.view.bounds];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    UIColor *color = [[UIColor colorWithPatternImage:image] colorWithAlphaComponent:0.5f];
+    self.view.backgroundColor = color;
+    /************************************************************************************/
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+    /************************************************************************************/
+    [self.userTextField becomeFirstResponder];
     
     self.loginbutton.layer.borderColor = [[UIColor whiteColor] CGColor];
     self.loginbutton.layer.borderWidth = 2.0f;
     [self.view addSubview:self.loginbutton];
     
-    [self.view addGestureRecognizer:tap];
     self.userTextField.delegate = self;
     self.passwordTextField.delegate = self;
 }
@@ -59,6 +70,9 @@
     }];
 }
 
+- (IBAction)backButtonClosed:(id)sender {
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
 
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField

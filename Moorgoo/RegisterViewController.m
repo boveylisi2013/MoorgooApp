@@ -19,6 +19,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    /************************************************************************************/
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [[UIImage imageNamed:@"TutorBackground"] drawInRect:self.view.bounds];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    UIColor *color = [[UIColor colorWithPatternImage:image] colorWithAlphaComponent:0.4f];
+    self.view.backgroundColor = color;
+    /************************************************************************************/
     
     //keyboard disappear when tapping outside of text field
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
@@ -61,6 +70,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)backButtonClicked:(id)sender {
+    [self performSegueWithIdentifier:@"backToEntranceView" sender:nil];
 }
 
 -(IBAction)signUpUserPressed:(id)sender
