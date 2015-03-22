@@ -22,21 +22,21 @@
     [Parse setApplicationId:PARSE_APPLICATION_ID clientKey:PARSE_CLIENT_KEY];
     
     /********************************************************************************************************/
-    KeychainItemWrapper* keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"KeychainTest" accessGroup:nil];
-    [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
-    NSString *username = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
-    NSString *password = [keychain objectForKey:(__bridge id)(kSecValueData)];
-    keychain = nil;
-    
-    BOOL isLoggedIn = (![username isEqualToString:@""]) && (![password isEqualToString:@""]);
-    
-    NSString *storyboardId = isLoggedIn ? @"MainIdentifier" : @"LoginIdentifier";
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:storyboardId];
-    
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = initViewController;
-    [self.window makeKeyAndVisible];
+//    KeychainItemWrapper* keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"KeychainTest" accessGroup:nil];
+//    [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
+//    NSString *username = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
+//    NSString *password = [keychain objectForKey:(__bridge id)(kSecValueData)];
+//    keychain = nil;
+//    
+//    BOOL isLoggedIn = (![username isEqualToString:@""]) && (![password isEqualToString:@""]);
+//    
+//    NSString *storyboardId = isLoggedIn ? @"MainIdentifier" : @"LoginIdentifier";
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:storyboardId];
+//    
+//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    self.window.rootViewController = initViewController;
+//    [self.window makeKeyAndVisible];
     /********************************************************************************************************/
     noInternetAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"No Internet Connection!" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
     

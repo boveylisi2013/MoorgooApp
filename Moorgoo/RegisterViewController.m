@@ -8,7 +8,7 @@
 
 #import "RegisterViewController.h"
 
-@interface RegisterViewController ()
+@interface RegisterViewController () <UIAlertViewDelegate>
 {
     NSData *imageData;
 }
@@ -19,6 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     /************************************************************************************/
     UIGraphicsBeginImageContext(self.view.frame.size);
     [[UIImage imageNamed:@"TutorBackground"] drawInRect:self.view.bounds];
@@ -27,17 +28,22 @@
     
     UIColor *color = [[UIColor colorWithPatternImage:image] colorWithAlphaComponent:0.4f];
     self.view.backgroundColor = color;
-    /************************************************************************************/
     
+    /************************************************************************************/
     //keyboard disappear when tapping outside of text field
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
     
+    /************************************************************************************/
     self.firstRegisterTextField.delegate = self;
     self.lastRegisterTextField.delegate = self;
     self.emailRegisterTextField.delegate = self;
     self.passwordRegisterTextField.delegate = self;
     self.phoneRegisterTextField.delegate = self;
+    
+    /************************************************************************************/
+    self.hud = [[MBProgressHUD alloc] init];
+    [self.view addSubview:self.hud];
 }
 
 // When hit return key, go to "next line" --- next textField
@@ -76,8 +82,7 @@
     [self performSegueWithIdentifier:@"backToEntranceView" sender:nil];
 }
 
--(IBAction)signUpUserPressed:(id)sender
-{
+- (IBAction)signUpButtonPressed:(UIButton *)sender {
     // The string contains all possible errors
     NSString *errorString = @"";
     
@@ -91,7 +96,10 @@
         errorString = [errorString stringByAppendingString:@"Please input your phone number\n"];
     }
     if (self.passwordRegisterTextField.text.length < 4){
-        errorString = [errorString stringByAppendingString:@"Password has to be at least 4 digits long"];
+        errorString = [errorString stringByAppendingString:@"Password has to be at least 4 digits long\n"];
+    }
+    if (imageData == nil){
+        errorString = [errorString stringByAppendingString:@"Please choose your profile picture"];
     }
     
     PFUser *user = [PFUser user];
@@ -105,43 +113,60 @@
     // Check whether the user inputs their information correctly or not
     if ([errorString length] != 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                  message:errorString
-                                                  delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
+                                                        message:errorString
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
         [alert show];
         return;
     }
+    
+    [self.hud show:YES];
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             /************************************************************************/
             PFFile *imageFile = [PFFile fileWithName:@"Profileimage.png" data:imageData];
-                [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    if (!error) {
-                        if (succeeded) {
-                            PFUser *user = [PFUser currentUser];
-                            user[@"profilePicture"] = imageFile;
-                            [user saveInBackground];
-                        }
-                    } else {
-                        // Handle error
-                    }        
-                }];
+            [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    PFUser *user = [PFUser currentUser];
+                    user[@"profilePicture"] = imageFile;
+                    
+                    [user saveInBackground];
+                    
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
+                                                                    message:@"You have signed up successfully"
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                    
+                    [self.hud hide:YES];
+                    
+                } else {
+                    // Handle error
+                    [[[UIAlertView alloc] initWithTitle:@"Error" message:[error userInfo][@"error"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    
+                    [self.hud hide:YES];
+                }
+            }];
+            
             /************************************************************************/
             KeychainItemWrapper* keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"KeychainTest" accessGroup:nil];
             [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
             [keychain setObject:self.emailRegisterTextField.text forKey:(__bridge id)(kSecAttrAccount)];
             [keychain setObject:self.passwordRegisterTextField.text forKey:(__bridge id)(kSecValueData)];
             /************************************************************************/
-
-            [self performSegueWithIdentifier:@"SignupSuccesful" sender:self];
+            
         } else {
             [[[UIAlertView alloc] initWithTitle:@"Error" message:[error userInfo][@"error"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            
+            [self.hud hide:YES];
+            
         }
     }];
-
 }
+
 
 - (IBAction)pickImageButtonClicked:(id)sender {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
@@ -167,6 +192,18 @@
         self.profileImageView.image = image;
         [self.pickImageButton setTitle:@"Change Picture" forState:UIControlStateNormal];
     }];
+}
+
+#pragma alertViewClicked Response
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    
+    if([title isEqualToString:@"OK"])
+    {
+        [self performSegueWithIdentifier:@"SignupSuccesful" sender:self];
+    }
+    
 }
 
 @end

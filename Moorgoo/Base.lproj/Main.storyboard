@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="f7c-qw-pim">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="f7c-qw-pim">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
@@ -211,7 +211,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your School" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NPF-KE-I2V">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your School" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NPF-KE-I2V">
                                 <rect key="frame" x="16" y="91" width="568" height="30"/>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -220,7 +220,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Which class" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eIe-GJ-CiN">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Which class" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eIe-GJ-CiN">
                                 <rect key="frame" x="16" y="139" width="568" height="30"/>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -229,7 +229,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MAX PRICE ($ PER HOUR)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wYh-3a-JWX">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MAX PRICE ($ PER HOUR)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wYh-3a-JWX">
                                 <rect key="frame" x="130" y="185" width="454" height="30"/>
                                 <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -238,7 +238,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="$ PER HOUR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nC0-cD-roJ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ PER HOUR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nC0-cD-roJ">
                                 <rect key="frame" x="16" y="185" width="106" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="aY5-tf-vbg"/>
@@ -678,6 +678,22 @@
                                     <action selector="backButtonClicked:" destination="zOD-WQ-pco" eventType="touchUpInside" id="FgY-TI-h1b"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDd-T8-vBM">
+                                <rect key="frame" x="256" y="468" width="88" height="52"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="88" id="mri-RP-r78"/>
+                                    <constraint firstAttribute="height" constant="52" id="set-sT-na3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <state key="normal" title="Sign Up">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="signUpButtonPressed:" destination="zOD-WQ-pco" eventType="touchUpInside" id="Dod-TP-u6g"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="nhy-qZ-tSo" firstAttribute="top" secondItem="XfM-kl-Vr6" secondAttribute="bottom" constant="1" id="3cU-Em-jXv"/>
@@ -692,12 +708,14 @@
                             <constraint firstAttribute="trailingMargin" secondItem="nhy-qZ-tSo" secondAttribute="trailing" constant="15" id="XOf-Gn-sRE"/>
                             <constraint firstItem="G2C-NV-hJB" firstAttribute="top" secondItem="nhy-qZ-tSo" secondAttribute="bottom" constant="1" id="cMe-fw-RKB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XfM-kl-Vr6" secondAttribute="trailing" constant="15" id="dk7-xc-Uhw"/>
+                            <constraint firstAttribute="centerX" secondItem="gDd-T8-vBM" secondAttribute="centerX" id="gTm-r3-3Ah"/>
                             <constraint firstItem="y0L-bJ-2k0" firstAttribute="top" secondItem="G2C-NV-hJB" secondAttribute="bottom" constant="1" id="icP-eo-hes"/>
                             <constraint firstItem="kM7-pk-8XP" firstAttribute="top" secondItem="J5A-xX-tJz" secondAttribute="bottom" constant="8" id="l2P-Q6-OdS"/>
                             <constraint firstItem="TW3-2V-PK7" firstAttribute="top" secondItem="kM7-pk-8XP" secondAttribute="bottom" constant="20" id="l2r-14-Z4l"/>
                             <constraint firstItem="J5A-xX-tJz" firstAttribute="top" secondItem="jyq-NW-UMf" secondAttribute="bottom" constant="10" id="mKz-o4-N9Q"/>
                             <constraint firstItem="G2C-NV-hJB" firstAttribute="leading" secondItem="y2N-jm-o9U" secondAttribute="leadingMargin" constant="15" id="qS8-Jx-NW2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="y0L-bJ-2k0" secondAttribute="trailing" constant="15" id="tMx-zp-dgh"/>
+                            <constraint firstAttribute="centerY" secondItem="gDd-T8-vBM" secondAttribute="centerY" constant="-194" id="w8b-vG-mpq"/>
                             <constraint firstItem="XfM-kl-Vr6" firstAttribute="leading" secondItem="y2N-jm-o9U" secondAttribute="leadingMargin" constant="15" id="wfU-B6-BNB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="q9s-Yb-Ji5" secondAttribute="trailing" constant="15" id="ySD-9v-eiL"/>
                             <constraint firstItem="XfM-kl-Vr6" firstAttribute="top" secondItem="TW3-2V-PK7" secondAttribute="bottom" constant="1" id="zC3-1Y-cMu"/>

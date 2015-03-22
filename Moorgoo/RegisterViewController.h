@@ -16,6 +16,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UIButton *pickImageButton;
 
+@property (nonatomic, strong) MBProgressHUD *hud;
+
+
 -(IBAction)signUpUserPressed:(id)sender;
 - (IBAction)pickImageButtonClicked:(id)sender;
 
