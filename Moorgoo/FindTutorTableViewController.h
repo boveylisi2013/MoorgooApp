@@ -11,6 +11,7 @@
 
 @interface FindTutorTableViewController : UITableViewController<FilterViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>{
 }
+extern NSMutableArray *allTutorFromParse;
 
 @property NSMutableArray *tutorSource;
 @property (nonatomic, strong) SearchFilter *searchFilter;

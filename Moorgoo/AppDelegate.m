@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 
+NSMutableArray *allTutorFromParse;
+
 @interface AppDelegate ()
 - (void)networkChanged:(NSNotification *)notification;
 
@@ -20,6 +22,54 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [Parse setApplicationId:PARSE_APPLICATION_ID clientKey:PARSE_CLIENT_KEY];
+    /********************************************************************************************************/
+    allTutorFromParse = [[NSMutableArray alloc] init];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"CollegeClassTutor"];
+    [query setLimit:1000];
+    [query includeKey:@"userId"];
+    [query includeKey:@"departmentId"];
+    [query includeKey:@"schoolId"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error) {
+            for (PFObject *object in objects) {
+                PFUser *user = [object objectForKey:@"userId"];
+                
+                //Check whtether userId exists
+                if(user != nil){
+                    PFObject *department = [object objectForKey:@"departmentId"];
+                    PFObject *school = [object objectForKey:@"schoolId"];
+                    CollegeClassTutor *tutor = [[CollegeClassTutor alloc] init];
+                    tutor.firstName = [user objectForKey:@"firstName"];
+                    tutor.lastName = [user objectForKey:@"lastName"];
+                    tutor.userId = user.objectId;
+                    tutor.courses = [object objectForKey:@"courses"];
+                    tutor.availableDays = [user objectForKey:@"availableDays"];
+                    tutor.price = ([object objectForKey:@"price"] == nil) ? @"" : [object objectForKey:@"price"];
+                    tutor.department = (department == nil) ? @"" : [department objectForKey:@"department"];
+                    tutor.school = (school == nil) ? @"" : [school objectForKey:@"schoolName"];
+                    tutor.schoolAbbreviation = ([object objectForKey:@"schoolAbbreviation"] == nil) ? @"" : [object objectForKey:@"schoolAbbreviation"];
+                    tutor.goodRating = ([object objectForKey:@"goodRating"] == nil) ? @"" : [object objectForKey:@"goodRating"];
+                    tutor.badRating = ([object objectForKey:@"badRating"] == nil) ? @"" : [object objectForKey:@"badRating"];
+                    
+                    /**************************************************************************************/
+                    [[user objectForKey:@"profilePicture"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                        tutor.profileImage = [UIImage imageWithData:data];
+                        [allTutorFromParse addObject:tutor];
+                    }];
+                    /**************************************************************************************/
+                }
+            }
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:[error localizedDescription]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
     
     /********************************************************************************************************/
     KeychainItemWrapper* keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"KeychainTest" accessGroup:nil];

@@ -43,6 +43,17 @@
     [self addSchoolPicker];
     [self addClassPicker];
     
+    /*******************************************************************************/
+    
+    if([self.schoolTextField.text isEqualToString:@""]) {
+        self.classTextField.userInteractionEnabled = FALSE;
+    }
+    else {
+        self.classTextField.userInteractionEnabled = TRUE;
+    }
+    self.schoolTextField.layer.borderColor = [[UIColor redColor] CGColor];
+    self.schoolTextField.layer.borderWidth = 1.0;
+    /*******************************************************************************/
     
     
     //self.schoolTextField.delegate = self;
@@ -88,20 +99,38 @@
             titleForRow:(NSInteger)row
            forComponent:(NSInteger)component
 {
-    if(pickerView == schoolPicker)
+    if(pickerView == schoolPicker) {
         return [pickerSchoolArray objectAtIndex:row];
-    else
+    }
+    else {
         return [pickerClassArray objectAtIndex:row];
+    }
 }
 
 - (void)pickerView:(UIPickerView *)pickerView
       didSelectRow:(NSInteger)row
        inComponent:(NSInteger)component
 {
-    if(pickerView == schoolPicker)
+    if(pickerView == schoolPicker) {
+        
         self.schoolTextField.text = [NSString stringWithFormat:@"%@", [pickerSchoolArray objectAtIndex:row]];
-    else
+        self.classTextField.text = @"";
+        [self addClassPicker];
+    }
+    else {
         self.classTextField.text = [NSString stringWithFormat:@"%@", [pickerClassArray objectAtIndex:row]];
+    }
+    
+    if([self.schoolTextField.text isEqualToString:@""]) {
+        self.classTextField.userInteractionEnabled = FALSE;
+        self.classTextField.text = @"";
+        self.schoolTextField.layer.borderWidth = 1.0;
+    }
+    else {
+        self.schoolTextField.layer.borderColor = [[UIColor redColor] CGColor];
+        self.schoolTextField.layer.borderWidth = 0.0;
+        self.classTextField.userInteractionEnabled = TRUE;
+    }
 }
 
 
@@ -180,12 +209,16 @@
 }
 
 -(void)getCourses{
+    [pickerClassArray removeAllObjects];
     [pickerClassArray addObject:@""];
     
     for(CollegeClassTutor *tutor in tutorArray){
-        for(NSString *course in tutor.courses){
-            if(![pickerClassArray containsObject:course]){
-                [pickerClassArray addObject:course];
+        if([self.schoolTextField.text isEqualToString:tutor.school]) {
+            
+            for(NSString *course in tutor.courses){
+                if(![pickerClassArray containsObject:course]){
+                    [pickerClassArray addObject:course];
+                }
             }
         }
     }

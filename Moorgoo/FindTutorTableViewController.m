@@ -19,6 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.hud show:YES];
+    
     /**************************************************************************************/
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor purpleColor];
@@ -34,7 +36,7 @@
     searchFilter.collegeClassTutorSchool = @"";
     searchFilter.collegeClassTutorCourse = @"";
     searchFilter.collegeClassTutorPrice = @"";
-
+    
     NSLog(@"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     /**************************************************************************************/
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -46,7 +48,7 @@
     tutorSource = [[NSMutableArray alloc] init];
     Reachability *reachability2 = [Reachability reachabilityForInternetConnection];
     [reachability2 startNotifier];
-
+    
     if([reachability2 currentReachabilityStatus] != NotReachable){
         KeychainItemWrapper* keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"KeychainTest" accessGroup:nil];
         [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
@@ -62,7 +64,9 @@
             }
         }];
         
-        [self fetchAllCollegeClassTutors];
+        /**************************************************************************************/
+        [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(fetchAllCollegeClassTutors) userInfo:nil repeats:NO];
+        /**************************************************************************************/
     }
 }
 
@@ -71,71 +75,29 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self fetchAllCollegeClassTutors];
+}
 /**************************************************************************************/
 - (void)fetchAllCollegeClassTutors{
     //searchFilter = [[SearchFilter alloc] init];
     
     [self.hud show:YES];
-
+    
     [tutorSource removeAllObjects];
     
-    PFQuery *query = [PFQuery queryWithClassName:@"CollegeClassTutor"];
-    [query setLimit:1000];
-    [query includeKey:@"userId"];
-    [query includeKey:@"departmentId"];
-    [query includeKey:@"schoolId"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if(!error) {
-            for (PFObject *object in objects) {
-                PFUser *user = [object objectForKey:@"userId"];
-                
-                //Check whtether userId exists
-                if(user != nil){
-                    PFObject *department = [object objectForKey:@"departmentId"];
-                    PFObject *school = [object objectForKey:@"schoolId"];
-                    CollegeClassTutor *tutor = [[CollegeClassTutor alloc] init];
-                    tutor.firstName = [user objectForKey:@"firstName"];
-                    tutor.lastName = [user objectForKey:@"lastName"];
-                    tutor.userId = user.objectId;
-                    tutor.courses = [object objectForKey:@"courses"];
-                    tutor.availableDays = [user objectForKey:@"availableDays"];
-                    tutor.price = ([object objectForKey:@"price"] == nil) ? @"" : [object objectForKey:@"price"];
-                    tutor.department = (department == nil) ? @"" : [department objectForKey:@"department"];
-                    tutor.school = (school == nil) ? @"" : [school objectForKey:@"schoolName"];
-                    tutor.schoolAbbreviation = ([object objectForKey:@"schoolAbbreviation"] == nil) ? @"" : [object objectForKey:@"schoolAbbreviation"];
-                    tutor.goodRating = ([object objectForKey:@"goodRating"] == nil) ? @"" : [object objectForKey:@"goodRating"];
-                    tutor.badRating = ([object objectForKey:@"badRating"] == nil) ? @"" : [object objectForKey:@"badRating"];
-                    
-                    NSLog(@"tutor's price: %@", tutor.price);
-                    NSLog(@"filter's price: %@", searchFilter.collegeClassTutorPrice);
-                    
-                    /**************************************************************************************/
-                    if(([searchFilter.collegeClassTutorSchool isEqual: @""] || [searchFilter.collegeClassTutorSchool isEqualToString:tutor.school])
-                       && ([searchFilter.collegeClassTutorCourse  isEqual: @""] || [tutor.courses containsObject:searchFilter.collegeClassTutorCourse])
-                       && ([searchFilter.collegeClassTutorPrice  isEqual: @""] || [tutor.price intValue] <= [searchFilter.collegeClassTutorPrice intValue])){
-                        [tutorSource addObject:tutor];
-                    }
-                    
-                    /**************************************************************************************/
-                    [[user objectForKey:@"profilePicture"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                        tutor.profileImage = [UIImage imageWithData:data];
-                        [self.tableView reloadData];
-                        [self.hud hide:YES];
-                        [self.refreshControl endRefreshing];
-                    }];
-                    /**************************************************************************************/
-                }
-            }
+    /**************************************************************************************/
+    for (CollegeClassTutor *tutor in allTutorFromParse) {
+        if(([searchFilter.collegeClassTutorSchool isEqual: @""] || [searchFilter.collegeClassTutorSchool isEqualToString:tutor.school])
+           && ([searchFilter.collegeClassTutorCourse isEqual: @""] || [tutor.courses containsObject:searchFilter.collegeClassTutorCourse])
+           && ([searchFilter.collegeClassTutorPrice isEqual: @""] || [tutor.price intValue] <= [searchFilter.collegeClassTutorPrice intValue])){
+            [tutorSource addObject:tutor];
         }
-        else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:[error localizedDescription]
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-        }
-    }];
+    }
+    
+    [self.tableView reloadData];
+    
+    [self.hud hide:YES afterDelay:2.0f];
 }
 /**************************************************************************************/
 
@@ -191,7 +153,7 @@
     [price appendString:((CollegeClassTutor *)[tutorSource objectAtIndex:indexPath.row]).price];
     [price appendString:@" per hour"];
     priceLabel.text = price;
-
+    
     //rating
     UILabel *goodLabel = (UILabel *)[cell.contentView viewWithTag:500];
     NSMutableString *goodrating = [NSMutableString new];
@@ -207,13 +169,6 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    // Do not let the cell stay selected
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-}
-
 
 #pragma mark - Navigation
 
@@ -222,7 +177,7 @@
         UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
         FilterViewController *dest = (FilterViewController *)navController.topViewController;
         dest.filter = searchFilter;
-        dest.tutorArray = tutorSource;
+        dest.tutorArray = allTutorFromParse;
         dest.delegate = self;
     }
 }
@@ -233,7 +188,7 @@
 }
 
 - (void)networkChanged2:(NSNotification *)notification{
-
+    
     Reachability * reachability = [notification object];
     NetworkStatus remoteHostStatus = [reachability currentReachabilityStatus];
     
@@ -245,14 +200,14 @@
             NSString *username = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
             NSString *password = [keychain objectForKey:(__bridge id)(kSecValueData)];
             keychain = nil;
-        
+            
             [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error) {
                 if (user) {
                 }
                 else {
                     [[[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedFailureReason] delegate:nil    cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                    }
-                }];
+                }
+            }];
         }
         
         if([tutorSource count] == 0) {
