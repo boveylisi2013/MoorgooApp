@@ -36,6 +36,8 @@
 		13EBBE4D1AA19B1200495F8A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE4B1AA19B1200495F8A /* LaunchScreen.xib */; };
 		42C2D2EA1ABE68AC00006AC2 /* TestTextFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2D2E91ABE68AC00006AC2 /* TestTextFieldViewController.m */; };
 		42C2D2F11AC0B36300006AC2 /* ChangeProfilePictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2D2F01AC0B36300006AC2 /* ChangeProfilePictureViewController.m */; };
+		42C2D2F41AC0D27600006AC2 /* ChangePhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2D2F31AC0D27600006AC2 /* ChangePhoneNumberViewController.m */; };
+		42C2D2F71AC0DA0B00006AC2 /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2D2F61AC0DA0B00006AC2 /* ChangePasswordViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +90,10 @@
 		42C2D2E91ABE68AC00006AC2 /* TestTextFieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestTextFieldViewController.m; path = Moorgoo/TestTextFieldViewController.m; sourceTree = "<group>"; };
 		42C2D2EF1AC0B36300006AC2 /* ChangeProfilePictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeProfilePictureViewController.h; sourceTree = "<group>"; };
 		42C2D2F01AC0B36300006AC2 /* ChangeProfilePictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeProfilePictureViewController.m; sourceTree = "<group>"; };
+		42C2D2F21AC0D27600006AC2 /* ChangePhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePhoneNumberViewController.h; sourceTree = "<group>"; };
+		42C2D2F31AC0D27600006AC2 /* ChangePhoneNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePhoneNumberViewController.m; sourceTree = "<group>"; };
+		42C2D2F51AC0DA0B00006AC2 /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
+		42C2D2F61AC0DA0B00006AC2 /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +273,10 @@
 				135979AE1AA459220037862A /* AccountTableViewController.m */,
 				42C2D2EF1AC0B36300006AC2 /* ChangeProfilePictureViewController.h */,
 				42C2D2F01AC0B36300006AC2 /* ChangeProfilePictureViewController.m */,
+				42C2D2F21AC0D27600006AC2 /* ChangePhoneNumberViewController.h */,
+				42C2D2F31AC0D27600006AC2 /* ChangePhoneNumberViewController.m */,
+				42C2D2F51AC0DA0B00006AC2 /* ChangePasswordViewController.h */,
+				42C2D2F61AC0DA0B00006AC2 /* ChangePasswordViewController.m */,
 			);
 			name = ThirdTab;
 			sourceTree = "<group>";
@@ -371,8 +381,10 @@
 				42C2D2F11AC0B36300006AC2 /* ChangeProfilePictureViewController.m in Sources */,
 				42C2D2EA1ABE68AC00006AC2 /* TestTextFieldViewController.m in Sources */,
 				1388CF211AA2345A0064BFE5 /* LoginViewController.m in Sources */,
+				42C2D2F71AC0DA0B00006AC2 /* ChangePasswordViewController.m in Sources */,
 				135979AF1AA459220037862A /* AccountTableViewController.m in Sources */,
 				135979AC1AA4316A0037862A /* KeychainItemWrapper.m in Sources */,
+				42C2D2F41AC0D27600006AC2 /* ChangePhoneNumberViewController.m in Sources */,
 				13934C431AA7996C0095E818 /* MBProgressHUD.m in Sources */,
 				1388CF241AA234660064BFE5 /* RegisterViewController.m in Sources */,
 				137A41C31AA56376008BF591 /* FindTutorTableViewController.m in Sources */,

@@ -8,11 +8,13 @@
 
 #import "AccountTableViewController.h"
 #import "ChangeProfilePictureViewController.h"
+#import "ChangePhoneNumberViewController.h"
 
 
 @interface AccountTableViewController () <UIAlertViewDelegate>
 {
     UIImage *profileImage;
+    NSString *phoneNumber;
 }
 @end
 
@@ -48,11 +50,12 @@
 {
     PFUser *currentUser = [PFUser currentUser];
     
+    phoneNumber = [currentUser objectForKey:@"phone"];
+    
     PFFile *imageFile = [currentUser objectForKey:@"profilePicture"];
     [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
             profileImage = [UIImage imageWithData:data];
-            NSLog(@"profileImage: %@",profileImage);
         }
         else{
             // Handle Error, don't forget!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -127,6 +130,10 @@
         {
             [self performSegueWithIdentifier:@"goToChangeProfilePicture" sender:self];
         }
+        else if(indexPath.row == 1)
+        {
+            [self performSegueWithIdentifier:@"goToChangePhoneNumber" sender:self];
+        }
     }
     else if(indexPath.section == 1)
     {
@@ -173,6 +180,11 @@
     {
         ChangeProfilePictureViewController *controller = (ChangeProfilePictureViewController *)segue.destinationViewController;
         controller.profileImage = profileImage;
+    }
+    else if([segue.identifier isEqualToString:@"goToChangePhoneNumber"])
+    {
+        ChangePhoneNumberViewController *controller = (ChangePhoneNumberViewController *)segue.destinationViewController;
+        controller.phoneNumber = phoneNumber;
     }
 }
 @end

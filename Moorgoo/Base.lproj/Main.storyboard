@@ -326,6 +326,8 @@
                     <connections>
                         <segue destination="f7c-qw-pim" kind="presentation" identifier="LogoutSuccessful" id="Ken-Uh-5Ky"/>
                         <segue destination="7QU-Ho-LUZ" kind="show" identifier="goToChangeProfilePicture" id="vWo-zs-V8u"/>
+                        <segue destination="iEm-tC-2wa" kind="show" identifier="goToChangePhoneNumber" id="BPm-SC-vVK"/>
+                        <segue destination="DP4-jX-ufx" kind="show" identifier="goToChangePassword" id="kEy-kZ-cZB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Rh-FI-46C" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -400,7 +402,114 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mJP-Mc-a9C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2329" y="776"/>
+            <point key="canvasLocation" x="2442" y="317"/>
+        </scene>
+        <!--Change Phone Number View Controller-->
+        <scene sceneID="LXN-XG-76t">
+            <objects>
+                <viewController id="iEm-tC-2wa" customClass="ChangePhoneNumberViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UlO-RZ-wBr"/>
+                        <viewControllerLayoutGuide type="bottom" id="gCo-AQ-Iu4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wsk-yg-fan">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Phone" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RIn-MX-RHl">
+                                <rect key="frame" x="31" y="177" width="538" height="35"/>
+                                <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="NqA-ku-BKq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2rd-Uc-iYa">
+                                <rect key="frame" x="197" y="453" width="206" height="46"/>
+                                <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="E0k-l0-Pis"/>
+                                    <constraint firstAttribute="width" constant="206" id="PPj-k9-JpU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="CHANGE MY NUMBER">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeNumberTextField:" destination="iEm-tC-2wa" eventType="touchUpInside" id="Rxm-QG-NHm"/>
+                                    <action selector="submitButtonPressed:" destination="7QU-Ho-LUZ" eventType="touchUpInside" id="SsC-BG-2MJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gCo-AQ-Iu4" firstAttribute="top" secondItem="2rd-Uc-iYa" secondAttribute="bottom" constant="52" id="7h6-CI-2st"/>
+                            <constraint firstAttribute="centerX" secondItem="2rd-Uc-iYa" secondAttribute="centerX" id="Bcm-3E-UVF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="RIn-MX-RHl" secondAttribute="trailing" constant="15" id="N7G-hW-ccJ"/>
+                            <constraint firstItem="RIn-MX-RHl" firstAttribute="leading" secondItem="wsk-yg-fan" secondAttribute="leadingMargin" constant="15" id="bHf-fp-9kT"/>
+                            <constraint firstAttribute="centerY" secondItem="RIn-MX-RHl" secondAttribute="centerY" constant="105.5" id="hts-pv-TDn"/>
+                            <constraint firstAttribute="centerX" secondItem="RIn-MX-RHl" secondAttribute="centerX" id="jjH-Ax-0W3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="phoneNumberTextField" destination="RIn-MX-RHl" id="c0C-Oe-9kn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vlj-1G-7EF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2441" y="976"/>
+        </scene>
+        <!--Change Password View Controller-->
+        <scene sceneID="5Ml-Lp-mw3">
+            <objects>
+                <viewController id="DP4-jX-ufx" customClass="ChangePasswordViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FQh-zi-fPA"/>
+                        <viewControllerLayoutGuide type="bottom" id="bzG-Y0-FDM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mcK-BE-lIN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Current Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hQg-DL-cAP">
+                                <rect key="frame" x="31" y="93" width="538" height="35"/>
+                                <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="New Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kDt-7f-eou">
+                                <rect key="frame" x="31" y="136" width="538" height="35"/>
+                                <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="New Password Again" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LPk-WT-xLe">
+                                <rect key="frame" x="31" y="179" width="538" height="35"/>
+                                <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ORe-Hc-teJ">
+                                <rect key="frame" x="219" y="475" width="162" height="46"/>
+                                <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="SUBMIT">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="submitButtonPressed:" destination="7QU-Ho-LUZ" eventType="touchUpInside" id="yvN-6d-4Uk"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZDH-Xg-p0H" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2452" y="1793"/>
         </scene>
         <!--Entrance View Controller-->
         <scene sceneID="maw-ZW-nK8">
@@ -1089,7 +1198,7 @@
         <image name="Tutor" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3bo-43-4df"/>
+        <segue reference="KB5-8y-Bky"/>
         <segue reference="Ken-Uh-5Ky"/>
     </inferredMetricsTieBreakers>
 </document>

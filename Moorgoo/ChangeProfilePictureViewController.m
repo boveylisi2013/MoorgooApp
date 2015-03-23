@@ -11,6 +11,7 @@
 @interface ChangeProfilePictureViewController ()
 {
     NSData *imageData;
+    BOOL picked;
 
 }
 @end
@@ -25,6 +26,9 @@
     /************************************************************************************/
     self.hud = [[MBProgressHUD alloc] init];
     [self.view addSubview:self.hud];
+    
+    /************************************************************************************/
+    picked = false;
 }
 
 - (IBAction)pickImageButtonPressed:(UIButton *)sender
@@ -36,7 +40,12 @@
 
 - (IBAction)submitButtonPressed:(UIButton *)sender
 {
-    [self.hud show:NO];
+    [self.hud show:YES];
+    
+    if(!picked){
+        imageData = UIImagePNGRepresentation(self.profileImage);
+    }
+    
     PFFile *imageFile = [PFFile fileWithName:@"Profileimage.png" data:imageData];
     [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
@@ -84,6 +93,8 @@
     [picker dismissViewControllerAnimated:YES completion:^{
         self.profileImageView.image = image;
     }];
+    
+    picked = true;
 }
 
 
