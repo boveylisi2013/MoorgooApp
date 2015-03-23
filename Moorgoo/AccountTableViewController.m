@@ -7,9 +7,13 @@
 //
 
 #import "AccountTableViewController.h"
+#import "ChangeProfilePictureViewController.h"
+
 
 @interface AccountTableViewController () <UIAlertViewDelegate>
-
+{
+    UIImage *profileImage;
+}
 @end
 
 @implementation AccountTableViewController
@@ -29,6 +33,33 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    /************************************************************************************/
+    [self fetchCurentUserInformation];
+
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self fetchCurentUserInformation];
+}
+
+-(void)fetchCurentUserInformation
+{
+    PFUser *currentUser = [PFUser currentUser];
+    
+    PFFile *imageFile = [currentUser objectForKey:@"profilePicture"];
+    [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if (!error) {
+            profileImage = [UIImage imageWithData:data];
+            NSLog(@"profileImage: %@",profileImage);
+        }
+        else{
+            // Handle Error, don't forget!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            NSLog(@"error when loading image!!!!!");
+        }
+    }];
+    
 }
 
 
@@ -36,14 +67,19 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return 1;
+    if(section == 0) return 3;
+    else return 1;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if(section == 0) return 0;
+    else return 20;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *simpleTableIdentifier = @"SimpleTableItem";
@@ -54,18 +90,28 @@
     }
     
     if(indexPath.section == 0) {
-        cell.textLabel.text = @"Account Setting";
+        if(indexPath.row == 0){
+            cell.textLabel.text = @"Change Profile Picture";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else if(indexPath.row == 1){
+            cell.textLabel.text = @"Change Phone Number";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else{
+            cell.textLabel.text = @"Change Password";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
     }
     else if(indexPath.section == 1) {
+        cell.textLabel.text = @"Tutor";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    else{
         cell.textLabel.text = @"Log Out";
         [cell setBackgroundColor:[UIColor redColor]];
     }
     return cell;
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 20;
 }
 
 #pragma mark - Table view delegate
@@ -77,11 +123,17 @@
     
     if(indexPath.section == 0)
     {
-        [self performSegueWithIdentifier:@"goToAccountSetting" sender:self];
+        if(indexPath.row == 0)
+        {
+            [self performSegueWithIdentifier:@"goToChangeProfilePicture" sender:self];
+        }
     }
     else if(indexPath.section == 1)
     {
         
+    }
+    else
+    {
         // Logout confirmation
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notice"
                                                         message:@"Are you sure you wanna logout?"
@@ -112,6 +164,15 @@
         /******************************************************/
         
         [self performSegueWithIdentifier:@"LogoutSuccessful" sender:self];
+    }
+}
+
+#pragma mark - prepare for segue
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"goToChangeProfilePicture"])
+    {
+        ChangeProfilePictureViewController *controller = (ChangeProfilePictureViewController *)segue.destinationViewController;
+        controller.profileImage = profileImage;
     }
 }
 @end

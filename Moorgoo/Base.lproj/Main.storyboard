@@ -325,41 +325,12 @@
                     <navigationItem key="navigationItem" title="Account" id="G38-6U-gZV"/>
                     <connections>
                         <segue destination="f7c-qw-pim" kind="presentation" identifier="LogoutSuccessful" id="Ken-Uh-5Ky"/>
-                        <segue destination="zHd-Zo-6Cb" kind="show" identifier="goToAccountSetting" id="p2j-5q-m6E"/>
+                        <segue destination="7QU-Ho-LUZ" kind="show" identifier="goToChangeProfilePicture" id="vWo-zs-V8u"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Rh-FI-46C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1562" y="776"/>
-        </scene>
-        <!--Account Setting View Controller-->
-        <scene sceneID="CcI-Kt-PRb">
-            <objects>
-                <tableViewController id="zHd-Zo-6Cb" customClass="AccountSettingViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="71" sectionHeaderHeight="22" sectionFooterHeight="22" id="HVe-kX-mSa">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tableItem" rowHeight="71" id="82t-Ps-wLF">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="82t-Ps-wLF" id="e8F-PV-dtO">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="zHd-Zo-6Cb" id="tcK-mI-mJ9"/>
-                            <outlet property="delegate" destination="zHd-Zo-6Cb" id="Nx6-1J-r7h"/>
-                        </connections>
-                    </tableView>
-                    <connections>
-                        <segue destination="7QU-Ho-LUZ" kind="show" identifier="goToChangeProfilePicture" id="5Yo-x4-h6k"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Us4-lk-bJP" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2312" y="774"/>
         </scene>
         <!--Change Profile Picture View Controller-->
         <scene sceneID="hy0-VL-Tfv">
@@ -429,7 +400,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mJP-Mc-a9C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2992" y="774"/>
+            <point key="canvasLocation" x="2329" y="776"/>
         </scene>
         <!--Entrance View Controller-->
         <scene sceneID="maw-ZW-nK8">
