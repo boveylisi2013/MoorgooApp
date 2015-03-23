@@ -34,6 +34,7 @@
 		13EBBE481AA19B1200495F8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE461AA19B1200495F8A /* Main.storyboard */; };
 		13EBBE4A1AA19B1200495F8A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE491AA19B1200495F8A /* Images.xcassets */; };
 		13EBBE4D1AA19B1200495F8A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE4B1AA19B1200495F8A /* LaunchScreen.xib */; };
+		42C2D2EA1ABE68AC00006AC2 /* TestTextFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2D2E91ABE68AC00006AC2 /* TestTextFieldViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,8 @@
 		13EBBE4C1AA19B1200495F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13EBBE641AA19EBA00495F8A /* AppConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstant.h; sourceTree = "<group>"; };
 		13EBBE671AA1A1CB00495F8A /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		42C2D2E81ABE68AC00006AC2 /* TestTextFieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTextFieldViewController.h; path = Moorgoo/TestTextFieldViewController.h; sourceTree = "<group>"; };
+		42C2D2E91ABE68AC00006AC2 /* TestTextFieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestTextFieldViewController.m; path = Moorgoo/TestTextFieldViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +176,7 @@
 		13EBBE2D1AA19B1200495F8A = {
 			isa = PBXGroup;
 			children = (
+				42C2D2EB1ABE68B900006AC2 /* TestFiles */,
 				13EBBE381AA19B1200495F8A /* Moorgoo */,
 				13EBBE371AA19B1200495F8A /* Products */,
 				135979961AA3790C0037862A /* Frameworks */,
@@ -275,6 +279,15 @@
 			name = User;
 			sourceTree = "<group>";
 		};
+		42C2D2EB1ABE68B900006AC2 /* TestFiles */ = {
+			isa = PBXGroup;
+			children = (
+				42C2D2E81ABE68AC00006AC2 /* TestTextFieldViewController.h */,
+				42C2D2E91ABE68AC00006AC2 /* TestTextFieldViewController.m */,
+			);
+			name = TestFiles;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -350,6 +363,7 @@
 				137A41C81AA57036008BF591 /* CollegeClassTutor.m in Sources */,
 				13EBBE3F1AA19B1200495F8A /* AppDelegate.m in Sources */,
 				138607501AA6DC14002A840A /* FilterViewController.m in Sources */,
+				42C2D2EA1ABE68AC00006AC2 /* TestTextFieldViewController.m in Sources */,
 				1388CF211AA2345A0064BFE5 /* LoginViewController.m in Sources */,
 				135979AF1AA459220037862A /* AccountTableViewController.m in Sources */,
 				135979AC1AA4316A0037862A /* KeychainItemWrapper.m in Sources */,

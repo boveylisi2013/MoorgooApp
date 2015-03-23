@@ -7,10 +7,14 @@
 //
 
 #import "RegisterViewController.h"
+#define kOFFSET_FOR_KEYBOARD 160.0
+#define DARK_ALPHA 0.3f
+
 
 @interface RegisterViewController () <UIAlertViewDelegate>
 {
     NSData *imageData;
+    UIImage *backgroundImage;
 }
 
 @end
@@ -20,14 +24,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    /************************************************************************************/
-    UIGraphicsBeginImageContext(self.view.frame.size);
-    [[UIImage imageNamed:@"TutorBackground"] drawInRect:self.view.bounds];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    backgroundImage = [UIImage imageNamed:@"TutorBackground"];
     
-    UIColor *color = [[UIColor colorWithPatternImage:image] colorWithAlphaComponent:0.4f];
-    self.view.backgroundColor = color;
+    [self fillBackgroundWithImage:backgroundImage withAlpha: DARK_ALPHA];
     
     /************************************************************************************/
     //keyboard disappear when tapping outside of text field
@@ -69,15 +68,90 @@
     return YES;
 }
 
+// Helper method encapsulates the background drawing code
+-(void)fillBackgroundWithImage:(UIImage *)image withAlpha:(CGFloat)alpha
+{
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [image drawInRect:self.view.bounds];
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    UIColor *color = [[UIColor colorWithPatternImage:theImage] colorWithAlphaComponent:alpha];
+    self.view.backgroundColor = color;
+}
+
+#pragma mark - TextFields animation
 -(void)dismissKeyboard {
-    [self.view endEditing:YES];
+    [self.firstRegisterTextField endEditing:YES];
+    [self.lastRegisterTextField endEditing:YES];
+    [self.emailRegisterTextField endEditing:YES];
+    [self.passwordRegisterTextField endEditing:YES];
+    [self.phoneRegisterTextField endEditing:YES];
+    
+    [UIView beginAnimations: nil context: NULL];
+    [UIView setAnimationDuration: 0.4];
+    
+    self.profileImageView.alpha = 1.0f;
+    self.pickImageButton.alpha = 1.0f;
+    self.signUpButton.alpha = 1.0f;
+    self.backButton.alpha = 1.0f;
+    
+    [self fillBackgroundWithImage:backgroundImage withAlpha: DARK_ALPHA];
+    
+    [UIView commitAnimations];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self animateTextField:textField up:YES];
+    
 }
 
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [self animateTextField:textField up:NO];
+}
+
+-(void)animateTextField:(UITextField*)textField up:(BOOL)up
+{
+    [UIView beginAnimations: nil context: NULL];
+    [UIView setAnimationDuration: 0.4];
+    
+    if (up)
+    {
+        self.firstNameVerticalLayout.constant += kOFFSET_FOR_KEYBOARD;
+        
+        [self.firstRegisterTextField layoutIfNeeded];
+        [self.lastRegisterTextField layoutIfNeeded];
+        [self.emailRegisterTextField layoutIfNeeded];
+        [self.passwordRegisterTextField layoutIfNeeded];
+        [self.phoneRegisterTextField layoutIfNeeded];
+        
+        self.view.backgroundColor = [UIColor colorWithRed:10.0f green:10.0f blue:10.0f alpha:0.3f];
+        self.profileImageView.alpha = 0.3f;
+        self.pickImageButton.alpha = 0.3f;
+        self.signUpButton.alpha = 0.3f;
+        self.backButton.alpha = 0.3f;
+        
+        [self fillBackgroundWithImage:backgroundImage withAlpha: DARK_ALPHA];
+    }
+    else
+    {
+        // revert back to the normal state.
+        self.firstNameVerticalLayout.constant -= kOFFSET_FOR_KEYBOARD;
+        
+        [self.firstRegisterTextField layoutIfNeeded];
+        [self.lastRegisterTextField layoutIfNeeded];
+        [self.emailRegisterTextField layoutIfNeeded];
+        [self.passwordRegisterTextField layoutIfNeeded];
+        [self.phoneRegisterTextField layoutIfNeeded];
+        
+    }
+    
+    [UIView commitAnimations];
+}
+
+#pragma mark - Button clicked methods
 - (IBAction)backButtonClicked:(id)sender {
     [self performSegueWithIdentifier:@"backToEntranceView" sender:nil];
 }
@@ -135,7 +209,7 @@
                     [user saveInBackground];
                     
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
-                                                                    message:@"You have signed up successfully"
+                                                                    message:@"You have signed up successfully,\n Go find a tutor!"
                                                                    delegate:self
                                                           cancelButtonTitle:@"OK"
                                                           otherButtonTitles:nil];
@@ -182,7 +256,7 @@
     return newImage;
 }
 
-#pragma uiimagepicker delegate
+#pragma mark - uiimagepicker delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
@@ -194,7 +268,7 @@
     }];
 }
 
-#pragma alertViewClicked Response
+#pragma mark - alertViewClicked Response
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];

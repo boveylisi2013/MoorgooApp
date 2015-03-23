@@ -15,11 +15,13 @@
 @property (nonatomic, weak) IBOutlet UITextField *phoneRegisterTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UIButton *pickImageButton;
+@property (weak, nonatomic) IBOutlet UIButton *signUpButton;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 @property (nonatomic, strong) MBProgressHUD *hud;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *firstNameVerticalLayout;
 
--(IBAction)signUpUserPressed:(id)sender;
 - (IBAction)pickImageButtonClicked:(id)sender;
 
 @end
