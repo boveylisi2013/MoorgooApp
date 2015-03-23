@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="zOD-WQ-pco">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="f7c-qw-pim">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
@@ -325,11 +325,111 @@
                     <navigationItem key="navigationItem" title="Account" id="G38-6U-gZV"/>
                     <connections>
                         <segue destination="f7c-qw-pim" kind="presentation" identifier="LogoutSuccessful" id="Ken-Uh-5Ky"/>
+                        <segue destination="zHd-Zo-6Cb" kind="show" identifier="goToAccountSetting" id="p2j-5q-m6E"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Rh-FI-46C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1562" y="776"/>
+        </scene>
+        <!--Account Setting View Controller-->
+        <scene sceneID="CcI-Kt-PRb">
+            <objects>
+                <tableViewController id="zHd-Zo-6Cb" customClass="AccountSettingViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="71" sectionHeaderHeight="22" sectionFooterHeight="22" id="HVe-kX-mSa">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tableItem" rowHeight="71" id="82t-Ps-wLF">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="82t-Ps-wLF" id="e8F-PV-dtO">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="zHd-Zo-6Cb" id="tcK-mI-mJ9"/>
+                            <outlet property="delegate" destination="zHd-Zo-6Cb" id="Nx6-1J-r7h"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <segue destination="7QU-Ho-LUZ" kind="show" identifier="goToChangeProfilePicture" id="5Yo-x4-h6k"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Us4-lk-bJP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2312" y="774"/>
+        </scene>
+        <!--Change Profile Picture View Controller-->
+        <scene sceneID="hy0-VL-Tfv">
+            <objects>
+                <viewController id="7QU-Ho-LUZ" customClass="ChangeProfilePictureViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xp8-x8-n3e"/>
+                        <viewControllerLayoutGuide type="bottom" id="C4s-K9-5HT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="43u-w7-TJX">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kgj-aN-lZt">
+                                <rect key="frame" x="180" y="87" width="240" height="180"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="180" id="5lC-PP-1Uv"/>
+                                    <constraint firstAttribute="width" constant="240" id="Xx5-nD-7lA"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O41-BL-Hoi">
+                                <rect key="frame" x="201" y="286" width="198" height="46"/>
+                                <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="198" id="wre-Nc-FMP"/>
+                                    <constraint firstAttribute="height" constant="46" id="yq5-pS-QWF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="PICK ANOTHER ONE">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pickImageButtonPressed:" destination="7QU-Ho-LUZ" eventType="touchUpInside" id="euG-HG-bz0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H1k-Je-6Eu">
+                                <rect key="frame" x="219" y="488" width="162" height="46"/>
+                                <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="162" id="Yhu-hV-wQX"/>
+                                    <constraint firstAttribute="height" constant="46" id="one-Rq-XtD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="SUBMIT">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="submitButtonPressed:" destination="7QU-Ho-LUZ" eventType="touchUpInside" id="rEF-8g-YAM"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="Kgj-aN-lZt" secondAttribute="centerX" id="0qB-Tl-BjB"/>
+                            <constraint firstItem="Kgj-aN-lZt" firstAttribute="top" secondItem="xp8-x8-n3e" secondAttribute="bottom" constant="23" id="KmD-bR-EsP"/>
+                            <constraint firstItem="C4s-K9-5HT" firstAttribute="top" secondItem="H1k-Je-6Eu" secondAttribute="bottom" constant="17" id="PGN-TZ-bvl"/>
+                            <constraint firstAttribute="centerX" secondItem="O41-BL-Hoi" secondAttribute="centerX" id="jBF-PB-Cmv"/>
+                            <constraint firstItem="O41-BL-Hoi" firstAttribute="top" secondItem="Kgj-aN-lZt" secondAttribute="bottom" constant="19" id="nI2-68-i9I"/>
+                            <constraint firstAttribute="centerX" secondItem="H1k-Je-6Eu" secondAttribute="centerX" id="nha-cc-tGq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="profileImageView" destination="Kgj-aN-lZt" id="ab2-hw-p5z"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mJP-Mc-a9C" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2992" y="774"/>
         </scene>
         <!--Entrance View Controller-->
         <scene sceneID="maw-ZW-nK8">
@@ -1019,6 +1119,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="3bo-43-4df"/>
-        <segue reference="8rJ-t8-uSW"/>
+        <segue reference="Ken-Uh-5Ky"/>
     </inferredMetricsTieBreakers>
 </document>

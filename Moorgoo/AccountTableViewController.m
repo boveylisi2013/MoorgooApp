@@ -8,7 +8,7 @@
 
 #import "AccountTableViewController.h"
 
-@interface AccountTableViewController ()
+@interface AccountTableViewController () <UIAlertViewDelegate>
 
 @end
 
@@ -31,10 +31,6 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - Table view data source
 
@@ -76,7 +72,37 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if(indexPath.section == 1) {
+    // Do not let the cell stay selected
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if(indexPath.section == 0)
+    {
+        [self performSegueWithIdentifier:@"goToAccountSetting" sender:self];
+    }
+    else if(indexPath.section == 1)
+    {
+        
+        // Logout confirmation
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notice"
+                                                        message:@"Are you sure you wanna logout?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Yes", nil];
+        [alert show];
+    }
+}
+
+# pragma mark - Alert view delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    
+    if([title isEqualToString:@"Cancel"])
+    {
+        // Do nothing
+    }
+    if([title isEqualToString:@"Yes"])
+    {
         [PFUser logOut];
         
         /******************************************************/

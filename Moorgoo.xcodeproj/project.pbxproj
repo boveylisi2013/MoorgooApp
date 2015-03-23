@@ -35,6 +35,8 @@
 		13EBBE4A1AA19B1200495F8A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE491AA19B1200495F8A /* Images.xcassets */; };
 		13EBBE4D1AA19B1200495F8A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE4B1AA19B1200495F8A /* LaunchScreen.xib */; };
 		42C2D2EA1ABE68AC00006AC2 /* TestTextFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2D2E91ABE68AC00006AC2 /* TestTextFieldViewController.m */; };
+		42C2D2EE1AC08DFD00006AC2 /* AccountSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2D2ED1AC08DFD00006AC2 /* AccountSettingViewController.m */; };
+		42C2D2F11AC0B36300006AC2 /* ChangeProfilePictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2D2F01AC0B36300006AC2 /* ChangeProfilePictureViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +87,10 @@
 		13EBBE671AA1A1CB00495F8A /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		42C2D2E81ABE68AC00006AC2 /* TestTextFieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTextFieldViewController.h; path = Moorgoo/TestTextFieldViewController.h; sourceTree = "<group>"; };
 		42C2D2E91ABE68AC00006AC2 /* TestTextFieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestTextFieldViewController.m; path = Moorgoo/TestTextFieldViewController.m; sourceTree = "<group>"; };
+		42C2D2EC1AC08DFD00006AC2 /* AccountSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountSettingViewController.h; sourceTree = "<group>"; };
+		42C2D2ED1AC08DFD00006AC2 /* AccountSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountSettingViewController.m; sourceTree = "<group>"; };
+		42C2D2EF1AC0B36300006AC2 /* ChangeProfilePictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeProfilePictureViewController.h; sourceTree = "<group>"; };
+		42C2D2F01AC0B36300006AC2 /* ChangeProfilePictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeProfilePictureViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,6 +268,10 @@
 			children = (
 				135979AD1AA459220037862A /* AccountTableViewController.h */,
 				135979AE1AA459220037862A /* AccountTableViewController.m */,
+				42C2D2EC1AC08DFD00006AC2 /* AccountSettingViewController.h */,
+				42C2D2ED1AC08DFD00006AC2 /* AccountSettingViewController.m */,
+				42C2D2EF1AC0B36300006AC2 /* ChangeProfilePictureViewController.h */,
+				42C2D2F01AC0B36300006AC2 /* ChangeProfilePictureViewController.m */,
 			);
 			name = ThirdTab;
 			sourceTree = "<group>";
@@ -362,7 +372,9 @@
 				13EBBE451AA19B1200495F8A /* SecondViewController.m in Sources */,
 				137A41C81AA57036008BF591 /* CollegeClassTutor.m in Sources */,
 				13EBBE3F1AA19B1200495F8A /* AppDelegate.m in Sources */,
+				42C2D2EE1AC08DFD00006AC2 /* AccountSettingViewController.m in Sources */,
 				138607501AA6DC14002A840A /* FilterViewController.m in Sources */,
+				42C2D2F11AC0B36300006AC2 /* ChangeProfilePictureViewController.m in Sources */,
 				42C2D2EA1ABE68AC00006AC2 /* TestTextFieldViewController.m in Sources */,
 				1388CF211AA2345A0064BFE5 /* LoginViewController.m in Sources */,
 				135979AF1AA459220037862A /* AccountTableViewController.m in Sources */,

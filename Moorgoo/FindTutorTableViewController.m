@@ -207,6 +207,13 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // Do not let the cell stay selected
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+}
+
 
 #pragma mark - Navigation
 
