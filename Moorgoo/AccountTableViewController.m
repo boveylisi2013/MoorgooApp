@@ -134,6 +134,10 @@
         {
             [self performSegueWithIdentifier:@"goToChangePhoneNumber" sender:self];
         }
+        else if(indexPath.row == 2)
+        {
+            [self performSegueWithIdentifier:@"goToChangePassword" sender:self];
+        }
     }
     else if(indexPath.section == 1)
     {

@@ -17,11 +17,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    //keyboard disappear when tapping outside of text field
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+    /************************************************************************************/
+    
     self.phoneNumberTextField.text = self.phoneNumber;
 
     /************************************************************************************/
     self.hud = [[MBProgressHUD alloc] init];
     [self.view addSubview:self.hud];
+}
+
+-(void)dismissKeyboard {
+    [self.phoneNumberTextField endEditing:YES];
 }
 
 - (IBAction)changeNumberTextField:(UIButton *)sender {

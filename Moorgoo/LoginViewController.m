@@ -79,7 +79,7 @@
 {
     if (textField == self.passwordTextField)
     {
-        [self.userTextField resignFirstResponder];
+        [self.userTextField becomeFirstResponder];
     }
     else if (textField == self.userTextField)
     {

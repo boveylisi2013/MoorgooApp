@@ -473,39 +473,58 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Current Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hQg-DL-cAP">
-                                <rect key="frame" x="31" y="93" width="538" height="35"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="New Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kDt-7f-eou">
+                                <rect key="frame" x="31" y="90" width="538" height="35"/>
                                 <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="2SP-dK-sHE"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="New Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kDt-7f-eou">
-                                <rect key="frame" x="31" y="136" width="538" height="35"/>
-                                <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="New Password Again" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LPk-WT-xLe">
-                                <rect key="frame" x="31" y="179" width="538" height="35"/>
-                                <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ORe-Hc-teJ">
-                                <rect key="frame" x="219" y="475" width="162" height="46"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ORe-Hc-teJ">
+                                <rect key="frame" x="219" y="465" width="162" height="46"/>
                                 <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="IaO-TC-JOl"/>
+                                    <constraint firstAttribute="width" constant="162" id="LzA-xg-jFy"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <state key="normal" title="SUBMIT">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="submitButtonPressed:" destination="DP4-jX-ufx" eventType="touchUpInside" id="Sa8-hb-ln9"/>
                                     <action selector="submitButtonPressed:" destination="7QU-Ho-LUZ" eventType="touchUpInside" id="yvN-6d-4Uk"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="New Password Again" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LPk-WT-xLe">
+                                <rect key="frame" x="31" y="150" width="538" height="35"/>
+                                <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="P7c-AO-6Pc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="LPk-WT-xLe" firstAttribute="leading" secondItem="mcK-BE-lIN" secondAttribute="leadingMargin" constant="15" id="6DP-VD-Neh"/>
+                            <constraint firstItem="bzG-Y0-FDM" firstAttribute="top" secondItem="ORe-Hc-teJ" secondAttribute="bottom" constant="40" id="IDO-mx-iQj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LPk-WT-xLe" secondAttribute="trailing" constant="15" id="Myl-Yi-N4O"/>
+                            <constraint firstItem="kDt-7f-eou" firstAttribute="leading" secondItem="mcK-BE-lIN" secondAttribute="leadingMargin" constant="15" id="QLz-qS-gj9"/>
+                            <constraint firstAttribute="centerX" secondItem="ORe-Hc-teJ" secondAttribute="centerX" id="a7T-1m-rDJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kDt-7f-eou" secondAttribute="trailing" constant="15" id="i3T-C5-zRK"/>
+                            <constraint firstItem="kDt-7f-eou" firstAttribute="top" secondItem="FQh-zi-fPA" secondAttribute="bottom" constant="26" id="lgC-0y-oAQ"/>
+                            <constraint firstItem="LPk-WT-xLe" firstAttribute="top" secondItem="kDt-7f-eou" secondAttribute="bottom" constant="25" id="vQR-tM-PE1"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="changedPasswordTextField" destination="kDt-7f-eou" id="j7N-Fm-2Z5"/>
+                        <outlet property="confirmPasswordTextField" destination="LPk-WT-xLe" id="gtq-kR-83D"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZDH-Xg-p0H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

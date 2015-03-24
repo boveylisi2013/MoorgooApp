@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ChangePasswordViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UITextField *changedPasswordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *confirmPasswordTextField;
+@property (nonatomic, strong) MBProgressHUD *hud;
 
 @end
