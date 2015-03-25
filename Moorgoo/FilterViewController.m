@@ -11,12 +11,15 @@
 
 @interface FilterViewController (){
     UIPickerView *schoolPicker;
-    UIPickerView *classPicker;
+
     NSMutableArray *pickerSchoolArray;
-    NSMutableArray *pickerClassArray;
+    
+    NSMutableArray *flexibleClassArray;
+    NSMutableArray *stableClassArray;
+    
+    BOOL noClassFound;
 }
 @property (weak, nonatomic) IBOutlet UITextField *schoolTextField;
-@property (weak, nonatomic) IBOutlet UITextField *classTextField;
 @property (weak, nonatomic) IBOutlet UITextField *priceTextField;
 
 @end
@@ -30,18 +33,19 @@
     NSLog(@"course: %@", filter.collegeClassTutorCourse);
     NSLog(@"price: %@", filter.collegeClassTutorPrice);
     self.schoolTextField.text = filter.collegeClassTutorSchool;
-    self.classTextField.text = filter.collegeClassTutorCourse;
     self.priceTextField.text = filter.collegeClassTutorPrice;
     
     /*******************************************************************************/
     //keyboard disappear when tapping outside of text field
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
+    
+    // prevent the touch event to the table view being eaten by the tap
+    [tap setCancelsTouchesInView:NO];
     /*******************************************************************************/
     
     filter = [[SearchFilter alloc] init];
     [self addSchoolPicker];
-    [self addClassPicker];
     
     /*******************************************************************************/
     
@@ -54,10 +58,26 @@
     self.schoolTextField.layer.borderColor = [[UIColor redColor] CGColor];
     self.schoolTextField.layer.borderWidth = 1.0;
     /*******************************************************************************/
-    
-    
     //self.schoolTextField.delegate = self;
-    //self.classTextField.delegate = self;
+    self.classTextField.delegate = self;
+    
+    /*******************************************************************************/
+    flexibleClassArray = [[NSMutableArray alloc] init];
+    stableClassArray = [[NSMutableArray alloc] init];
+    
+    [self.courseTableView setHidden:TRUE];
+    self.perhourVerticalSpaceLayout.constant = 15;
+    self.maxpriceVerticalSpaceLayout.constant = 15;
+    
+    /*******************************************************************************/
+    // Add the method to detect change in the specficClassTextField
+    [self.classTextField addTarget:self
+                                    action:@selector(textFieldDidChange:)
+                          forControlEvents:UIControlEventEditingChanged];
+    
+    /*******************************************************************************/
+    self.courseTableView.delegate = self;
+    self.courseTableView.dataSource = self;
 }
 
 -(void)dismissKeyboard {
@@ -88,10 +108,7 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent: (NSInteger)component {
-    if(pickerView == schoolPicker)
-        return pickerSchoolArray.count;
-    else
-        return pickerClassArray.count;
+    return pickerSchoolArray.count;
 }
 
 #pragma mark- Picker View Delegate
@@ -99,37 +116,30 @@
             titleForRow:(NSInteger)row
            forComponent:(NSInteger)component
 {
-    if(pickerView == schoolPicker) {
-        return [pickerSchoolArray objectAtIndex:row];
-    }
-    else {
-        return [pickerClassArray objectAtIndex:row];
-    }
+    return [pickerSchoolArray objectAtIndex:row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView
       didSelectRow:(NSInteger)row
        inComponent:(NSInteger)component
 {
-    if(pickerView == schoolPicker) {
-        
-        self.schoolTextField.text = [NSString stringWithFormat:@"%@", [pickerSchoolArray objectAtIndex:row]];
-        self.classTextField.text = @"";
-        [self addClassPicker];
-    }
-    else {
-        self.classTextField.text = [NSString stringWithFormat:@"%@", [pickerClassArray objectAtIndex:row]];
-    }
+    
+    self.schoolTextField.text = [NSString stringWithFormat:@"%@", [pickerSchoolArray objectAtIndex:row]];
+    self.classTextField.text = @"";
     
     if([self.schoolTextField.text isEqualToString:@""]) {
         self.classTextField.userInteractionEnabled = FALSE;
         self.classTextField.text = @"";
+        self.schoolTextField.layer.borderColor = [[UIColor redColor] CGColor];        
         self.schoolTextField.layer.borderWidth = 1.0;
     }
     else {
-        self.schoolTextField.layer.borderColor = [[UIColor redColor] CGColor];
         self.schoolTextField.layer.borderWidth = 0.0;
         self.classTextField.userInteractionEnabled = TRUE;
+        
+        [self getCourses:flexibleClassArray];
+        [self getCourses:stableClassArray];
+
     }
 }
 
@@ -177,56 +187,75 @@
     [self.schoolTextField resignFirstResponder];
 }
 /***********************************************************************************/
--(void)addClassPicker{
-    pickerClassArray = [[NSMutableArray alloc]init];
-    [self getCourses];
-    
-    classPicker = [[UIPickerView alloc] initWithFrame:CGRectZero];
-    classPicker.delegate = self;
-    classPicker.dataSource = self;
-    [classPicker setShowsSelectionIndicator:YES];
-    self.classTextField.inputView = classPicker;
-    
-    // Create done button in UIPickerView
-    UIToolbar*  mypickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
-    mypickerToolbar.barStyle = UIBarStyleBlackOpaque;
-    [mypickerToolbar sizeToFit];
-    NSMutableArray *barItems = [[NSMutableArray alloc] init];
-    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    [barItems addObject:flexSpace];
-    
-    UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(pickerDoneClicked2)];
-    [barItems addObject:doneBtn];
-    
-    [mypickerToolbar setItems:barItems animated:YES];
-    self.classTextField.inputAccessoryView = mypickerToolbar;
-}
 
--(void)pickerDoneClicked2
-{
-    //NSLog(@"Done Clicked");
-    [self.classTextField resignFirstResponder];
-}
-
--(void)getCourses{
-    [pickerClassArray removeAllObjects];
-    [pickerClassArray addObject:@""];
+-(void)getCourses:(NSMutableArray *)targetArray{
+    [targetArray removeAllObjects];
+    [targetArray addObject:@""];
     
     for(CollegeClassTutor *tutor in tutorArray){
         if([self.schoolTextField.text isEqualToString:tutor.school]) {
             
             for(NSString *course in tutor.courses){
-                if(![pickerClassArray containsObject:course]){
-                    [pickerClassArray addObject:course];
+                if(![targetArray containsObject:course]){
+                    [targetArray addObject:course];
                 }
             }
         }
     }
     //sort the array according to character
-    [pickerClassArray sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    [targetArray sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 }
 /*************************************************************************************/
+# pragma mark - table view delegate and datasource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if([flexibleClassArray count] != 0)
+        return [flexibleClassArray count];
+    else
+        return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"courseItem"];
+    
+    // configure text for cell
+    UILabel *label = (UILabel *)[cell viewWithTag:550];
+    
+    if ([flexibleClassArray count] != 0)
+    {
+        label.text = flexibleClassArray[indexPath.row];
+        noClassFound = false;
+    }
+    else
+    {
+        label.text = @"No tutor is available for this class";
+        noClassFound = true;
+    }
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    UILabel *label = (UILabel *)[cell viewWithTag:550];
+    if(!noClassFound)
+    {
+        NSString *chosenString = label.text;
+        self.classTextField.text = chosenString;
+    }
+    
+    [self.courseTableView setHidden:YES];
+    self.perhourVerticalSpaceLayout.constant = 15;
+    self.maxpriceVerticalSpaceLayout.constant = 15;
+    
+    [self.view endEditing:YES];
+    //ChecklistItem *item = _items[indexPath.row];
+}
 
 /*************************************************************************************/
 - (IBAction)saveButtonClicked:(UIBarButtonItem *)sender {
@@ -240,6 +269,59 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(applyFilterToFetchTutors:)]) {
         [self.delegate applyFilterToFetchTutors:filter];
     }
+}
+
+/*************************************************************************************/
+
+// Helper method which checks whether one string contains another string
+-(BOOL)string:(NSString *)string_1 containsString:(NSString *)string_2
+{
+    return !([string_1 rangeOfString:string_2].location == NSNotFound);
+}
+#pragma mark - textField delegate methods
+
+// the method which will be called when specificClassTextField is changed
+// this method is added as a selector to specficClassTextField
+-(void)textFieldDidChange:(UITextField *)textField
+{
+    //BOOL textFieldIsEmpty = (self.pickHelpTextField.text.length == 0 || self.specificClassTextField.text.length == 0);
+    if (textField.text.length == 0)
+    {
+        [self.courseTableView setHidden:YES];
+        self.perhourVerticalSpaceLayout.constant = 15;
+        self.maxpriceVerticalSpaceLayout.constant = 15;
+        
+//        self.next.enabled = NO; DO WE NEED TO DISABLE SEARCH BUTTON???????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+    }
+    else
+    {
+//        self.next.enabled = !textFieldIsEmpty;
+        
+        [self.courseTableView setHidden:NO];
+        self.perhourVerticalSpaceLayout.constant = 266;
+        self.maxpriceVerticalSpaceLayout.constant = 266;
+        
+        NSString *inputString = [textField.text uppercaseString];
+        NSMutableArray *discardItems = [[NSMutableArray alloc] init];
+        
+        // Filter out classes based on user input
+        for (NSString *currentString in flexibleClassArray)
+        {
+            if(![self string:currentString containsString:inputString])
+                [discardItems addObject:currentString];
+        }
+        [flexibleClassArray removeObjectsInArray:discardItems];
+        
+        // Add classes back when user delete characters
+        for (NSString *currentString in stableClassArray)
+        {
+            if([self string:currentString containsString:inputString])
+                if(![flexibleClassArray containsObject:currentString])
+                    [flexibleClassArray addObject:currentString];
+        }
+        [self.courseTableView reloadData];
+    }
+    
 }
 
 @end

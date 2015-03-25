@@ -14,12 +14,18 @@
 
 @end
 
-@interface FilterViewController : UIViewController<UIPickerViewDelegate, UIPickerViewDataSource>{
+@interface FilterViewController : UIViewController<UIPickerViewDelegate, UIPickerViewDataSource,UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate>{
     id<FilterViewControllerDelegate> delegate;
 }
 
 @property (atomic, strong) SearchFilter *filter;
 @property NSMutableArray *tutorArray;
 @property id<FilterViewControllerDelegate> delegate;
+
+@property (weak, nonatomic) IBOutlet UITableView *courseTableView;
+@property (weak, nonatomic) IBOutlet UITextField *classTextField;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *perhourVerticalSpaceLayout;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *maxpriceVerticalSpaceLayout;
 
 @end
