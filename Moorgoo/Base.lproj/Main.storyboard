@@ -509,9 +509,9 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sep 21st" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eqm-5Z-QUl">
-                                                <rect key="frame" x="10" y="268" width="69" height="21"/>
+                                                <rect key="frame" x="10" y="268" width="110" height="21"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="69" id="0vT-lo-fgd"/>
+                                                    <constraint firstAttribute="width" constant="110" id="0vT-lo-fgd"/>
                                                     <constraint firstAttribute="height" constant="21" id="F9b-02-47V"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -519,9 +519,9 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sep 22nd" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VzU-yn-pFO">
-                                                <rect key="frame" x="10" y="328" width="74" height="21"/>
+                                                <rect key="frame" x="10" y="328" width="110" height="21"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="74" id="Qag-Eb-P20"/>
+                                                    <constraint firstAttribute="width" constant="110" id="Qag-Eb-P20"/>
                                                     <constraint firstAttribute="height" constant="21" id="nPe-Oq-EJi"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -529,9 +529,9 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sep 23rd" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONp-vU-mwB">
-                                                <rect key="frame" x="10" y="299" width="70" height="21"/>
+                                                <rect key="frame" x="10" y="299" width="110" height="21"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="70" id="9RN-aq-D4a"/>
+                                                    <constraint firstAttribute="width" constant="110" id="9RN-aq-D4a"/>
                                                     <constraint firstAttribute="height" constant="21" id="VBn-z8-fVq"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -539,10 +539,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sep 24th" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hon-QQ-TfO">
-                                                <rect key="frame" x="11" y="357" width="70" height="21"/>
+                                                <rect key="frame" x="11" y="357" width="110" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="0Rh-iy-I4j"/>
-                                                    <constraint firstAttribute="width" constant="70" id="nHf-Zs-5JR"/>
+                                                    <constraint firstAttribute="width" constant="110" id="nHf-Zs-5JR"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -561,6 +561,7 @@
                                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
+                                                    <action selector="cancelButton1Pressed:" destination="loJ-Rx-Txk" eventType="touchUpInside" id="5ty-E4-FAf"/>
                                                     <action selector="signUpButtonPressed:" destination="zOD-WQ-pco" eventType="touchUpInside" id="zkU-2d-L1P"/>
                                                 </connections>
                                             </button>
@@ -577,6 +578,7 @@
                                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
+                                                    <action selector="cancelButton2Pressed:" destination="loJ-Rx-Txk" eventType="touchUpInside" id="rQj-19-eeO"/>
                                                     <action selector="signUpButtonPressed:" destination="zOD-WQ-pco" eventType="touchUpInside" id="0uS-I1-Y0G"/>
                                                 </connections>
                                             </button>
@@ -593,6 +595,7 @@
                                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
+                                                    <action selector="cancelButton3Pressed:" destination="loJ-Rx-Txk" eventType="touchUpInside" id="f8K-WF-rrD"/>
                                                     <action selector="signUpButtonPressed:" destination="zOD-WQ-pco" eventType="touchUpInside" id="xvp-h2-SrK"/>
                                                 </connections>
                                             </button>
@@ -609,6 +612,7 @@
                                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
+                                                    <action selector="cancelButton4Pressed:" destination="loJ-Rx-Txk" eventType="touchUpInside" id="DHS-ul-cup"/>
                                                     <action selector="signUpButtonPressed:" destination="zOD-WQ-pco" eventType="touchUpInside" id="gUA-i5-Trk"/>
                                                 </connections>
                                             </button>

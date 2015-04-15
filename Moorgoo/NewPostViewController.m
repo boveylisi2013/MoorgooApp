@@ -8,7 +8,7 @@
 
 #import "NewPostViewController.h"
 
-@interface NewPostViewController ()
+@interface NewPostViewController () <UIAlertViewDelegate>
 {
     UIColor *originalColor;
     
@@ -23,6 +23,9 @@
     
     UIPickerView *helpPicker;
     NSMutableArray *pickerHelpArray;
+    
+    UIPickerView *hourPicker;
+    NSMutableArray *pickerHourArray;
 }
 @end
 
@@ -35,6 +38,8 @@
     /*******************************************************************************/
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.courseTextField.delegate = self;
+    [self.courseTextField setReturnKeyType:UIReturnKeyDone];
     
     /*******************************************************************************/
     // Add the method to detect change in the specficClassTextField
@@ -97,6 +102,34 @@
     [buttons addObject:self.cancelButton3];
     [buttons addObject:self.cancelButton4];
     [buttons addObject:self.postButton];
+    
+    /*******************************************************************************/
+
+    [self addHelpPicker];
+    [self addHourPicker];
+    
+    [self.moneyTextField setKeyboardType:UIKeyboardTypeNumberPad];
+    
+    /*******************************************************************************/
+    //keyboard disappear when tapping outside of text field
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+    
+    // prevent the touch event to the table view being eaten by the tap
+    [tap setCancelsTouchesInView:NO];
+    /*******************************************************************************/
+    [self.datePicker addTarget:self action:@selector(datePickerChanged:) forControlEvents:UIControlEventValueChanged];
+    
+}
+
+# pragma mark - dismissKeyboard
+-(void)dismissKeyboard {
+    [self.view endEditing:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 /*************************************************************************************/
@@ -160,6 +193,41 @@
     [UIView commitAnimations];
 
     [self.view endEditing:YES];
+}
+
+/*************************************************************************************/
+#pragma mark - Picker View Data source
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent: (NSInteger)component {
+    if(pickerView == helpPicker)
+        return pickerHelpArray.count;
+    else
+        return pickerHourArray.count;
+}
+
+#pragma mark- Picker View Delegate
+-(NSString *)pickerView:(UIPickerView *)pickerView
+            titleForRow:(NSInteger)row
+           forComponent:(NSInteger)component
+{
+    if(pickerView == helpPicker)
+        return [pickerHelpArray objectAtIndex:row];
+    else
+        return [pickerHourArray objectAtIndex:row];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView
+      didSelectRow:(NSInteger)row
+       inComponent:(NSInteger)component
+{
+    if(pickerView == helpPicker)
+        self.helptypeTextField.text = [NSString stringWithFormat:@"%@", [pickerHelpArray objectAtIndex:row]];
+    else
+        self.hourTextField.text = [NSString stringWithFormat:@"%@", [pickerHourArray objectAtIndex:row]];
+
 }
 
 /*************************************************************************************/
@@ -266,7 +334,7 @@
     
     [self.datePicker setHidden:false];
     [self.selectButton setHidden:false];
-    self.datePickerYAlignment.constant = 150;
+    self.datePickerYAlignment.constant = 15;
     
     [self.datePicker layoutIfNeeded];
     [self.selectButton layoutIfNeeded];
@@ -279,6 +347,7 @@
 
 - (IBAction)selectButtonPressed:(UIButton *)sender
 {
+    // Animation
     self.scrollView.canCancelContentTouches = YES;
     self.scrollView.delaysContentTouches = YES;
     self.scrollView.scrollEnabled = YES;
@@ -303,6 +372,83 @@
     [self.selectButton layoutIfNeeded];
     
     [UIView commitAnimations];
+    
+    // Non - Animation
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM-dd-yyyy"];
+    
+    NSDate *chosenDate = [self.datePicker date];
+    NSString *dateString = [dateFormatter stringFromDate:chosenDate];
+    
+    if(self.dateLabel1.hidden == true)
+    {
+        self.dateLabel1.text = dateString;
+        [self.dateLabel1 setHidden:false];
+        [self.cancelButton1 setHidden:false];
+    }
+    else if(self.dateLabel2.hidden == true)
+    {
+        self.dateLabel2.text = dateString;
+        [self.dateLabel2 setHidden:false];
+        [self.cancelButton2 setHidden:false];
+    }
+    else if(self.dateLabel3.hidden == true)
+    {
+        self.dateLabel3.text = dateString;
+        [self.dateLabel3 setHidden:false];
+        [self.cancelButton3 setHidden:false];
+    }
+    else if(self.dateLabel4.hidden == true)
+    {
+        self.dateLabel4.text = dateString;
+        [self.dateLabel4 setHidden:false];
+        [self.cancelButton4 setHidden:false];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"You can add at most 4 schedule"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+- (IBAction)cancelButton1Pressed:(UIButton *)sender {
+    [self.dateLabel1 setHidden:true];
+    [self.cancelButton1 setHidden:true];
+}
+
+- (IBAction)cancelButton2Pressed:(UIButton *)sender {
+    [self.dateLabel2 setHidden:true];
+    [self.cancelButton2 setHidden:true];
+}
+
+- (IBAction)cancelButton3Pressed:(UIButton *)sender {
+    [self.dateLabel3 setHidden:true];
+    [self.cancelButton3 setHidden:true];
+}
+
+- (IBAction)cancelButton4Pressed:(UIButton *)sender {
+    [self.dateLabel4 setHidden:true];
+    [self.cancelButton4 setHidden:true];
+}
+
+#pragma mark - datePicker set method
+-(void)datePickerChanged:(UIDatePicker *)datePicker
+{
+    self.datePicker = datePicker;
+    NSDate *chosenDate = [datePicker date];
+    
+    NSDate *CurrentDate = [NSDate date];
+    if([CurrentDate compare:chosenDate] == NSOrderedDescending)
+    {
+        [datePicker setDate:CurrentDate];
+    }
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm"];
 }
 
 #pragma mark - encapsulation methods
@@ -335,6 +481,83 @@
     {
         textField.enabled = enabled;
     }
+}
+
+// Helper method to add the picker
+-(void)addHelpPicker
+{
+    pickerHelpArray = [[NSMutableArray alloc]init];
+    
+    [pickerHelpArray addObject:@""];
+    [pickerHelpArray addObject:@"Homework Help"];
+    [pickerHelpArray addObject:@"Lab Assignment Help"];
+    [pickerHelpArray addObject:@"Exam Review"];
+    [pickerHelpArray addObject:@"Lecture Review"];
+    [pickerHelpArray addObject:@"Project Help"];
+    [pickerHelpArray addObject:@"Quiz Review"];
+    
+    
+    helpPicker = [[UIPickerView alloc] initWithFrame:CGRectZero];
+    helpPicker.delegate = self;
+    helpPicker.dataSource = self;
+    [helpPicker setShowsSelectionIndicator:YES];
+    self.helptypeTextField.inputView = helpPicker;
+    
+    // Create done button in UIPickerView
+    UIToolbar*  mypickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    mypickerToolbar.barStyle = UIBarStyleBlackOpaque;
+    [mypickerToolbar sizeToFit];
+    NSMutableArray *barItems = [[NSMutableArray alloc] init];
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    [barItems addObject:flexSpace];
+    
+    UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(pickerDoneClicked)];
+    [barItems addObject:doneBtn];
+    
+    [mypickerToolbar setItems:barItems animated:YES];
+    self.helptypeTextField.inputAccessoryView = mypickerToolbar;
+}
+
+-(void)addHourPicker
+{
+    pickerHourArray = [[NSMutableArray alloc]init];
+    
+    [pickerHourArray addObject:@""];
+    [pickerHourArray addObject:@"1"];
+    [pickerHourArray addObject:@"2"];
+    [pickerHourArray addObject:@"3"];
+    [pickerHourArray addObject:@"4"];
+    [pickerHourArray addObject:@"5"];
+
+    hourPicker = [[UIPickerView alloc] initWithFrame:CGRectZero];
+    hourPicker.delegate = self;
+    hourPicker.dataSource = self;
+    [hourPicker setShowsSelectionIndicator:YES];
+    self.hourTextField.inputView = hourPicker;
+    
+    // Create done button in UIPickerView
+    UIToolbar*  mypickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    mypickerToolbar.barStyle = UIBarStyleBlackOpaque;
+    [mypickerToolbar sizeToFit];
+    NSMutableArray *barItems = [[NSMutableArray alloc] init];
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    [barItems addObject:flexSpace];
+    
+    UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(pickerDoneClicked2)];
+    [barItems addObject:doneBtn];
+    
+    [mypickerToolbar setItems:barItems animated:YES];
+    self.hourTextField.inputAccessoryView = mypickerToolbar;
+}
+
+-(void)pickerDoneClicked
+{
+    [self.helptypeTextField resignFirstResponder];
+}
+
+-(void)pickerDoneClicked2
+{
+    [self.hourTextField resignFirstResponder];
 }
 
 
