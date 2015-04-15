@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 
 NSMutableArray *allTutorFromParse;
+NSMutableArray *allCourseFromParse;
 
 @interface AppDelegate ()
 - (void)networkChanged:(NSNotification *)notification;
@@ -71,6 +72,23 @@ NSMutableArray *allTutorFromParse;
         }
     }];
     
+    /********************************************************************************************************/
+    allCourseFromParse = [[NSMutableArray alloc] init];
+    PFQuery *theQuery = [PFQuery queryWithClassName:@"Course"];
+    [theQuery setLimit:1000];
+    [theQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error) {
+            allCourseFromParse = [objects valueForKey:@"courseName"];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:[error localizedDescription]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
     /********************************************************************************************************/
     KeychainItemWrapper* keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"KeychainTest" accessGroup:nil];
     [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];

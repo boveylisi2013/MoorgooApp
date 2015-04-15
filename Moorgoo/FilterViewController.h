@@ -27,5 +27,7 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *perhourVerticalSpaceLayout;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *maxpriceVerticalSpaceLayout;
+@property (weak, nonatomic) IBOutlet UILabel *perHourLabel;
+@property (weak, nonatomic) IBOutlet UITextField *priceTextField;
 
 @end

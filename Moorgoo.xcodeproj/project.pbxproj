@@ -34,6 +34,7 @@
 		13EBBE481AA19B1200495F8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE461AA19B1200495F8A /* Main.storyboard */; };
 		13EBBE4A1AA19B1200495F8A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE491AA19B1200495F8A /* Images.xcassets */; };
 		13EBBE4D1AA19B1200495F8A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE4B1AA19B1200495F8A /* LaunchScreen.xib */; };
+		420342931AC8B92D00FCD722 /* NewPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 420342921AC8B92D00FCD722 /* NewPostViewController.m */; };
 		42C2D2EA1ABE68AC00006AC2 /* TestTextFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2D2E91ABE68AC00006AC2 /* TestTextFieldViewController.m */; };
 		42C2D2F11AC0B36300006AC2 /* ChangeProfilePictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2D2F01AC0B36300006AC2 /* ChangeProfilePictureViewController.m */; };
 		42C2D2F41AC0D27600006AC2 /* ChangePhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2D2F31AC0D27600006AC2 /* ChangePhoneNumberViewController.m */; };
@@ -86,6 +87,8 @@
 		13EBBE4C1AA19B1200495F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13EBBE641AA19EBA00495F8A /* AppConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstant.h; sourceTree = "<group>"; };
 		13EBBE671AA1A1CB00495F8A /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		420342911AC8B92D00FCD722 /* NewPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPostViewController.h; sourceTree = "<group>"; };
+		420342921AC8B92D00FCD722 /* NewPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPostViewController.m; sourceTree = "<group>"; };
 		42C2D2E81ABE68AC00006AC2 /* TestTextFieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTextFieldViewController.h; path = Moorgoo/TestTextFieldViewController.h; sourceTree = "<group>"; };
 		42C2D2E91ABE68AC00006AC2 /* TestTextFieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestTextFieldViewController.m; path = Moorgoo/TestTextFieldViewController.m; sourceTree = "<group>"; };
 		42C2D2EF1AC0B36300006AC2 /* ChangeProfilePictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeProfilePictureViewController.h; sourceTree = "<group>"; };
@@ -262,6 +265,8 @@
 			children = (
 				13EBBE431AA19B1200495F8A /* SecondViewController.h */,
 				13EBBE441AA19B1200495F8A /* SecondViewController.m */,
+				420342911AC8B92D00FCD722 /* NewPostViewController.h */,
+				420342921AC8B92D00FCD722 /* NewPostViewController.m */,
 			);
 			name = SecondTab;
 			sourceTree = "<group>";
@@ -379,6 +384,7 @@
 				13EBBE3F1AA19B1200495F8A /* AppDelegate.m in Sources */,
 				138607501AA6DC14002A840A /* FilterViewController.m in Sources */,
 				42C2D2F11AC0B36300006AC2 /* ChangeProfilePictureViewController.m in Sources */,
+				420342931AC8B92D00FCD722 /* NewPostViewController.m in Sources */,
 				42C2D2EA1ABE68AC00006AC2 /* TestTextFieldViewController.m in Sources */,
 				1388CF211AA2345A0064BFE5 /* LoginViewController.m in Sources */,
 				42C2D2F71AC0DA0B00006AC2 /* ChangePasswordViewController.m in Sources */,

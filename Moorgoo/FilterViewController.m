@@ -20,7 +20,6 @@
     BOOL noClassFound;
 }
 @property (weak, nonatomic) IBOutlet UITextField *schoolTextField;
-@property (weak, nonatomic) IBOutlet UITextField *priceTextField;
 
 @end
 
@@ -29,11 +28,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"school: %@", filter.collegeClassTutorSchool);
-    NSLog(@"course: %@", filter.collegeClassTutorCourse);
-    NSLog(@"price: %@", filter.collegeClassTutorPrice);
-    self.schoolTextField.text = filter.collegeClassTutorSchool;
-    self.priceTextField.text = filter.collegeClassTutorPrice;
+
+//    NSLog(@"school: %@", filter.collegeClassTutorSchool);
+//    NSLog(@"course: %@", filter.collegeClassTutorCourse);
+//    NSLog(@"price: %@", filter.collegeClassTutorPrice);
+
+//    self.schoolTextField.text = filter.collegeClassTutorSchool;
+//    self.priceTextField.text = filter.collegeClassTutorPrice;
+//    
+//    if([self.schoolTextField.text length] != 0)
+//    {
+//        [self getCourses:flexibleClassArray];
+//        [self getCourses:stableClassArray];
+//        [self.courseTableView reloadData];
+//    }
     
     /*******************************************************************************/
     //keyboard disappear when tapping outside of text field
@@ -51,12 +59,15 @@
     
     if([self.schoolTextField.text isEqualToString:@""]) {
         self.classTextField.userInteractionEnabled = FALSE;
+        self.schoolTextField.layer.borderColor = [[UIColor redColor] CGColor];
+        self.schoolTextField.layer.borderWidth = 1.0;
     }
     else {
         self.classTextField.userInteractionEnabled = TRUE;
+        self.schoolTextField.layer.borderWidth = 0.0;
+
     }
-    self.schoolTextField.layer.borderColor = [[UIColor redColor] CGColor];
-    self.schoolTextField.layer.borderWidth = 1.0;
+
     /*******************************************************************************/
     //self.schoolTextField.delegate = self;
     self.classTextField.delegate = self;
@@ -194,9 +205,10 @@
     
     for(CollegeClassTutor *tutor in tutorArray){
         if([self.schoolTextField.text isEqualToString:tutor.school]) {
-            
+//            NSLog(@"tutorschool: %@", tutor.school);
             for(NSString *course in tutor.courses){
                 if(![targetArray containsObject:course]){
+//                    NSLog(@"coursname: %@", course);
                     [targetArray addObject:course];
                 }
             }
@@ -204,6 +216,8 @@
     }
     //sort the array according to character
     [targetArray sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    
+//    NSLog(@"in getcourses");
 }
 /*************************************************************************************/
 # pragma mark - table view delegate and datasource
@@ -212,6 +226,10 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    NSLog(@"in numberofrows, count: %d", [flexibleClassArray count]);
+//    for(NSString *ts in flexibleClassArray)
+//        NSLog(@"in numrows: class is %@", ts);
+    
     if([flexibleClassArray count] != 0)
         return [flexibleClassArray count];
     else
@@ -287,19 +305,36 @@
     //BOOL textFieldIsEmpty = (self.pickHelpTextField.text.length == 0 || self.specificClassTextField.text.length == 0);
     if (textField.text.length == 0)
     {
+        [UIView beginAnimations: nil context: NULL];
+        [UIView setAnimationDuration: 0.2];
+        
         [self.courseTableView setHidden:YES];
         self.perhourVerticalSpaceLayout.constant = 15;
         self.maxpriceVerticalSpaceLayout.constant = 15;
         
+        [self.perHourLabel layoutIfNeeded];
+        [self.priceTextField layoutIfNeeded];
+        [self.courseTableView layoutIfNeeded];
+        
+        [UIView commitAnimations];
+
 //        self.next.enabled = NO; DO WE NEED TO DISABLE SEARCH BUTTON???????????????????????????????????????????????????????????????????????????????????????????????????????????????????
     }
     else
     {
 //        self.next.enabled = !textFieldIsEmpty;
+        [UIView beginAnimations: nil context: NULL];
+        [UIView setAnimationDuration: 0.2];
         
         [self.courseTableView setHidden:NO];
         self.perhourVerticalSpaceLayout.constant = 266;
         self.maxpriceVerticalSpaceLayout.constant = 266;
+        
+        [self.perHourLabel layoutIfNeeded];
+        [self.priceTextField layoutIfNeeded];
+        [self.courseTableView layoutIfNeeded];
+        
+        [UIView commitAnimations];
         
         NSString *inputString = [textField.text uppercaseString];
         NSMutableArray *discardItems = [[NSMutableArray alloc] init];
