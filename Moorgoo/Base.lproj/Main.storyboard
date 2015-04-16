@@ -778,6 +778,8 @@
                         <segue destination="7QU-Ho-LUZ" kind="show" identifier="goToChangeProfilePicture" id="vWo-zs-V8u"/>
                         <segue destination="iEm-tC-2wa" kind="show" identifier="goToChangePhoneNumber" id="BPm-SC-vVK"/>
                         <segue destination="DP4-jX-ufx" kind="show" identifier="goToChangePassword" id="kEy-kZ-cZB"/>
+                        <segue destination="Gtm-Bw-fEf" kind="show" identifier="goToTutorDashboard" id="AsV-og-l0L"/>
+                        <segue destination="Mxh-8x-jmj" kind="show" identifier="goToTutorIntroduction" id="gCz-w0-xMt"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Rh-FI-46C" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -979,6 +981,50 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZDH-Xg-p0H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2452" y="1793"/>
+        </scene>
+        <!--Tutor Dashboard View Controller-->
+        <scene sceneID="ukM-tR-SfW">
+            <objects>
+                <viewController id="Gtm-Bw-fEf" customClass="TutorDashboardViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WOY-DH-8ba"/>
+                        <viewControllerLayoutGuide type="bottom" id="Syx-Dw-Ulh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qNe-0d-DXM">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yaK-vk-VKg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="901" y="1827"/>
+        </scene>
+        <!--Tutor Introduction View Controller-->
+        <scene sceneID="qUl-DL-AXJ">
+            <objects>
+                <viewController id="Mxh-8x-jmj" customClass="TutorIntroductionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="S0P-YV-eKM"/>
+                        <viewControllerLayoutGuide type="bottom" id="pe9-ie-LAT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Orm-WW-QcI">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nl4-j2-oZn">
+                                <rect key="frame" x="92" y="86" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Ll-Le-Efy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1581" y="1825"/>
         </scene>
         <!--Entrance View Controller-->
         <scene sceneID="maw-ZW-nK8">
@@ -1668,6 +1714,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="usY-Z8-TSn"/>
-        <segue reference="8rJ-t8-uSW"/>
+        <segue reference="Ken-Uh-5Ky"/>
     </inferredMetricsTieBreakers>
 </document>

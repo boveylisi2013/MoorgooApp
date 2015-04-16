@@ -141,7 +141,21 @@
     }
     else if(indexPath.section == 1)
     {
-        
+        PFObject *userPointer = [PFObject objectWithoutDataWithClassName:@"_User" objectId:([PFUser currentUser]).objectId];
+        PFQuery *query = [PFQuery queryWithClassName:@"CollegeClassTutor"];
+        [query whereKey:@"userId" equalTo:userPointer];
+
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if(!error)
+            {
+                // If curent user is tutor
+                if([objects count] == 1)
+                    [self performSegueWithIdentifier:@"goToTutorDashboard" sender:self];
+                // If current user is not tutor
+                else
+                    [self performSegueWithIdentifier:@"goToTutorIntroduction" sender:self];
+            }
+        }];
     }
     else
     {

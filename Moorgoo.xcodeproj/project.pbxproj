@@ -39,6 +39,8 @@
 		42C2D2F11AC0B36300006AC2 /* ChangeProfilePictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2D2F01AC0B36300006AC2 /* ChangeProfilePictureViewController.m */; };
 		42C2D2F41AC0D27600006AC2 /* ChangePhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2D2F31AC0D27600006AC2 /* ChangePhoneNumberViewController.m */; };
 		42C2D2F71AC0DA0B00006AC2 /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2D2F61AC0DA0B00006AC2 /* ChangePasswordViewController.m */; };
+		42CF14071ADF7C0E00FEE994 /* TutorDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CF14061ADF7C0E00FEE994 /* TutorDashboardViewController.m */; };
+		42CF140A1ADF7CD800FEE994 /* TutorIntroductionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CF14091ADF7CD800FEE994 /* TutorIntroductionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +99,10 @@
 		42C2D2F31AC0D27600006AC2 /* ChangePhoneNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePhoneNumberViewController.m; sourceTree = "<group>"; };
 		42C2D2F51AC0DA0B00006AC2 /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
 		42C2D2F61AC0DA0B00006AC2 /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordViewController.m; sourceTree = "<group>"; };
+		42CF14051ADF7C0E00FEE994 /* TutorDashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorDashboardViewController.h; sourceTree = "<group>"; };
+		42CF14061ADF7C0E00FEE994 /* TutorDashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorDashboardViewController.m; sourceTree = "<group>"; };
+		42CF14081ADF7CD800FEE994 /* TutorIntroductionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorIntroductionViewController.h; sourceTree = "<group>"; };
+		42CF14091ADF7CD800FEE994 /* TutorIntroductionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorIntroductionViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,6 +288,10 @@
 				42C2D2F31AC0D27600006AC2 /* ChangePhoneNumberViewController.m */,
 				42C2D2F51AC0DA0B00006AC2 /* ChangePasswordViewController.h */,
 				42C2D2F61AC0DA0B00006AC2 /* ChangePasswordViewController.m */,
+				42CF14051ADF7C0E00FEE994 /* TutorDashboardViewController.h */,
+				42CF14061ADF7C0E00FEE994 /* TutorDashboardViewController.m */,
+				42CF14081ADF7CD800FEE994 /* TutorIntroductionViewController.h */,
+				42CF14091ADF7CD800FEE994 /* TutorIntroductionViewController.m */,
 			);
 			name = ThirdTab;
 			sourceTree = "<group>";
@@ -385,11 +395,13 @@
 				138607501AA6DC14002A840A /* FilterViewController.m in Sources */,
 				42C2D2F11AC0B36300006AC2 /* ChangeProfilePictureViewController.m in Sources */,
 				420342931AC8B92D00FCD722 /* NewPostViewController.m in Sources */,
+				42CF14071ADF7C0E00FEE994 /* TutorDashboardViewController.m in Sources */,
 				42C2D2EA1ABE68AC00006AC2 /* TestTextFieldViewController.m in Sources */,
 				1388CF211AA2345A0064BFE5 /* LoginViewController.m in Sources */,
 				42C2D2F71AC0DA0B00006AC2 /* ChangePasswordViewController.m in Sources */,
 				135979AF1AA459220037862A /* AccountTableViewController.m in Sources */,
 				135979AC1AA4316A0037862A /* KeychainItemWrapper.m in Sources */,
+				42CF140A1ADF7CD800FEE994 /* TutorIntroductionViewController.m in Sources */,
 				42C2D2F41AC0D27600006AC2 /* ChangePhoneNumberViewController.m in Sources */,
 				13934C431AA7996C0095E818 /* MBProgressHUD.m in Sources */,
 				1388CF241AA234660064BFE5 /* RegisterViewController.m in Sources */,
