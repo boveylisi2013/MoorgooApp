@@ -22,12 +22,6 @@
     [self.hud show:YES];
     
     /**************************************************************************************/
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    self.refreshControl.backgroundColor = [UIColor purpleColor];
-    self.refreshControl.tintColor = [UIColor whiteColor];
-    [self.refreshControl addTarget:self
-                            action:@selector(fetchAllCollegeClassTutors)
-                  forControlEvents:UIControlEventValueChanged];
     /**************************************************************************************/
     self.hud = [[MBProgressHUD alloc] init];
     [self.view addSubview:self.hud];
@@ -68,6 +62,8 @@
         [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(fetchAllCollegeClassTutors) userInfo:nil repeats:NO];
         /**************************************************************************************/
     }
+    [self fetchAllCollegeClassTutors];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -76,7 +72,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self fetchAllCollegeClassTutors];
 }
 /**************************************************************************************/
 - (void)fetchAllCollegeClassTutors{
@@ -169,6 +164,17 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    CollegeClassTutor *tutorSelected = [tutorSource objectAtIndex:indexPath.row];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    TutorDetailTableViewController *dest = [[TutorDetailTableViewController alloc] initWithNibName:nil bundle:nil];
+    dest.tutorInstance = tutorSelected;
+    [self.navigationController pushViewController:dest animated:YES];
+}
+
 
 #pragma mark - Navigation
 
@@ -180,6 +186,10 @@
         dest.tutorArray = allTutorFromParse;
         dest.delegate = self;
     }
+    //    else if([segue.identifier isEqualToString:@"findToTutorDetail"]) {
+    //        TutorDetailTableViewController *dest = [[TutorDetailTableViewController alloc] init];
+    //        dest.tutorInstance = (CollegeClassTutor *)sender;
+    //    }
 }
 
 
@@ -205,7 +215,11 @@
                 if (user) {
                 }
                 else {
-                    [[[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedFailureReason] delegate:nil    cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                message:[error localizedFailureReason]
+                                               delegate:nil
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil] show];
                 }
             }];
         }

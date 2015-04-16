@@ -41,17 +41,23 @@ NSMutableArray *allCourseFromParse;
                     PFObject *department = [object objectForKey:@"departmentId"];
                     PFObject *school = [object objectForKey:@"schoolId"];
                     CollegeClassTutor *tutor = [[CollegeClassTutor alloc] init];
+                    
                     tutor.firstName = [user objectForKey:@"firstName"];
                     tutor.lastName = [user objectForKey:@"lastName"];
+                    tutor.phone = [user objectForKey:@"phone"];
+                    tutor.email = [user objectForKey:@"email"];
                     tutor.userId = user.objectId;
                     tutor.courses = [object objectForKey:@"courses"];
-                    tutor.availableDays = [user objectForKey:@"availableDays"];
+                    tutor.AClasses = [object objectForKey:@"AClasses"];
+                    tutor.availableDays = [object objectForKey:@"availableDays"];
                     tutor.price = ([object objectForKey:@"price"] == nil) ? @"" : [object objectForKey:@"price"];
                     tutor.department = (department == nil) ? @"" : [department objectForKey:@"department"];
                     tutor.school = (school == nil) ? @"" : [school objectForKey:@"schoolName"];
                     tutor.schoolAbbreviation = ([object objectForKey:@"schoolAbbreviation"] == nil) ? @"" : [object objectForKey:@"schoolAbbreviation"];
                     tutor.goodRating = ([object objectForKey:@"goodRating"] == nil) ? @"" : [object objectForKey:@"goodRating"];
                     tutor.badRating = ([object objectForKey:@"badRating"] == nil) ? @"" : [object objectForKey:@"badRating"];
+                    tutor.selfAd = ([object objectForKey:@"selfAd"] == nil) ? @"" : [object objectForKey:@"selfAd"];
+                    
                     
                     /**************************************************************************************/
                     [[user objectForKey:@"profilePicture"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		131B757D1ADF92A300ACA4E2 /* TutorDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 131B757C1ADF92A300ACA4E2 /* TutorDetailTableViewController.m */; };
 		13356FD51AAA48CB00C6B424 /* SearchFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13356FD41AAA48CB00C6B424 /* SearchFilter.m */; };
 		135979931AA378DA0037862A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135979921AA378DA0037862A /* Security.framework */; };
 		135979951AA378E20037862A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135979941AA378E20037862A /* UIKit.framework */; };
@@ -44,6 +45,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		131B757B1ADF92A300ACA4E2 /* tutorDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tutorDetailTableViewController.h; sourceTree = "<group>"; };
+		131B757C1ADF92A300ACA4E2 /* TutorDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorDetailTableViewController.m; sourceTree = "<group>"; };
 		13356FD31AAA48CB00C6B424 /* SearchFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchFilter.h; sourceTree = "<group>"; };
 		13356FD41AAA48CB00C6B424 /* SearchFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchFilter.m; sourceTree = "<group>"; };
 		135979921AA378DA0037862A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -262,6 +265,8 @@
 				137A41C21AA56376008BF591 /* FindTutorTableViewController.m */,
 				1386074E1AA6DC14002A840A /* FilterViewController.h */,
 				1386074F1AA6DC14002A840A /* FilterViewController.m */,
+				131B757B1ADF92A300ACA4E2 /* tutorDetailTableViewController.h */,
+				131B757C1ADF92A300ACA4E2 /* TutorDetailTableViewController.m */,
 			);
 			name = FirstTab;
 			sourceTree = "<group>";
@@ -407,6 +412,7 @@
 				1388CF241AA234660064BFE5 /* RegisterViewController.m in Sources */,
 				137A41C31AA56376008BF591 /* FindTutorTableViewController.m in Sources */,
 				138D42A11AAA7C3A000E437B /* Reachability.m in Sources */,
+				131B757D1ADF92A300ACA4E2 /* TutorDetailTableViewController.m in Sources */,
 				13EBBE3C1AA19B1200495F8A /* main.m in Sources */,
 				13356FD51AAA48CB00C6B424 /* SearchFilter.m in Sources */,
 				1388CF1E1AA2344E0064BFE5 /* EntranceViewController.m in Sources */,

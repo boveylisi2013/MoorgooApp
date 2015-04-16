@@ -20,5 +20,9 @@
 @property NSString *schoolAbbreviation;
 @property NSString *goodRating;
 @property NSString *badRating;
+@property NSString *selfAd;
+@property NSString *phone;
+@property NSString *email;
+@property NSArray *AClasses;
 
 @end
