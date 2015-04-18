@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TutorDashboardViewController : UIViewController
+@interface TutorDashboardViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>
 
 @end
