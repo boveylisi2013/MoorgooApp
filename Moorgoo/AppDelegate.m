@@ -76,8 +76,35 @@ NSMutableArray *allCourseFromParse;
                                                   otherButtonTitles:nil];
             [alert show];
         }
+        
+        /**************************************************************************************/
+        
+        /**************************************************************************************/
+        
     }];
     
+    /********************************************************************************************************/
+    NSLog(@"Getting the latest config...");
+    [PFConfig getConfigInBackgroundWithBlock:^(PFConfig *config, NSError *error) {
+        if (!error) {
+            NSLog(@"Yay! Config was fetched from the server.");
+            
+            BOOL isCurrentAppOpen = [config[@"isCurrentAppOpen"] boolValue];
+            NSString *currentAppVersion = config[@"currentAppVersion"];
+            
+            if(!isCurrentAppOpen) {
+                [[[UIAlertView alloc] initWithTitle:@"Sorry" message:@"Moorgoo Tutor App is maintained now. Please use it later." delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil] show];
+            }
+            
+            if(![currentAppVersion isEqualToString:@"1.0"]) {
+                [[[UIAlertView alloc] initWithTitle:@"Sorry" message:@"New version is available.\nPlease go to the App Store to download the latest version." delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil] show];
+            }
+            
+        } else {
+            NSLog(@"Failed to fetch. Using Cached Config.");
+            config = [PFConfig currentConfig];
+        }
+    }];
     /********************************************************************************************************/
     allCourseFromParse = [[NSMutableArray alloc] init];
     PFQuery *theQuery = [PFQuery queryWithClassName:@"Course"];
@@ -125,10 +152,10 @@ NSMutableArray *allCourseFromParse;
     
     [reachability startNotifier];
     /******************************************************************************/
-    
-    
-    [[UINavigationBar appearance] setBarTintColor:[UIColor yellowColor]];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:50.0/255.0 green:120.0/255.0 blue:180.0 alpha:1]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     return YES;
 }

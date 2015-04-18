@@ -160,8 +160,8 @@
     else
     {
         // Logout confirmation
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notice"
-                                                        message:@"Are you sure you wanna logout?"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Dear"
+                                                        message:@"Do you want to logout?"
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:@"Yes", nil];

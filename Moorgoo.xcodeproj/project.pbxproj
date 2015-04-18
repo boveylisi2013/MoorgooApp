@@ -29,9 +29,10 @@
 		138D42A11AAA7C3A000E437B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 138D42A01AAA7C3A000E437B /* Reachability.m */; };
 		13934C431AA7996C0095E818 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 13934C421AA7996C0095E818 /* MBProgressHUD.m */; };
 		13D287451AA54BED008B5D53 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D287441AA54BED008B5D53 /* Parse.framework */; };
+		13DD60DE1AE2266300B20FA2 /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13DD60DD1AE2266300B20FA2 /* CustomIOS7AlertView.m */; };
+		13DD60E21AE23A5700B20FA2 /* StudentPostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13DD60E11AE23A5700B20FA2 /* StudentPostTableViewController.m */; };
 		13EBBE3C1AA19B1200495F8A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBE3B1AA19B1200495F8A /* main.m */; };
 		13EBBE3F1AA19B1200495F8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBE3E1AA19B1200495F8A /* AppDelegate.m */; };
-		13EBBE451AA19B1200495F8A /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBE441AA19B1200495F8A /* SecondViewController.m */; };
 		13EBBE481AA19B1200495F8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE461AA19B1200495F8A /* Main.storyboard */; };
 		13EBBE4A1AA19B1200495F8A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE491AA19B1200495F8A /* Images.xcassets */; };
 		13EBBE4D1AA19B1200495F8A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBE4B1AA19B1200495F8A /* LaunchScreen.xib */; };
@@ -80,13 +81,15 @@
 		13934C411AA7996C0095E818 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		13934C421AA7996C0095E818 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		13D287441AA54BED008B5D53 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		13DD60DC1AE2266300B20FA2 /* CustomIOS7AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOS7AlertView.h; sourceTree = "<group>"; };
+		13DD60DD1AE2266300B20FA2 /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
+		13DD60E01AE23A5700B20FA2 /* StudentPostTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudentPostTableViewController.h; sourceTree = "<group>"; };
+		13DD60E11AE23A5700B20FA2 /* StudentPostTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudentPostTableViewController.m; sourceTree = "<group>"; };
 		13EBBE361AA19B1200495F8A /* Moorgoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moorgoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13EBBE3A1AA19B1200495F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13EBBE3B1AA19B1200495F8A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		13EBBE3D1AA19B1200495F8A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		13EBBE3E1AA19B1200495F8A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		13EBBE431AA19B1200495F8A /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		13EBBE441AA19B1200495F8A /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		13EBBE471AA19B1200495F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		13EBBE491AA19B1200495F8A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		13EBBE4C1AA19B1200495F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -194,6 +197,15 @@
 			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
+		13DD60DF1AE2266700B20FA2 /* CustomAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				13DD60DC1AE2266300B20FA2 /* CustomIOS7AlertView.h */,
+				13DD60DD1AE2266300B20FA2 /* CustomIOS7AlertView.m */,
+			);
+			name = CustomAlertView;
+			sourceTree = "<group>";
+		};
 		13EBBE2D1AA19B1200495F8A = {
 			isa = PBXGroup;
 			children = (
@@ -241,6 +253,7 @@
 		13EBBE621AA19E0200495F8A /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				13DD60DF1AE2266700B20FA2 /* CustomAlertView */,
 				138D429E1AAA7C10000E437B /* Reachability */,
 				13934C401AA7996C0095E818 /* MBProgressHUD */,
 				135979A91AA431420037862A /* KeyChain */,
@@ -274,8 +287,8 @@
 		13EBBE681AA1A61200495F8A /* SecondTab */ = {
 			isa = PBXGroup;
 			children = (
-				13EBBE431AA19B1200495F8A /* SecondViewController.h */,
-				13EBBE441AA19B1200495F8A /* SecondViewController.m */,
+				13DD60E01AE23A5700B20FA2 /* StudentPostTableViewController.h */,
+				13DD60E11AE23A5700B20FA2 /* StudentPostTableViewController.m */,
 				420342911AC8B92D00FCD722 /* NewPostViewController.h */,
 				420342921AC8B92D00FCD722 /* NewPostViewController.m */,
 			);
@@ -394,7 +407,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13EBBE451AA19B1200495F8A /* SecondViewController.m in Sources */,
 				137A41C81AA57036008BF591 /* CollegeClassTutor.m in Sources */,
 				13EBBE3F1AA19B1200495F8A /* AppDelegate.m in Sources */,
 				138607501AA6DC14002A840A /* FilterViewController.m in Sources */,
@@ -406,6 +418,7 @@
 				42C2D2F71AC0DA0B00006AC2 /* ChangePasswordViewController.m in Sources */,
 				135979AF1AA459220037862A /* AccountTableViewController.m in Sources */,
 				135979AC1AA4316A0037862A /* KeychainItemWrapper.m in Sources */,
+				13DD60DE1AE2266300B20FA2 /* CustomIOS7AlertView.m in Sources */,
 				42CF140A1ADF7CD800FEE994 /* TutorIntroductionViewController.m in Sources */,
 				42C2D2F41AC0D27600006AC2 /* ChangePhoneNumberViewController.m in Sources */,
 				13934C431AA7996C0095E818 /* MBProgressHUD.m in Sources */,
@@ -415,6 +428,7 @@
 				131B757D1ADF92A300ACA4E2 /* TutorDetailTableViewController.m in Sources */,
 				13EBBE3C1AA19B1200495F8A /* main.m in Sources */,
 				13356FD51AAA48CB00C6B424 /* SearchFilter.m in Sources */,
+				13DD60E21AE23A5700B20FA2 /* StudentPostTableViewController.m in Sources */,
 				1388CF1E1AA2344E0064BFE5 /* EntranceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

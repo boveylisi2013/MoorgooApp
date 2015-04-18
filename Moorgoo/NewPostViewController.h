@@ -42,4 +42,6 @@ extern NSMutableArray *allCourseFromParse;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
+@property (nonatomic, strong) MBProgressHUD *hud;
+
 @end

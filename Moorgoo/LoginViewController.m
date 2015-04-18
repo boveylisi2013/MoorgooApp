@@ -13,7 +13,8 @@
 
 @end
 
-@implementation LoginViewController 
+@implementation LoginViewController
+@synthesize emailResetTextField;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -86,6 +87,42 @@
         [self.passwordTextField becomeFirstResponder];
     }
     return YES;
+}
+
+
+- (IBAction)forgetButtonClicked:(id)sender {
+    
+    self.IOS7AlertView = [[CustomIOS7AlertView alloc] init];
+    UIView *basicView = [[UIView alloc] init];
+    basicView.frame = CGRectMake(0, 0, 300, 100);
+    
+    emailResetTextField = [[UITextField alloc] init];
+    emailResetTextField.frame = CGRectMake(10, 40, basicView.frame.size.width - 20, 45);
+    emailResetTextField.placeholder = @"Input your email address";
+    emailResetTextField.backgroundColor = [UIColor whiteColor];
+    emailResetTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    
+    [basicView addSubview:emailResetTextField];
+    
+    [self.IOS7AlertView setContainerView:basicView];
+    [self.IOS7AlertView setDelegate:self];
+    [self.IOS7AlertView setButtonTitles:@[@"Cancel", @"Reset"]];
+    [self.IOS7AlertView show];
+}
+
+#pragma mark - <customerAlertViewDelegate>
+- (void)customIOS7dialogButtonTouchUpInside:(CustomIOS7AlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self.IOS7AlertView close];
+    
+    if(buttonIndex == 1) {
+        [PFUser requestPasswordResetForEmailInBackground:emailResetTextField.text];
+        [[[UIAlertView alloc] initWithTitle:nil
+                                    message:@"An password reset link has been sent to your email address."
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+    }
 }
 
 @end

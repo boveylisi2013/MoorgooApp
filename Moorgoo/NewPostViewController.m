@@ -33,7 +33,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    self.hud = [[MBProgressHUD alloc] init];
+    [self.view addSubview:self.hud];
+    /*******************************************************************************/
+    self.navigationItem.title = @"New Post";
+    /*******************************************************************************/
 
+    
     originalColor = self.view.backgroundColor;
     /*******************************************************************************/
     self.tableView.delegate = self;
@@ -375,7 +383,7 @@
     
     // Non - Animation
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MM-dd-yyyy"];
+    [dateFormatter setDateFormat:@"MM-dd-yyyy hh:mm"];
     
     NSDate *chosenDate = [self.datePicker date];
     NSString *dateString = [dateFormatter stringFromDate:chosenDate];
@@ -558,6 +566,69 @@
 -(void)pickerDoneClicked2
 {
     [self.hourTextField resignFirstResponder];
+}
+
+- (IBAction)postButtonClicked:(id)sender {
+    
+    // The string contains all possible errors
+    NSString *errorString = @"";
+    
+    if (self.courseTextField.text.length == 0) {
+        errorString = [errorString stringByAppendingString:@"Please input the course\n"];
+    }
+    if (self.helptypeTextField.text.length == 0) {
+        errorString = [errorString stringByAppendingString:@"Please input help type\n"];
+    }
+    if (self.hourTextField.text.length == 0) {
+        errorString = [errorString stringByAppendingString:@"Please input number of hours\n"];
+    }
+    if (self.moneyTextField.text.length == 0){
+        errorString = [errorString stringByAppendingString:@"Please input hourly rate\n"];
+    }
+    
+    // Check whether the user inputs their information correctly or not
+    if ([errorString length] != 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:errorString
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    else {
+        NSMutableArray *timeArray = [[NSMutableArray alloc] init];
+        if(![self.dateLabel1 isHidden])
+            [timeArray addObject:self.dateLabel1.text];
+        if(![self.dateLabel2 isHidden])
+            [timeArray addObject:self.dateLabel2.text];
+        if(![self.dateLabel3 isHidden])
+            [timeArray addObject:self.dateLabel3.text];
+        if(![self.dateLabel4 isHidden])
+            [timeArray addObject:self.dateLabel4.text];
+        
+        [self.hud show:TRUE];
+        
+        PFObject *userPointer = [PFObject objectWithoutDataWithClassName:@"_User" objectId:([PFUser currentUser]).objectId];
+        
+        PFObject *studentPost = [PFObject objectWithClassName:@"StudentPost"];
+        [studentPost setObject:userPointer forKey:@"userId"];
+        [studentPost setObject:self.courseTextField.text forKey:@"course"];
+        [studentPost setObject:self.helptypeTextField.text forKey:@"typeOfHelp"];
+        [studentPost setObject:self.hourTextField.text forKey:@"numOfHour"];
+        [studentPost setObject:self.moneyTextField.text forKey:@"ratePerHour"];
+        [studentPost setObject:timeArray forKey:@"datePicked"];
+        [studentPost saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if(!error) {
+                [[[UIAlertView alloc] initWithTitle:nil message:@"Your posts have been successfully uploaded! You could delete your post in the account setting page." delegate:nil cancelButtonTitle:@"Got ya!" otherButtonTitles:nil, nil] show];
+            }
+            else {
+                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Your request is failed. Please try again!" delegate:nil cancelButtonTitle:@"Okay!" otherButtonTitles:nil, nil] show];
+            }
+            [self.hud hide:TRUE];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+    }
 }
 
 

@@ -75,8 +75,9 @@
         
         //school + department
         UILabel *departmentLabel = [[UILabel alloc] init];
-        departmentLabel.frame = CGRectMake(155, 60, [[UIScreen mainScreen] bounds].size.width-160, 20);
-        departmentLabel.font = [UIFont boldSystemFontOfSize:18];
+        departmentLabel.numberOfLines = 0;
+        departmentLabel.frame = CGRectMake(155, 60, [[UIScreen mainScreen] bounds].size.width-160, 40);
+        departmentLabel.font = [UIFont boldSystemFontOfSize:15];
         NSMutableString *department = [NSMutableString new];
         [department appendString:tutorInstance.schoolAbbreviation];
         [department appendString:@" "];
@@ -86,7 +87,7 @@
         
         //price
         UILabel *priceLabel = [[UILabel alloc] init];
-        priceLabel.frame = CGRectMake(155, 100, [[UIScreen mainScreen] bounds].size.width-160, 20);
+        priceLabel.frame = CGRectMake(155, 110, [[UIScreen mainScreen] bounds].size.width-160, 20);
         priceLabel.font = [UIFont boldSystemFontOfSize:18];
         NSMutableString *price = [NSMutableString new];
         [price appendString:@"$"];
@@ -98,7 +99,7 @@
     else if(indexPath.section == 1) {
         UIView *goodView = [[UIView alloc] init];
         goodView.frame = CGRectMake(5, 20, [[UIScreen mainScreen] bounds].size.width-10, 40);
-        goodView.layer.borderColor = [UIColor redColor].CGColor;
+        goodView.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:255.0 alpha:1].CGColor;
         goodView.layer.borderWidth = 2.0f;
         
         UILabel *goodNum = [[UILabel alloc] init];
@@ -125,7 +126,7 @@
         /*****************************************************************************/
         UIView *badView = [[UIView alloc] init];
         badView.frame = CGRectMake(5, 80, [[UIScreen mainScreen] bounds].size.width-10, 40);
-        badView.layer.borderColor = [UIColor redColor].CGColor;
+        badView.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:255.0 alpha:1].CGColor;
         badView.layer.borderWidth = 2.0f;
         
         UILabel *badNum = [[UILabel alloc] init];
@@ -242,7 +243,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 150; 
+    if(indexPath.section == 3 || indexPath.section == 7)
+        return 80;
+    return 160;
 }
 
 
@@ -250,9 +253,9 @@
 {
     UIView *header = [[UIView alloc] init];
     header.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 25);
-    header.backgroundColor = [UIColor colorWithRed:133.0/255.0
-                                             green:110.0/255.0
-                                              blue:246.0/255.0
+    header.backgroundColor = [UIColor colorWithRed:255.0/255.0
+                                             green:51.0/255.0
+                                              blue:51.0/255.0
                                              alpha:1];
     
     UILabel *headerLabel =[[UILabel alloc] init];
