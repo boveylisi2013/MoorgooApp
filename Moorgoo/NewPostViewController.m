@@ -128,6 +128,9 @@
     /*******************************************************************************/
     [self.datePicker addTarget:self action:@selector(datePickerChanged:) forControlEvents:UIControlEventValueChanged];
     
+    // This line can be used to change the date picker's mode
+    //    self.datePicker.datePickerMode = UIDatePickerModeDate;
+    
 }
 
 # pragma mark - dismissKeyboard

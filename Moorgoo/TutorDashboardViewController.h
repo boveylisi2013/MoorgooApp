@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TutorDashboardViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>
+@interface TutorDashboardViewController : UIViewController <UIPickerViewDelegate,UIPickerViewDataSource,UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) MBProgressHUD *hud;
 

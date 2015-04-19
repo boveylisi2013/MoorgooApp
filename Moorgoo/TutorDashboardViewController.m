@@ -24,6 +24,8 @@
     
     NSMutableArray *addedCourses;
     NSMutableArray *availableDays;
+    
+    NSMutableArray *pickerDepartmentArray;
     /************************************************************************************************/
     
     
@@ -69,6 +71,14 @@
     UILabel *fridayLabel;
     UILabel *saturdayLabel;
     UILabel *sundayLabel;
+    
+    UILabel *myDescriptionLabel;
+    UITextView *descriptionTextView;
+    
+    UILabel *myMajorLabel;
+    UITextField *majorTextField;
+    UIPickerView *departmentPicker;
+    
 }
 @end
 
@@ -89,7 +99,7 @@
     
     // Set up the scrollView
     scrollView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
-    scrollView.contentSize = CGSizeMake(screenWidth, screenHeight + 500);
+    scrollView.contentSize = CGSizeMake(screenWidth, screenHeight + 800);
     [self.view addSubview:scrollView];
     
     [self centerSubview:chooseCourseLabel withX:10 Y:10 height:15];
@@ -103,17 +113,19 @@
     
     [self centerSubview:courseTableView withX:10 Y:80 height:220];
     
-    [self layoutMyCoursesBlock:100];
     for(int i = 1; i < 6; i++)
     {
         [self hideCourseLabelAndButtonNumber:i YorN:true];
     }
     
-    [self layoutWeekDaysBlock:440];
-    
-    [self centerSubview:submitButton withX:40 Y:900 height:60];
     [submitButton setTitle:@"SAVE" forState:UIControlStateNormal];
     submitButton.backgroundColor = [UIColor purpleColor];
+    
+    [self layoutMyCoursesBlock:100];
+    [self layoutWeekDaysBlock:440];
+    [self centerSubview:submitButton withX:40 Y:900 height:60];
+    [self layoutMyDescriptionAndMajorBlock:980];
+    
     
     [self addAllSubviews];
     
@@ -191,8 +203,22 @@
     [deleteCourseButton4 setTitle:@"DELETE" forState:UIControlStateNormal];
     [deleteCourseButton5 setTitle:@"DELETE" forState:UIControlStateNormal];
     
-    /************************************************************************************************/
+    /************************************************************************************/
     
+    [self fetchTutorInfoAndSetSubviews];
+    
+    // Add the method to detect change in the specficClassTextField
+    [submitButton addTarget:self
+                     action:@selector(submitButtonPressed)
+           forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+}
+
+#pragma mark- database query methods
+-(void)fetchTutorInfoAndSetSubviews
+{
     addedCourses = [[NSMutableArray alloc] init];
     availableDays = [[NSMutableArray alloc] init];
     
@@ -228,6 +254,7 @@
              NSArray *tempAvailableDays = (NSArray *)[tutor objectForKey:@"availableDays"];
              [availableDays addObjectsFromArray:tempAvailableDays];
              
+             // Set the course labels
              if([addedCourses count] != 0)
              {
                  int i = 1;
@@ -239,6 +266,7 @@
                  }
              }
              
+             // Set the day labels and switchs
              if([availableDays count] != 0)
              {
                  if([availableDays containsObject:@"Monday"]) [mondaySwitch setOn:YES];
@@ -250,7 +278,9 @@
                  if([availableDays containsObject:@"Sunday"]) [sundaySwitch setOn:YES];
              }
              
-             
+             // Set myDescription textField
+             NSString *descriptionText = (NSString *)[tutor objectForKey:@"selfAd"];
+             [descriptionTextView setText:descriptionText];
          }
          else
          {
@@ -266,18 +296,7 @@
          }
          
      }];
-    
-    /************************************************************************************/
-    
-    // Add the method to detect change in the specficClassTextField
-    [submitButton addTarget:self
-                     action:@selector(submitButtonPressed)
-           forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
 }
-
 
 #pragma mark- tableView delegete methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -558,6 +577,7 @@
          {
              [tutor setObject:addedCourses forKey:@"courses"];
              [tutor setObject:availableDays forKey:@"availableDays"];
+             [tutor setObject:descriptionTextView.text forKey:@"selfAd"];
              [tutor saveInBackground];
              
              [self.hud hide:YES];
@@ -587,6 +607,64 @@
      }];
 }
 
+#pragma mark - add picker helper method
+// Helper method to add the picker
+-(void)addHelpPicker
+{
+    pickerDepartmentArray = [[NSMutableArray alloc] init];
+    
+    departmentPicker = [[UIPickerView alloc] initWithFrame:CGRectZero];
+    departmentPicker.delegate = self;
+    departmentPicker.dataSource = self;
+    [departmentPicker setShowsSelectionIndicator:YES];
+    majorTextField.inputView = departmentPicker;
+    
+    // Create done button in UIPickerView
+    UIToolbar*  mypickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    mypickerToolbar.barStyle = UIBarStyleBlackOpaque;
+    [mypickerToolbar sizeToFit];
+    NSMutableArray *barItems = [[NSMutableArray alloc] init];
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    [barItems addObject:flexSpace];
+    
+    UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(pickerDoneClicked)];
+    [barItems addObject:doneBtn];
+    
+    [mypickerToolbar setItems:barItems animated:YES];
+    majorTextField.inputAccessoryView = mypickerToolbar;
+}
+
+-(void)pickerDoneClicked
+{
+    [majorTextField resignFirstResponder];
+}
+
+/*************************************************************************************/
+#pragma mark - Picker View Data source
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent: (NSInteger)component {
+    return pickerDepartmentArray.count;
+}
+
+#pragma mark- Picker View Delegate
+-(NSString *)pickerView:(UIPickerView *)pickerView
+            titleForRow:(NSInteger)row
+           forComponent:(NSInteger)component
+{
+    return [pickerDepartmentArray objectAtIndex:row];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView
+      didSelectRow:(NSInteger)row
+       inComponent:(NSInteger)component
+{
+    majorTextField.text = [NSString stringWithFormat:@"%@", [pickerDepartmentArray objectAtIndex:row]];
+}
+
+
 #pragma mark - layout encapsulation method
 /************************************************************************************************/
 
@@ -613,8 +691,13 @@
     sundayLabel = [[UILabel alloc] init];
     myAvailableDaysLabel = [[UILabel alloc] init];
     
+    myDescriptionLabel = [[UILabel alloc] init];
+    
+    myMajorLabel = [[UILabel alloc] init];
+    
     // TextField
     chooseCourseTextField = [[UITextField alloc] init];
+    majorTextField = [[UITextField alloc] init];
     
     // TableView
     courseTableView = [[UITableView alloc] init];
@@ -636,6 +719,12 @@
     fridaySwitch = [[UISwitch alloc] init];
     saturdaySwitch = [[UISwitch alloc] init];
     sundaySwitch = [[UISwitch alloc] init];
+    
+    // UITextView
+    descriptionTextView = [[UITextView alloc] init];
+    
+    // UIPickerView
+    departmentPicker = [[UIPickerView alloc] init];
 }
 
 -(void)addAllSubviews
@@ -658,13 +747,18 @@
     [scrollView addSubview:sundayLabel];
     [scrollView addSubview:myAvailableDaysLabel];
     
+    [scrollView addSubview:myDescriptionLabel];
+    
+    [scrollView addSubview:myMajorLabel];
+    
     // TextField
     [scrollView addSubview:chooseCourseTextField];
+    [scrollView addSubview:majorTextField];
     
     // TableView
     [scrollView addSubview:courseTableView];
     
-    //Button
+    // Button
     [scrollView addSubview:deleteCourseButton1];
     [scrollView addSubview:deleteCourseButton2];
     [scrollView addSubview:deleteCourseButton3];
@@ -673,7 +767,7 @@
     
     [scrollView addSubview:submitButton];
     
-    //Switch
+    // Switch
     [scrollView addSubview:mondaySwitch];
     [scrollView addSubview:tuesdaySwitch];
     [scrollView addSubview:wednesdaySwitch];
@@ -681,6 +775,12 @@
     [scrollView addSubview:fridaySwitch];
     [scrollView addSubview:saturdaySwitch];
     [scrollView addSubview:sundaySwitch];
+    
+    // TextView
+    [scrollView addSubview:descriptionTextView];
+    
+    // UIPickerView
+    [scrollView addSubview:departmentPicker];
 }
 
 -(void)centerSubview:(UIView *)subView withX:(CGFloat)xCoordinate Y:(CGFloat)yCoordinate height:(CGFloat)height
@@ -784,7 +884,28 @@
     
 }
 
--(void)layoutIfNeededMyCourseBlock
+-(void)layoutMyDescriptionAndMajorBlock:(CGFloat)yCoordinate
+{
+    [self centerSubview:myDescriptionLabel withX:0 Y:yCoordinate height:35];
+    [myDescriptionLabel setText:@"  My Description"];
+    myDescriptionLabel.backgroundColor = [UIColor colorWithRed:50.0/255.0 green:120.0/255.0 blue:180.0 alpha:1];
+    myDescriptionLabel.textColor = [UIColor whiteColor];
+    
+    [self centerSubview:descriptionTextView withX:10 Y:yCoordinate + 45 height:200];
+    descriptionTextView.layer.borderWidth = 1;
+    descriptionTextView.layer.borderColor = [[UIColor blackColor] CGColor];
+    
+    [self centerSubview:myMajorLabel withX:0 Y:yCoordinate + 260 height:35];
+    [myMajorLabel setText:@"  My Major"];
+    myMajorLabel.backgroundColor = [UIColor colorWithRed:50.0/255.0 green:120.0/255.0 blue:180.0 alpha:1];
+    myMajorLabel.textColor = [UIColor whiteColor];
+    
+    [self centerSubview:majorTextField withX:10 Y:yCoordinate + 305 height:35];
+    majorTextField.layer.borderWidth = 1;
+    majorTextField.layer.borderColor = [[UIColor blackColor] CGColor];
+}
+
+-(void)layoutIfNeededAllBlocks
 {
     [myCourseLabel layoutIfNeeded];
     [courseLabel1 layoutIfNeeded];
@@ -795,6 +916,28 @@
     [deleteCourseButton2 layoutIfNeeded];
     [deleteCourseButton3 layoutIfNeeded];
     [deleteCourseButton4 layoutIfNeeded];
+    
+    [mondayLabel layoutIfNeeded];
+    [tuesdayLabel layoutIfNeeded];
+    [wednesdayLabel layoutIfNeeded];
+    [thursdayLabel layoutIfNeeded];
+    [fridayLabel layoutIfNeeded];
+    [saturdayLabel layoutIfNeeded];
+    [sundayLabel layoutIfNeeded];
+    
+    [mondaySwitch layoutIfNeeded];
+    [tuesdaySwitch layoutIfNeeded];
+    [wednesdaySwitch layoutIfNeeded];
+    [thursdaySwitch layoutIfNeeded];
+    [fridaySwitch layoutIfNeeded];
+    [saturdaySwitch layoutIfNeeded];
+    [sundaySwitch layoutIfNeeded];
+    
+    [myDescriptionLabel layoutIfNeeded];
+    [descriptionTextView layoutIfNeeded];
+    
+    [myMajorLabel layoutIfNeeded];
+    [majorTextField layoutIfNeeded];
 }
 
 -(void)hideCourseLabelAndButtonNumber:(int)number YorN:(BOOL)YN
@@ -860,7 +1003,8 @@
     [self layoutMyCoursesBlock:yCoordinate];
     [self layoutWeekDaysBlock:yCoordinate + 340];
     [self centerSubview:submitButton withX:40 Y:yCoordinate + 800 height:60];
-    [self layoutIfNeededMyCourseBlock];
+    [self layoutMyDescriptionAndMajorBlock:yCoordinate + 880];
+    [self layoutIfNeededAllBlocks];
     
     [UIView commitAnimations];
 }
