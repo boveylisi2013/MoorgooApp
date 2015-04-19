@@ -625,8 +625,8 @@
                 [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Your request is failed. Please try again!" delegate:nil cancelButtonTitle:@"Okay!" otherButtonTitles:nil, nil] show];
             }
             [self.hud hide:TRUE];
-            
-            [self.navigationController popViewControllerAnimated:YES];
+
+            [self performSegueWithIdentifier:@"goToStudentPosting" sender:self];
         }];
     }
 }

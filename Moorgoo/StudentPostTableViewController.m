@@ -50,6 +50,8 @@
                 isTutor = FALSE;
         }
     }];
+    
+    NSLog(@"in student post viewdid load");
 }
 
 - (void)didReceiveMemoryWarning {

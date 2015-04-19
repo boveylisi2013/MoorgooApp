@@ -8,14 +8,24 @@
 
 #import "TutorDashboardViewController.h"
 
-@interface TutorDashboardViewController () 
+@interface TutorDashboardViewController ()
 {
     // Arrays for tableView
     NSMutableArray *courseItems;
     NSMutableArray *stableCourseItems;
+    
     BOOL addedCoursesToStableCourseItems;
+    BOOL noCourseFound;
+    
+    NSString *choosenCourse;
+    
+    NSMutableArray *allCourseLabels;
+    NSMutableArray *allDeleteButtons;
+    
+    NSMutableArray *addedCourses;
+    NSMutableArray *availableDays;
     /************************************************************************************************/
-
+    
     
     UIScrollView *scrollView;
     
@@ -28,6 +38,7 @@
     UILabel *courseLabel2;
     UILabel *courseLabel3;
     UILabel *courseLabel4;
+    UILabel *courseLabel5;
     
     UITextField *chooseCourseTextField;
     
@@ -37,6 +48,27 @@
     UIButton *deleteCourseButton2;
     UIButton *deleteCourseButton3;
     UIButton *deleteCourseButton4;
+    UIButton *deleteCourseButton5;
+    
+    UIButton *submitButton;
+    
+    UISwitch *mondaySwitch;
+    UISwitch *tuesdaySwitch;
+    UISwitch *wednesdaySwitch;
+    UISwitch *thursdaySwitch;
+    UISwitch *fridaySwitch;
+    UISwitch *saturdaySwitch;
+    UISwitch *sundaySwitch;
+    
+    UILabel *myAvailableDaysLabel;
+    
+    UILabel *mondayLabel;
+    UILabel *tuesdayLabel;
+    UILabel *wednesdayLabel;
+    UILabel *thursdayLabel;
+    UILabel *fridayLabel;
+    UILabel *saturdayLabel;
+    UILabel *sundayLabel;
 }
 @end
 
@@ -44,7 +76,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    self.hud = [[MBProgressHUD alloc] init];
+    [scrollView addSubview:self.hud];
+    
     // Get the current screen height and size
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     screenWidth = screenRect.size.width;
@@ -68,23 +103,37 @@
     
     [self centerSubview:courseTableView withX:10 Y:80 height:220];
     
-    [self centerSubview:myCourseLabel withX:0 Y:320 height:30];
-    [myCourseLabel setText:@"  My Courses"];
-    myCourseLabel.backgroundColor = [UIColor yellowColor];
+    [self layoutMyCoursesBlock:100];
+    for(int i = 1; i < 6; i++)
+    {
+        [self hideCourseLabelAndButtonNumber:i YorN:true];
+    }
     
-    CGFloat courseLabelWidth = screenWidth * (2/3);
-    courseLabel1.frame = CGRectMake(0, 360, courseLabelWidth, 40);
-    courseLabel1.backgroundColor = [UIColor yellowColor];
-    [courseLabel1 setText:@"MATH 20A"];
+    [self layoutWeekDaysBlock:440];
     
-    CGFloat deleteButtonWidth = screenWidth * (1/3);
-    deleteCourseButton1.frame = CGRectMake(courseLabelWidth, 360, deleteButtonWidth, 40);
-    deleteCourseButton1.backgroundColor = [UIColor redColor];
-    [deleteCourseButton1 setTitle:@"DELETE" forState:UIControlStateNormal];
-    
-    
+    [self centerSubview:submitButton withX:40 Y:900 height:60];
+    [submitButton setTitle:@"SAVE" forState:UIControlStateNormal];
+    submitButton.backgroundColor = [UIColor purpleColor];
     
     [self addAllSubviews];
+    
+    /************************************************************************************************/
+    [mondayLabel setText:@"  MONDAY"];
+    [tuesdayLabel setText:@"  TUESDAY"];
+    [wednesdayLabel setText:@"  WEDNESDAY"];
+    [thursdayLabel setText:@"  THURSDAY"];
+    [fridayLabel setText:@"  FRIDAY"];
+    [saturdayLabel setText:@"  SATURDAY"];
+    [sundayLabel setText:@"  SUNDAY"];
+    
+    // Set the switches for the days to be off
+    [mondaySwitch setOn:NO];
+    [tuesdaySwitch setOn:NO];
+    [wednesdaySwitch setOn:NO];
+    [thursdaySwitch setOn:NO];
+    [fridaySwitch setOn:NO];
+    [saturdaySwitch setOn:NO];
+    [sundaySwitch setOn:NO];
     
     /************************************************************************************************/
     // TABLE VIEW SET UP
@@ -100,12 +149,133 @@
     
     // Add the method to detect change in the specficClassTextField
     [chooseCourseTextField addTarget:self
-                                    action:@selector(textFieldDidChange:)
-                          forControlEvents:UIControlEventEditingChanged];
+                              action:@selector(textFieldDidChange:)
+                    forControlEvents:UIControlEventEditingChanged];
     
     //Initially hide the table view
     courseTableView.rowHeight = 44;
     [courseTableView setHidden:YES];
+    /************************************************************************************************/
+    // ADD ALL THE COURSE LABELS INTO THE ARRAY
+    allCourseLabels = [[NSMutableArray alloc] init];
+    [allCourseLabels addObject:courseLabel1];
+    [allCourseLabels addObject:courseLabel2];
+    [allCourseLabels addObject:courseLabel3];
+    [allCourseLabels addObject:courseLabel4];
+    [allCourseLabels addObject:courseLabel5];
+    
+    allDeleteButtons = [[NSMutableArray alloc] init];
+    [allDeleteButtons addObject:deleteCourseButton1];
+    [allDeleteButtons addObject:deleteCourseButton2];
+    [allDeleteButtons addObject:deleteCourseButton3];
+    [allDeleteButtons addObject:deleteCourseButton4];
+    [allDeleteButtons addObject:deleteCourseButton5];
+    
+    // FIRSTLY HIDE ALL THE COURSE LABELS AND DELETE BUTTON
+    [self hideCourseLabelAndButtonNumber:1 YorN:true];
+    [self hideCourseLabelAndButtonNumber:2 YorN:true];
+    [self hideCourseLabelAndButtonNumber:3 YorN:true];
+    [self hideCourseLabelAndButtonNumber:4 YorN:true];
+    [self hideCourseLabelAndButtonNumber:5 YorN:true];
+    
+    /************************************************************************************************/
+    [deleteCourseButton1 addTarget:self action:@selector(pressDelete1) forControlEvents:UIControlEventTouchUpInside];
+    [deleteCourseButton2 addTarget:self action:@selector(pressDelete2) forControlEvents:UIControlEventTouchUpInside];
+    [deleteCourseButton3 addTarget:self action:@selector(pressDelete3) forControlEvents:UIControlEventTouchUpInside];
+    [deleteCourseButton4 addTarget:self action:@selector(pressDelete4) forControlEvents:UIControlEventTouchUpInside];
+    [deleteCourseButton5 addTarget:self action:@selector(pressDelete5) forControlEvents:UIControlEventTouchUpInside];
+    
+    [deleteCourseButton1 setTitle:@"DELETE" forState:UIControlStateNormal];
+    [deleteCourseButton2 setTitle:@"DELETE" forState:UIControlStateNormal];
+    [deleteCourseButton3 setTitle:@"DELETE" forState:UIControlStateNormal];
+    [deleteCourseButton4 setTitle:@"DELETE" forState:UIControlStateNormal];
+    [deleteCourseButton5 setTitle:@"DELETE" forState:UIControlStateNormal];
+    
+    /************************************************************************************************/
+    
+    addedCourses = [[NSMutableArray alloc] init];
+    availableDays = [[NSMutableArray alloc] init];
+    
+    // QUERY TUTOR INFORMATION
+    PFObject *userPointer = [PFObject objectWithoutDataWithClassName:@"_User" objectId:([PFUser currentUser]).objectId];
+    PFQuery *query = [PFQuery queryWithClassName:@"CollegeClassTutor"];
+    [query whereKey:@"userId" equalTo:userPointer];
+    [query setLimit:1000];
+    
+    [self.hud show:YES];
+    
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *tutor, NSError *error)
+     {
+         
+         if(!error)
+         {
+             [self.hud hide:YES];
+             if(tutor == nil)
+             {
+                 
+                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                 message:@"Tutor information missing, please contact Moorgoo staff"
+                                                                delegate:nil
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil];
+                 [alert show];
+                 return;
+             }
+             
+             NSArray *tempAddedClasses = (NSArray *)[tutor objectForKey:@"courses"];
+             [addedCourses addObjectsFromArray:tempAddedClasses];
+             
+             NSArray *tempAvailableDays = (NSArray *)[tutor objectForKey:@"availableDays"];
+             [availableDays addObjectsFromArray:tempAvailableDays];
+             
+             if([addedCourses count] != 0)
+             {
+                 int i = 1;
+                 for(NSString *courseString in addedCourses)
+                 {
+                     [self setCourseLabelNumber:i toString:courseString];
+                     [self hideCourseLabelAndButtonNumber:i YorN:false];
+                     i++;
+                 }
+             }
+             
+             if([availableDays count] != 0)
+             {
+                 if([availableDays containsObject:@"Monday"]) [mondaySwitch setOn:YES];
+                 if([availableDays containsObject:@"Tuesday"]) [tuesdaySwitch setOn:YES];
+                 if([availableDays containsObject:@"Wednesday"]) [wednesdaySwitch setOn:YES];
+                 if([availableDays containsObject:@"Thursday"]) [thursdaySwitch setOn:YES];
+                 if([availableDays containsObject:@"Friday"]) [fridaySwitch setOn:YES];
+                 if([availableDays containsObject:@"Saturday"]) [saturdaySwitch setOn:YES];
+                 if([availableDays containsObject:@"Sunday"]) [sundaySwitch setOn:YES];
+             }
+             
+             
+         }
+         else
+         {
+             [self.hud hide:YES];
+             // Not found the tutor information in the database
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                             message:@"Tutor information missing, please contact with Moorgoo staff!!"
+                                                            delegate:nil
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles:nil];
+             [alert show];
+             return;
+         }
+         
+     }];
+    
+    /************************************************************************************/
+    
+    // Add the method to detect change in the specficClassTextField
+    [submitButton addTarget:self
+                     action:@selector(submitButtonPressed)
+           forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
 }
 
 
@@ -131,26 +301,124 @@
     }
     
     if([courseItems count] != 0)
+    {
         cell.textLabel.text = courseItems[indexPath.row];
+        noCourseFound = false;
+    }
     else
+    {
         cell.textLabel.text = @"No course matches the input";
+        noCourseFound = true;
+    }
     
     return cell;
 }
 
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//    UILabel *label = (UILabel *)[cell viewWithTag:1000];
-//    if(!noClassFound)
-//    {
-//        NSString *chosenString = label.text;
-//        self.specificClassTextField.text = chosenString;
-//    }
-//    [self.classesTableView setHidden:YES];
-//    [self.view endEditing:YES];
-//    //ChecklistItem *item = _items[indexPath.row];
-//}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Do not let the cell stay selected
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if(noCourseFound)
+    {
+        [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
+        chooseCourseTextField.text = @"";
+    }
+    
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if(!noCourseFound)
+    {
+        choosenCourse = cell.textLabel.text;
+        NSString *alertMessage = [@"Do you wanna add " stringByAppendingString:choosenCourse];
+        alertMessage = [alertMessage stringByAppendingString:@" to My Courses?"];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm"
+                                                        message:alertMessage
+                                                       delegate:self
+                                              cancelButtonTitle:@"No"
+                                              otherButtonTitles:@"Yes", nil];
+        [alert show];
+    }
+    else
+    {
+        [courseTableView setHidden:YES];
+        chooseCourseTextField.text = @"";
+        [self.view endEditing:YES];
+    }
+    //ChecklistItem *item = _items[indexPath.row];
+}
+
+
+# pragma mark - Alert view delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    
+    if([title isEqualToString:@"No"])
+    {
+        // Do nothing
+    }
+    if([title isEqualToString:@"Yes"])
+    {
+        if([addedCourses count] == 5)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:@"You can add at most 5 courses"
+                                                           delegate:self
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:@"OK", nil];
+            [alert show];
+            
+            chooseCourseTextField.text = @"";
+            
+            [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
+            
+        }
+        else
+        {
+            if([addedCourses containsObject:choosenCourse])
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                message:@"You have already added this course"
+                                                               delegate:self
+                                                      cancelButtonTitle:nil
+                                                      otherButtonTitles:@"OK", nil];
+                [alert show];
+                
+                chooseCourseTextField.text = @"";
+            }
+            
+            else
+            {
+                [addedCourses addObject:choosenCourse];
+                for(UILabel *courseLabel in allCourseLabels)
+                {
+                    if([courseLabel isHidden])
+                    {
+                        [courseLabel setHidden:false];
+                        [courseLabel setText:choosenCourse];
+                        break;
+                    }
+                }
+                
+                for(UIButton *deleteButton in allDeleteButtons)
+                {
+                    if([deleteButton isHidden])
+                    {
+                        [deleteButton setHidden:false];
+                        break;
+                    }
+                }
+                [self.view endEditing:YES];
+                
+                [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
+                chooseCourseTextField.text = @"";
+            }
+            
+        }
+    }
+}
 
 #pragma mark- textField delegete methods
 -(void)textFieldDidChange:(UITextField *)textField
@@ -165,10 +433,14 @@
     }
     
     
-    if (textField.text.length == 0) [courseTableView setHidden:YES];
+    if (textField.text.length == 0)
+    {
+        [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
+    }
     else
     {
-        [courseTableView setHidden:NO];
+        [self hideCourseTableView:NO AndSetYOfMyCoursesBlock:360];
+        
         NSString *inputString = [textField.text uppercaseString];
         NSMutableArray *discardItems = [[NSMutableArray alloc] init];
         
@@ -217,6 +489,104 @@
     }];
 }
 
+#pragma mark - buttonPressed methods
+-(void)pressDelete1
+{
+    [courseLabel1 setHidden:true];
+    [deleteCourseButton1 setHidden:true];
+    
+    NSString *courseName = [courseLabel1.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [addedCourses removeObject:courseName];
+    
+}
+
+-(void)pressDelete2
+{
+    [courseLabel2 setHidden:true];
+    [deleteCourseButton2 setHidden:true];
+    NSString *courseName = [courseLabel2.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [addedCourses removeObject:courseName];
+}
+
+-(void)pressDelete3
+{
+    [courseLabel3 setHidden:true];
+    [deleteCourseButton3 setHidden:true];
+    NSString *courseName = [courseLabel3.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [addedCourses removeObject:courseName];
+}
+
+-(void)pressDelete4
+{
+    [courseLabel4 setHidden:true];
+    [deleteCourseButton4 setHidden:true];
+    NSString *courseName = [courseLabel4.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [addedCourses removeObject:courseName];
+}
+
+-(void)pressDelete5
+{
+    [courseLabel5 setHidden:true];
+    [deleteCourseButton5 setHidden:true];
+    NSString *courseName = [courseLabel5.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [addedCourses removeObject:courseName];
+}
+
+-(void)submitButtonPressed
+{
+    [availableDays removeAllObjects];
+    
+    if(mondaySwitch.isOn)    [availableDays addObject:@"Monday"];
+    if(tuesdaySwitch.isOn)   [availableDays addObject:@"Tuesday"];
+    if(wednesdaySwitch.isOn) [availableDays addObject:@"Wednesday"];
+    if(thursdaySwitch.isOn)  [availableDays addObject:@"Thursday"];
+    if(fridaySwitch.isOn)    [availableDays addObject:@"Friday"];
+    if(saturdaySwitch.isOn)  [availableDays addObject:@"Saturday"];
+    if(sundaySwitch.isOn)    [availableDays addObject:@"Sunday"];
+    
+    // QUERY TUTOR INFORMATION
+    PFObject *userPointer = [PFObject objectWithoutDataWithClassName:@"_User" objectId:([PFUser currentUser]).objectId];
+    PFQuery *query = [PFQuery queryWithClassName:@"CollegeClassTutor"];
+    [query whereKey:@"userId" equalTo:userPointer];
+    [query setLimit:1000];
+    
+    [self.hud show:YES];
+    
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *tutor, NSError *error)
+     {
+         if(!error)
+         {
+             [tutor setObject:addedCourses forKey:@"courses"];
+             [tutor setObject:availableDays forKey:@"availableDays"];
+             [tutor saveInBackground];
+             
+             [self.hud hide:YES];
+             
+             // successfully updated tutor information
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notice"
+                                                             message:@"You have successfully updated your tutor information"
+                                                            delegate:nil
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles:nil];
+             [alert show];
+             return;
+         }
+         else
+         {
+             [self.hud hide:YES];
+             
+             // Not found the tutor information in the database
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                             message:@"Tutor information missing, please contact with Moorgoo staff"
+                                                            delegate:nil
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles:nil];
+             [alert show];
+             return;
+         }
+     }];
+}
+
 #pragma mark - layout encapsulation method
 /************************************************************************************************/
 
@@ -232,6 +602,16 @@
     courseLabel2 = [[UILabel alloc] init];
     courseLabel3 = [[UILabel alloc] init];
     courseLabel4 = [[UILabel alloc] init];
+    courseLabel5 = [[UILabel alloc] init];
+    
+    mondayLabel = [[UILabel alloc] init];
+    tuesdayLabel = [[UILabel alloc] init];
+    wednesdayLabel = [[UILabel alloc] init];
+    thursdayLabel = [[UILabel alloc] init];
+    fridayLabel = [[UILabel alloc] init];
+    saturdayLabel = [[UILabel alloc] init];
+    sundayLabel = [[UILabel alloc] init];
+    myAvailableDaysLabel = [[UILabel alloc] init];
     
     // TextField
     chooseCourseTextField = [[UITextField alloc] init];
@@ -244,6 +624,18 @@
     deleteCourseButton2 = [[UIButton alloc] init];
     deleteCourseButton3 = [[UIButton alloc] init];
     deleteCourseButton4 = [[UIButton alloc] init];
+    deleteCourseButton5 = [[UIButton alloc] init];
+    
+    submitButton = [[UIButton alloc] init];
+    
+    // Switch
+    mondaySwitch = [[UISwitch alloc] init];
+    tuesdaySwitch = [[UISwitch alloc] init];
+    wednesdaySwitch = [[UISwitch alloc] init];
+    thursdaySwitch = [[UISwitch alloc] init];
+    fridaySwitch = [[UISwitch alloc] init];
+    saturdaySwitch = [[UISwitch alloc] init];
+    sundaySwitch = [[UISwitch alloc] init];
 }
 
 -(void)addAllSubviews
@@ -255,6 +647,16 @@
     [scrollView addSubview:courseLabel2];
     [scrollView addSubview:courseLabel3];
     [scrollView addSubview:courseLabel4];
+    [scrollView addSubview:courseLabel5];
+    
+    [scrollView addSubview:mondayLabel];
+    [scrollView addSubview:tuesdayLabel];
+    [scrollView addSubview:wednesdayLabel];
+    [scrollView addSubview:thursdayLabel];
+    [scrollView addSubview:fridayLabel];
+    [scrollView addSubview:saturdayLabel];
+    [scrollView addSubview:sundayLabel];
+    [scrollView addSubview:myAvailableDaysLabel];
     
     // TextField
     [scrollView addSubview:chooseCourseTextField];
@@ -267,12 +669,200 @@
     [scrollView addSubview:deleteCourseButton2];
     [scrollView addSubview:deleteCourseButton3];
     [scrollView addSubview:deleteCourseButton4];
+    [scrollView addSubview:deleteCourseButton5];
+    
+    [scrollView addSubview:submitButton];
+    
+    //Switch
+    [scrollView addSubview:mondaySwitch];
+    [scrollView addSubview:tuesdaySwitch];
+    [scrollView addSubview:wednesdaySwitch];
+    [scrollView addSubview:thursdaySwitch];
+    [scrollView addSubview:fridaySwitch];
+    [scrollView addSubview:saturdaySwitch];
+    [scrollView addSubview:sundaySwitch];
 }
 
 -(void)centerSubview:(UIView *)subView withX:(CGFloat)xCoordinate Y:(CGFloat)yCoordinate height:(CGFloat)height
 {
     CGFloat width = screenWidth - 2*xCoordinate;
     subView.frame = CGRectMake(xCoordinate,yCoordinate,width,height);
+}
+
+-(void)layoutMyCoursesBlock:(CGFloat)yCoordinate
+{
+    [self centerSubview:myCourseLabel withX:0 Y:yCoordinate height:30];
+    [myCourseLabel setText:@"  My Courses"];
+    myCourseLabel.backgroundColor = [UIColor colorWithRed:50.0/255.0 green:120.0/255.0 blue:180.0 alpha:1];
+    myCourseLabel.textColor = [UIColor whiteColor];
+    
+    CGFloat courseLabelWidth = screenWidth * (2.0/3.0);
+    CGFloat deleteButtonWidth = screenWidth * (1.0/3.0);
+    
+    CGFloat firstCourseLabelYCoordinate = yCoordinate + 40;
+    CGFloat theHeight = 50;
+    
+    courseLabel1.frame = CGRectMake(0, firstCourseLabelYCoordinate, courseLabelWidth, theHeight);
+    courseLabel1.backgroundColor = [UIColor colorWithRed:102.0/255.0 green:178.0/255.0 blue:255.0 alpha:1];
+    courseLabel1.textColor = [UIColor whiteColor];
+    
+    deleteCourseButton1.frame = CGRectMake(courseLabelWidth, firstCourseLabelYCoordinate, deleteButtonWidth, theHeight);
+    deleteCourseButton1.backgroundColor = [UIColor redColor];
+    
+    CGFloat LLDistance = 55;
+    
+    courseLabel2.frame = CGRectMake(0, firstCourseLabelYCoordinate + LLDistance, courseLabelWidth, theHeight);
+    courseLabel2.backgroundColor = [UIColor colorWithRed:102.0/255.0 green:178.0/255.0 blue:255.0 alpha:1];
+    courseLabel2.textColor = [UIColor whiteColor];
+    
+    deleteCourseButton2.frame = CGRectMake(courseLabelWidth, firstCourseLabelYCoordinate + LLDistance, deleteButtonWidth, theHeight);
+    deleteCourseButton2.backgroundColor = [UIColor redColor];
+    
+    courseLabel3.frame = CGRectMake(0, firstCourseLabelYCoordinate + 2*LLDistance, courseLabelWidth, theHeight);
+    courseLabel3.backgroundColor = [UIColor colorWithRed:102.0/255.0 green:178.0/255.0 blue:255.0 alpha:1];
+    courseLabel3.textColor = [UIColor whiteColor];
+    
+    deleteCourseButton3.frame = CGRectMake(courseLabelWidth, firstCourseLabelYCoordinate + 2*LLDistance, deleteButtonWidth, theHeight);
+    deleteCourseButton3.backgroundColor = [UIColor redColor];
+    
+    courseLabel4.frame = CGRectMake(0, firstCourseLabelYCoordinate + 3*LLDistance, courseLabelWidth, theHeight);
+    courseLabel4.backgroundColor = [UIColor colorWithRed:102.0/255.0 green:178.0/255.0 blue:255.0 alpha:1];
+    courseLabel4.textColor = [UIColor whiteColor];
+    
+    deleteCourseButton4.frame = CGRectMake(courseLabelWidth, firstCourseLabelYCoordinate + 3*LLDistance, deleteButtonWidth, theHeight);
+    deleteCourseButton4.backgroundColor = [UIColor redColor];
+    
+    courseLabel5.frame = CGRectMake(0, firstCourseLabelYCoordinate + 4*LLDistance, courseLabelWidth, theHeight);
+    courseLabel5.backgroundColor = [UIColor colorWithRed:102.0/255.0 green:178.0/255.0 blue:255.0 alpha:1];
+    courseLabel5.textColor = [UIColor whiteColor];
+    
+    deleteCourseButton5.frame = CGRectMake(courseLabelWidth, firstCourseLabelYCoordinate + 4*LLDistance, deleteButtonWidth, theHeight);
+    deleteCourseButton5.backgroundColor = [UIColor redColor];
+}
+
+-(void)layoutWeekDaysBlock:(CGFloat)yCoordinate
+{
+    [self centerSubview:myAvailableDaysLabel withX:0 Y:yCoordinate height:35];
+    [myAvailableDaysLabel setText:@"  My Available Days"];
+    myAvailableDaysLabel.backgroundColor = [UIColor colorWithRed:50.0/255.0 green:120.0/255.0 blue:180.0 alpha:1];
+    myAvailableDaysLabel.textColor = [UIColor whiteColor];
+    
+    CGFloat dayLabelWidth = screenWidth * (2.0/3.0);
+    CGFloat daySwitchWidth = screenWidth * (1.0/3.0);
+    
+    CGFloat firstCourseLabelYCoordinate = yCoordinate + 45;
+    
+    mondayLabel.frame = CGRectMake(0, firstCourseLabelYCoordinate, dayLabelWidth, 40);
+    
+    mondaySwitch.frame = CGRectMake(dayLabelWidth,firstCourseLabelYCoordinate + 5, daySwitchWidth, 40);
+    
+    CGFloat LLDistance = 55;
+    
+    tuesdayLabel.frame = CGRectMake(0, firstCourseLabelYCoordinate + LLDistance, dayLabelWidth, 40);
+    
+    tuesdaySwitch.frame = CGRectMake(dayLabelWidth,firstCourseLabelYCoordinate + 5 + LLDistance, daySwitchWidth, 40);
+    
+    wednesdayLabel.frame = CGRectMake(0, firstCourseLabelYCoordinate + 2*LLDistance, dayLabelWidth, 40);
+    
+    wednesdaySwitch.frame = CGRectMake(dayLabelWidth,firstCourseLabelYCoordinate + 5 + 2*LLDistance, daySwitchWidth, 40);
+    
+    thursdayLabel.frame = CGRectMake(0, firstCourseLabelYCoordinate + 3*LLDistance, dayLabelWidth, 40);
+    
+    thursdaySwitch.frame = CGRectMake(dayLabelWidth,firstCourseLabelYCoordinate + 5 + 3*LLDistance, daySwitchWidth, 40);
+    
+    fridayLabel.frame = CGRectMake(0, firstCourseLabelYCoordinate + 4*LLDistance, dayLabelWidth, 40);
+    
+    fridaySwitch.frame = CGRectMake(dayLabelWidth,firstCourseLabelYCoordinate + 5 + 4*LLDistance, daySwitchWidth, 40);
+    
+    saturdayLabel.frame = CGRectMake(0, firstCourseLabelYCoordinate + 5*LLDistance, dayLabelWidth, 40);
+    
+    saturdaySwitch.frame = CGRectMake(dayLabelWidth,firstCourseLabelYCoordinate + 5 + 5*LLDistance, daySwitchWidth, 40);
+    
+    sundayLabel.frame = CGRectMake(0, firstCourseLabelYCoordinate + 6*LLDistance, dayLabelWidth, 40);
+    
+    sundaySwitch.frame = CGRectMake(dayLabelWidth,firstCourseLabelYCoordinate + 5 + 6*LLDistance, daySwitchWidth, 40);
+    
+}
+
+-(void)layoutIfNeededMyCourseBlock
+{
+    [myCourseLabel layoutIfNeeded];
+    [courseLabel1 layoutIfNeeded];
+    [courseLabel2 layoutIfNeeded];
+    [courseLabel3 layoutIfNeeded];
+    [courseLabel4 layoutIfNeeded];
+    [deleteCourseButton1 layoutIfNeeded];
+    [deleteCourseButton2 layoutIfNeeded];
+    [deleteCourseButton3 layoutIfNeeded];
+    [deleteCourseButton4 layoutIfNeeded];
+}
+
+-(void)hideCourseLabelAndButtonNumber:(int)number YorN:(BOOL)YN
+{
+    if(number == 1)
+    {
+        [courseLabel1 setHidden:YN];
+        [deleteCourseButton1 setHidden:YN];
+    }
+    else if(number == 2)
+    {
+        [courseLabel2 setHidden:YN];
+        [deleteCourseButton2 setHidden:YN];
+    }
+    else if(number == 3)
+    {
+        [courseLabel3 setHidden:YN];
+        [deleteCourseButton3 setHidden:YN];
+    }
+    else if(number == 4)
+    {
+        [courseLabel4 setHidden:YN];
+        [deleteCourseButton4 setHidden:YN];
+    }
+    else
+    {
+        [courseLabel5 setHidden:YN];
+        [deleteCourseButton5 setHidden:YN];
+    }
+}
+
+-(void)setCourseLabelNumber:(int)number toString:(NSString *)string
+{
+    NSString *theString = [@" " stringByAppendingString:string];
+    if(number == 1)
+    {
+        [courseLabel1 setText:theString];
+    }
+    else if(number == 2)
+    {
+        [courseLabel2 setText:theString];
+    }
+    else if(number == 3)
+    {
+        [courseLabel3 setText:theString];
+    }
+    else if(number == 4)
+    {
+        [courseLabel4 setText:theString];
+    }
+    else
+    {
+        [courseLabel5 setText:theString];
+    }
+}
+
+-(void)hideCourseTableView:(BOOL)YN AndSetYOfMyCoursesBlock:(CGFloat)yCoordinate
+{
+    [UIView beginAnimations: nil context: NULL];
+    [UIView setAnimationDuration: 0.2];
+    
+    [courseTableView setHidden:YN];
+    [self layoutMyCoursesBlock:yCoordinate];
+    [self layoutWeekDaysBlock:yCoordinate + 340];
+    [self centerSubview:submitButton withX:40 Y:yCoordinate + 800 height:60];
+    [self layoutIfNeededMyCourseBlock];
+    
+    [UIView commitAnimations];
 }
 
 

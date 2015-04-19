@@ -98,6 +98,10 @@
     
     [self fillBackgroundWithImage:backgroundImage withAlpha: DARK_ALPHA];
     
+    self.pickImageButton.enabled = true;
+    self.signUpButton.enabled = true;
+    self.backButton.enabled = true;
+    
     [UIView commitAnimations];
 }
 
@@ -133,6 +137,10 @@
         self.signUpButton.alpha = 0.3f;
         self.backButton.alpha = 0.3f;
         
+        self.pickImageButton.enabled = false;
+        self.signUpButton.enabled = false;
+        self.backButton.enabled = false;
+        
         [self fillBackgroundWithImage:backgroundImage withAlpha: DARK_ALPHA];
     }
     else
@@ -145,6 +153,10 @@
         [self.emailRegisterTextField layoutIfNeeded];
         [self.passwordRegisterTextField layoutIfNeeded];
         [self.phoneRegisterTextField layoutIfNeeded];
+        
+        self.pickImageButton.enabled = true;
+        self.signUpButton.enabled = true;
+        self.backButton.enabled = true;
         
     }
     

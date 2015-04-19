@@ -10,4 +10,6 @@
 
 @interface TutorDashboardViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>
 
+@property (nonatomic, strong) MBProgressHUD *hud;
+
 @end

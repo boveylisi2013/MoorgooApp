@@ -38,7 +38,7 @@
     
     /************************************************************************************/
     [self fetchCurentUserInformation];
-
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -113,6 +113,8 @@
     else{
         cell.textLabel.text = @"Log Out";
         [cell setBackgroundColor:[UIColor redColor]];
+        [cell setTintColor:[UIColor whiteColor]];
+        [cell.textLabel setTextColor:[UIColor whiteColor]];
     }
     return cell;
 }
