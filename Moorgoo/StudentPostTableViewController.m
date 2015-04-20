@@ -30,7 +30,6 @@
     
     hud = [[MBProgressHUD alloc] init];
     [self.view addSubview:hud];
-    [hud show:YES];
     
     [self fetchStudentPostings];
     
@@ -61,6 +60,7 @@
 
 - (void)fetchStudentPostings {
     [postSource removeAllObjects];
+    [hud show:YES];
     
     PFQuery *query = [PFQuery queryWithClassName:@"StudentPost"];
     [query setLimit:1000];
@@ -231,5 +231,10 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (IBAction)refreshButtonClicked:(id)sender {
+    [self fetchStudentPostings];
+    
+}
 
 @end

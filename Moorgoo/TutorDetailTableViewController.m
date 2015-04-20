@@ -354,11 +354,11 @@
     if([alertView.title isEqualToString:@"Dear"]) {
         if(buttonIndex == 1) {
             PFObject *userPointer = [PFObject objectWithoutDataWithClassName:@"_User"
-                                                                    objectId:([PFUser currentUser]).objectId];
+                                                                    objectId:tutorInstance.userId];
 
             PFQuery *query = [PFQuery queryWithClassName:@"CollegeClassTutor"];
             [query whereKey:@"userId" equalTo:userPointer];
-            [query getFirstObjectInBackgroundWithBlock:^(PFObject * userStats, NSError *error) {
+            [query getFirstObjectInBackgroundWithBlock:^(PFObject *userStats, NSError *error) {
                 if (!error) {
                     NSString *good = [userStats objectForKey:@"goodRating"];
                     good = [NSString stringWithFormat:@"%d", [good intValue] + 1];
@@ -386,7 +386,7 @@
     else if([alertView.title isEqualToString:@"Oops"]) {
         if(buttonIndex == 1) {
             PFObject *userPointer = [PFObject objectWithoutDataWithClassName:@"_User"
-                                                                    objectId:([PFUser currentUser]).objectId];
+                                                                    objectId:tutorInstance.userId];
             
             PFQuery *query = [PFQuery queryWithClassName:@"CollegeClassTutor"];
             [query whereKey:@"userId" equalTo:userPointer];

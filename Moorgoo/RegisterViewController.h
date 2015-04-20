@@ -6,7 +6,9 @@
 //  Copyright (c) 2014 Moorgoo. All rights reserved.
 //
 
-@interface RegisterViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+#import "CustomIOS7AlertView.h"
+
+@interface RegisterViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CustomIOS7AlertViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextField *firstRegisterTextField;
 @property (nonatomic, weak) IBOutlet UITextField *lastRegisterTextField;
@@ -23,5 +25,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *firstNameVerticalLayout;
 
 - (IBAction)pickImageButtonClicked:(id)sender;
+@property CustomIOS7AlertView *IOS7AlertView;
 
 @end

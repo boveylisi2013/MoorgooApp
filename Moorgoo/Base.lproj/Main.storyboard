@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -767,6 +767,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Student Postings" id="NDz-oM-oOa">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="Mp8-JM-da0">
+                            <connections>
+                                <action selector="refreshButtonClicked:" destination="fbl-AR-MY3" id="pbe-P8-rwa"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Post" id="MT5-CC-cOC">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -1561,6 +1566,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="KB5-8y-Bky"/>
         <segue reference="8rJ-t8-uSW"/>
-        <segue reference="fSN-nL-So1"/>
+        <segue reference="LSs-YQ-ybf"/>
     </inferredMetricsTieBreakers>
 </document>

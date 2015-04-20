@@ -70,7 +70,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -106,11 +106,20 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
-    else if(indexPath.section == 1) {
+    if(indexPath.section == 1) {
+        cell.textLabel.text = @"Empty All of my Student Posts";
+        [cell setBackgroundColor:[UIColor colorWithRed:135.0/255.0
+                                                 green:206.0/255.0
+                                                  blue:250.0/255.0
+                                                 alpha:1]];
+        [cell setTintColor:[UIColor whiteColor]];
+        [cell.textLabel setTextColor:[UIColor whiteColor]];
+    }
+    else if(indexPath.section == 2) {
         cell.textLabel.text = @"Tutor";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-    else{
+    else if(indexPath.section == 3){
         cell.textLabel.text = @"Log Out";
         [cell setBackgroundColor:[UIColor redColor]];
         [cell setTintColor:[UIColor whiteColor]];
@@ -141,7 +150,16 @@
             [self performSegueWithIdentifier:@"goToChangePassword" sender:self];
         }
     }
-    else if(indexPath.section == 1)
+    else if(indexPath.section == 1) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Halo"
+                                                        message:@"Do you want to delete all of your help posts?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Yes", nil];
+        [alert show];
+
+    }
+    else if(indexPath.section == 2)
     {
         PFObject *userPointer = [PFObject objectWithoutDataWithClassName:@"_User" objectId:([PFUser currentUser]).objectId];
         PFQuery *query = [PFQuery queryWithClassName:@"CollegeClassTutor"];
@@ -159,7 +177,7 @@
             }
         }];
     }
-    else
+    else if(indexPath.section == 3)
     {
         // Logout confirmation
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Dear"
@@ -174,23 +192,41 @@
 # pragma mark - Alert view delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
-    
-    if([title isEqualToString:@"Cancel"])
-    {
-        // Do nothing
+
+    if([alertView.title isEqualToString:@"Dear"]) {
+        
+        if(buttonIndex == 1) {
+            [PFUser logOut];
+        
+            /******************************************************/
+            KeychainItemWrapper* keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"KeychainTest" accessGroup:nil];
+            [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked)
+                         forKey:(__bridge id)(kSecAttrAccessible)];
+            [keychain resetKeychainItem];
+            /******************************************************/
+        
+            [self performSegueWithIdentifier:@"LogoutSuccessful" sender:self];
+        }
     }
-    if([title isEqualToString:@"Yes"])
-    {
-        [PFUser logOut];
-        
-        /******************************************************/
-        KeychainItemWrapper* keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"KeychainTest" accessGroup:nil];
-        [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
-        [keychain resetKeychainItem];
-        /******************************************************/
-        
-        [self performSegueWithIdentifier:@"LogoutSuccessful" sender:self];
+    else if([alertView.title isEqualToString:@"Halo"]) {
+        if(buttonIndex == 1) {
+            PFObject *userPointer = [PFObject objectWithoutDataWithClassName:@"_User"
+                                                                    objectId:([PFUser currentUser]).objectId];
+            PFQuery *query = [PFQuery queryWithClassName:@"StudentPost"];
+            [query whereKey:@"userId" equalTo:userPointer];
+            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if(!error) {
+                    for(PFObject *object in objects) {
+                        [object deleteInBackground];
+                    }
+                }
+                else {
+                    
+                }
+                
+                [[[UIAlertView alloc] initWithTitle:nil message:@"Your posts have been deleted" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil] show];
+            }];
+        }
     }
 }
 
