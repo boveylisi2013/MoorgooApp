@@ -207,7 +207,7 @@
     }
     else if(indexPath.section == 6) {
         UITextView *textView = [[UITextView alloc] init];
-        textView.frame = CGRectMake(5, 5, [[UIScreen mainScreen] bounds].size.width-10, 150);
+        textView.frame = CGRectMake(5, 5, [[UIScreen mainScreen] bounds].size.width-10, 170);
         NSMutableString *availability = [[NSMutableString alloc] init];
         
         for(NSString *day in tutorInstance.availableDays) {
@@ -245,6 +245,11 @@
 {
     if(indexPath.section == 3 || indexPath.section == 7)
         return 80;
+    
+    if(indexPath.section == 6) {
+        return 190;
+    }
+    
     return 160;
 }
 

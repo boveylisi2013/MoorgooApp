@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
@@ -32,7 +32,7 @@
             <objects>
                 <tableViewController id="SjV-ZX-hwx" customClass="FindTutorTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="140" sectionHeaderHeight="22" sectionFooterHeight="22" id="GPs-3B-uEV">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -145,6 +145,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Tutor List" id="dbg-Sv-Vqe">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="ZcY-E9-FKM">
+                            <connections>
+                                <action selector="refreshButtonClicked:" destination="SjV-ZX-hwx" id="sSQ-Na-9s1"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="r0d-BC-Fn3">
                             <color key="tintColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -152,6 +157,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <segue destination="t96-pS-nCi" kind="presentation" identifier="goToFilterView" id="W2t-fU-qpc"/>
                         <segue destination="9N5-Kw-yBR" kind="show" identifier="findToTutorDetail" id="32p-qI-ZKF"/>
@@ -1564,8 +1570,8 @@
         <image name="Tutor" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="KB5-8y-Bky"/>
-        <segue reference="8rJ-t8-uSW"/>
+        <segue reference="usY-Z8-TSn"/>
         <segue reference="LSs-YQ-ybf"/>
+        <segue reference="8rJ-t8-uSW"/>
     </inferredMetricsTieBreakers>
 </document>

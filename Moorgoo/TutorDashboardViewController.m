@@ -22,8 +22,12 @@
     NSMutableArray *allCourseLabels;
     NSMutableArray *allDeleteButtons;
     
+    NSMutableArray *allACourseLabels;
+    NSMutableArray *allADeleteButtons;
+    
     NSMutableArray *addedCourses;
     NSMutableArray *availableDays;
+    NSMutableArray *ACourses;
     
     NSMutableArray *pickerDepartmentArray;
     /************************************************************************************************/
@@ -42,6 +46,12 @@
     UILabel *courseLabel4;
     UILabel *courseLabel5;
     
+    UILabel *acourseLabel1;
+    UILabel *acourseLabel2;
+    UILabel *acourseLabel3;
+    UILabel *acourseLabel4;
+    UILabel *acourseLabel5;
+    
     UITextField *chooseCourseTextField;
     
     UITableView *courseTableView;
@@ -51,6 +61,12 @@
     UIButton *deleteCourseButton3;
     UIButton *deleteCourseButton4;
     UIButton *deleteCourseButton5;
+    
+    UIButton *adeleteCourseButton1;
+    UIButton *adeleteCourseButton2;
+    UIButton *adeleteCourseButton3;
+    UIButton *adeleteCourseButton4;
+    UIButton *adeleteCourseButton5;
     
     UIButton *submitButton;
     
@@ -75,9 +91,14 @@
     UILabel *myDescriptionLabel;
     UITextView *descriptionTextView;
     
-    UILabel *myMajorLabel;
-    UITextField *majorTextField;
+    UILabel *myDepartmentLabel;
+    UITextField *departmentTextField;
     UIPickerView *departmentPicker;
+    
+    UILabel *myACourseLabel;
+    UITextField *ACourseTextField;
+    UITableView *ACourseTableView;
+    
     
 }
 @end
@@ -99,7 +120,7 @@
     
     // Set up the scrollView
     scrollView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
-    scrollView.contentSize = CGSizeMake(screenWidth, screenHeight + 800);
+    scrollView.contentSize = CGSizeMake(screenWidth, screenHeight + 1400);
     [self.view addSubview:scrollView];
     
     [self centerSubview:chooseCourseLabel withX:10 Y:10 height:15];
@@ -110,12 +131,25 @@
     chooseCourseTextField.placeholder = @"type in the coursename";
     chooseCourseTextField.layer.borderWidth = 1;
     chooseCourseTextField.layer.borderColor = [[UIColor blackColor] CGColor];
+    [chooseCourseTextField setReturnKeyType:UIReturnKeyDone];
+    chooseCourseTextField.delegate = self;
+    
+    ACourseTextField.delegate = self;
+    [ACourseTextField setReturnKeyType:UIReturnKeyDone];
+    
     
     [self centerSubview:courseTableView withX:10 Y:80 height:220];
+    [self centerSubview:ACourseTableView withX:10 Y:1350 height:205];
+    
     
     for(int i = 1; i < 6; i++)
     {
         [self hideCourseLabelAndButtonNumber:i YorN:true];
+    }
+    
+    for(int i = 1; i < 6; i++)
+    {
+        [self hideACourseLabelAndButtonNumber:i YorN:true];
     }
     
     [submitButton setTitle:@"SAVE" forState:UIControlStateNormal];
@@ -123,9 +157,9 @@
     
     [self layoutMyCoursesBlock:100];
     [self layoutWeekDaysBlock:440];
-    [self centerSubview:submitButton withX:40 Y:900 height:60];
-    [self layoutMyDescriptionAndMajorBlock:980];
-    
+    [self layoutMyDescriptionAndDepartmentBlock:900];
+    [self centerSubview:submitButton withX:40 Y:1750 height:60];
+    [self layoutACoursesBlocks:1260 + 100];
     
     [self addAllSubviews];
     
@@ -148,14 +182,15 @@
     [sundaySwitch setOn:NO];
     
     /************************************************************************************************/
+    // Initialize and query for arrays that serve as datasource for the tableView
+    stableCourseItems = [[NSMutableArray alloc] init];
+    courseItems = [[NSMutableArray alloc] init];
+    
     // TABLE VIEW SET UP
     
     courseTableView.delegate = self;
     courseTableView.dataSource = self;
     
-    // Initialize and query for arrays that serve as datasource for the tableView
-    stableCourseItems = [[NSMutableArray alloc] init];
-    courseItems = [[NSMutableArray alloc] init];
     [self getCourses:courseItems];
     addedCoursesToStableCourseItems = false;
     
@@ -167,6 +202,23 @@
     //Initially hide the table view
     courseTableView.rowHeight = 44;
     [courseTableView setHidden:YES];
+    /************************************************************************************************/
+    // A COURSE TABLE VIEW SET UP
+    
+    ACourseTableView.delegate = self;
+    ACourseTableView.dataSource = self;
+    
+    //    [self getCourses:courseItems];
+    addedCoursesToStableCourseItems = false;
+    
+    // Add the method to detect change in the specficClassTextField
+    [ACourseTextField addTarget:self
+                         action:@selector(textFieldDidChange:)
+               forControlEvents:UIControlEventEditingChanged];
+    
+    //Initially hide the table view
+    ACourseTableView.rowHeight = 44;
+    [ACourseTableView setHidden:YES];
     /************************************************************************************************/
     // ADD ALL THE COURSE LABELS INTO THE ARRAY
     allCourseLabels = [[NSMutableArray alloc] init];
@@ -182,6 +234,20 @@
     [allDeleteButtons addObject:deleteCourseButton3];
     [allDeleteButtons addObject:deleteCourseButton4];
     [allDeleteButtons addObject:deleteCourseButton5];
+    
+    allACourseLabels = [[NSMutableArray alloc] init];
+    [allACourseLabels addObject:acourseLabel1];
+    [allACourseLabels addObject:acourseLabel2];
+    [allACourseLabels addObject:acourseLabel3];
+    [allACourseLabels addObject:acourseLabel4];
+    [allACourseLabels addObject:acourseLabel5];
+    
+    allADeleteButtons = [[NSMutableArray alloc] init];
+    [allADeleteButtons addObject:adeleteCourseButton1];
+    [allADeleteButtons addObject:adeleteCourseButton2];
+    [allADeleteButtons addObject:adeleteCourseButton3];
+    [allADeleteButtons addObject:adeleteCourseButton4];
+    [allADeleteButtons addObject:adeleteCourseButton5];
     
     // FIRSTLY HIDE ALL THE COURSE LABELS AND DELETE BUTTON
     [self hideCourseLabelAndButtonNumber:1 YorN:true];
@@ -203,17 +269,44 @@
     [deleteCourseButton4 setTitle:@"DELETE" forState:UIControlStateNormal];
     [deleteCourseButton5 setTitle:@"DELETE" forState:UIControlStateNormal];
     
+    [adeleteCourseButton1 addTarget:self action:@selector(pressADelete1) forControlEvents:UIControlEventTouchUpInside];
+    [adeleteCourseButton2 addTarget:self action:@selector(pressADelete2) forControlEvents:UIControlEventTouchUpInside];
+    [adeleteCourseButton3 addTarget:self action:@selector(pressADelete3) forControlEvents:UIControlEventTouchUpInside];
+    [adeleteCourseButton4 addTarget:self action:@selector(pressADelete4) forControlEvents:UIControlEventTouchUpInside];
+    [adeleteCourseButton5 addTarget:self action:@selector(pressADelete5) forControlEvents:UIControlEventTouchUpInside];
+    
+    [adeleteCourseButton1 setTitle:@"DELETE" forState:UIControlStateNormal];
+    [adeleteCourseButton2 setTitle:@"DELETE" forState:UIControlStateNormal];
+    [adeleteCourseButton3 setTitle:@"DELETE" forState:UIControlStateNormal];
+    [adeleteCourseButton4 setTitle:@"DELETE" forState:UIControlStateNormal];
+    [adeleteCourseButton5 setTitle:@"DELETE" forState:UIControlStateNormal];
+    
     /************************************************************************************/
     
     [self fetchTutorInfoAndSetSubviews];
+    [self fetchAllDepartmentsAndFillThePickerArray];
+    [self addDepartmentPicker];
     
     // Add the method to detect change in the specficClassTextField
     [submitButton addTarget:self
                      action:@selector(submitButtonPressed)
            forControlEvents:UIControlEventTouchUpInside];
     
+    ACourses = [[NSMutableArray alloc] init];
     
+    /*******************************************************************************/
+    //keyboard disappear when tapping outside of text field
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
     
+    // prevent the touch event to the table view being eaten by the tap
+    [tap setCancelsTouchesInView:NO];
+    
+}
+
+# pragma mark - dismissKeyboard
+-(void)dismissKeyboard {
+    [self.view endEditing:YES];
 }
 
 #pragma mark- database query methods
@@ -226,6 +319,7 @@
     PFObject *userPointer = [PFObject objectWithoutDataWithClassName:@"_User" objectId:([PFUser currentUser]).objectId];
     PFQuery *query = [PFQuery queryWithClassName:@"CollegeClassTutor"];
     [query whereKey:@"userId" equalTo:userPointer];
+    [query includeKey:@"departmentId"];
     [query setLimit:1000];
     
     [self.hud show:YES];
@@ -254,6 +348,12 @@
              NSArray *tempAvailableDays = (NSArray *)[tutor objectForKey:@"availableDays"];
              [availableDays addObjectsFromArray:tempAvailableDays];
              
+             NSArray *tempAddedAClasses = (NSArray *)[tutor objectForKey:@"AClasses"];
+             [ACourses addObjectsFromArray:tempAddedAClasses];
+             
+             PFObject *departmentPointer = [tutor objectForKey:@"departmentId"];
+             departmentTextField.text = [departmentPointer objectForKey:@"department"];
+             
              // Set the course labels
              if([addedCourses count] != 0)
              {
@@ -262,6 +362,18 @@
                  {
                      [self setCourseLabelNumber:i toString:courseString];
                      [self hideCourseLabelAndButtonNumber:i YorN:false];
+                     i++;
+                 }
+             }
+             
+             // Set the course labels
+             if([ACourses count] != 0)
+             {
+                 int i = 1;
+                 for(NSString *courseString in ACourses)
+                 {
+                     [self setACourseLabelNumber:i toString:courseString];
+                     [self hideACourseLabelAndButtonNumber:i YorN:false];
                      i++;
                  }
              }
@@ -296,6 +408,32 @@
          }
          
      }];
+}
+
+-(void)fetchAllDepartmentsAndFillThePickerArray
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Department"];
+    [query setLimit:1000];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error)
+        {
+            [pickerDepartmentArray addObjectsFromArray:[objects valueForKey:@"department"]];
+            [pickerDepartmentArray insertObject:@"" atIndex:0];
+            [pickerDepartmentArray sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                            message:@"Some error happened during fetching departments"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        
+    }];
 }
 
 #pragma mark- tableView delegete methods
@@ -338,34 +476,53 @@
     // Do not let the cell stay selected
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if(noCourseFound)
+    if(tableView == courseTableView)
     {
-        [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
-        chooseCourseTextField.text = @"";
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        if(!noCourseFound)
+        {
+            choosenCourse = cell.textLabel.text;
+            NSString *alertMessage = [@"Do you wanna add " stringByAppendingString:choosenCourse];
+            alertMessage = [alertMessage stringByAppendingString:@" to My Courses?"];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm"
+                                                            message:alertMessage
+                                                           delegate:self
+                                                  cancelButtonTitle:@"No"
+                                                  otherButtonTitles:@"Yes", nil];
+            [alert show];
+        }
+        else
+        {
+            [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
+            chooseCourseTextField.text = @"";
+            [self.view endEditing:YES];
+        }
     }
-    
-    
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if(!noCourseFound)
+    else if(tableView == ACourseTableView)
     {
-        choosenCourse = cell.textLabel.text;
-        NSString *alertMessage = [@"Do you wanna add " stringByAppendingString:choosenCourse];
-        alertMessage = [alertMessage stringByAppendingString:@" to My Courses?"];
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm"
-                                                        message:alertMessage
-                                                       delegate:self
-                                              cancelButtonTitle:@"No"
-                                              otherButtonTitles:@"Yes", nil];
-        [alert show];
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        if(!noCourseFound)
+        {
+            choosenCourse = cell.textLabel.text;
+            NSString *alertMessage = [@"Do you wanna add " stringByAppendingString:choosenCourse];
+            alertMessage = [alertMessage stringByAppendingString:@" to My A+/A/A- Courses?"];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm"
+                                                            message:alertMessage
+                                                           delegate:self
+                                                  cancelButtonTitle:@"No!"
+                                                  otherButtonTitles:@"Yes!", nil];
+            [alert show];
+        }
+        else
+        {
+            [self hideACourseTableView:true AndSetYOfSubmitButton:1350];
+            ACourseTextField.text = @"";
+            [self.view endEditing:YES];
+        }
     }
-    else
-    {
-        [courseTableView setHidden:YES];
-        chooseCourseTextField.text = @"";
-        [self.view endEditing:YES];
-    }
-    //ChecklistItem *item = _items[indexPath.row];
 }
 
 
@@ -374,10 +531,66 @@
 {
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
     
-    if([title isEqualToString:@"No"])
+    if([title isEqualToString:@"No"] || [title isEqualToString:@"No!"])
     {
         // Do nothing
     }
+    
+    if([title isEqualToString:@"Yes!"])
+    {
+        if([ACourses count] == 5)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:@"You can add at most 5 courses"
+                                                           delegate:self
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:@"OK", nil];
+            [alert show];
+            ACourseTextField.text = @"";
+            [self.view endEditing:YES];
+            [self hideACourseTableView:true AndSetYOfSubmitButton:1350];
+        }
+        else
+        {
+            if([ACourses containsObject:choosenCourse])
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                message:@"You have already added this course"
+                                                               delegate:self
+                                                      cancelButtonTitle:nil
+                                                      otherButtonTitles:@"OK", nil];
+                [alert show];
+                [self.view endEditing:YES];
+                ACourseTextField.text = @"";
+            }
+            else
+            {
+                [ACourses addObject:choosenCourse];
+                for(UILabel *courseLabel in allACourseLabels)
+                {
+                    if([courseLabel isHidden])
+                    {
+                        [courseLabel setHidden:false];
+                        [courseLabel setText:choosenCourse];
+                        break;
+                    }
+                }
+                
+                for(UIButton *deleteButton in allADeleteButtons)
+                {
+                    if([deleteButton isHidden])
+                    {
+                        [deleteButton setHidden:false];
+                        break;
+                    }
+                }
+                [self.view endEditing:YES];
+                [self hideACourseTableView:true AndSetYOfSubmitButton:1350];
+                ACourseTextField.text = @"";
+            }
+        }
+    }
+    
     if([title isEqualToString:@"Yes"])
     {
         if([addedCourses count] == 5)
@@ -388,11 +601,10 @@
                                                   cancelButtonTitle:nil
                                                   otherButtonTitles:@"OK", nil];
             [alert show];
-            
+            [self.view endEditing:YES];
             chooseCourseTextField.text = @"";
-            
             [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
-            
+            [self centerSubview:submitButton withX:40 Y:1750 height:60];
         }
         else
         {
@@ -404,10 +616,9 @@
                                                       cancelButtonTitle:nil
                                                       otherButtonTitles:@"OK", nil];
                 [alert show];
-                
+                [self.view endEditing:YES];
                 chooseCourseTextField.text = @"";
             }
-            
             else
             {
                 [addedCourses addObject:choosenCourse];
@@ -430,13 +641,31 @@
                     }
                 }
                 [self.view endEditing:YES];
-                
                 [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
+                [self centerSubview:submitButton withX:40 Y:1750 height:60];
+                [self.view endEditing:YES];                
                 chooseCourseTextField.text = @"";
             }
-            
         }
     }
+}
+
+#pragma mark - textView delegate methods
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    if([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    
+    return YES;
+}
+
+#pragma mark - textField delegate methods
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 #pragma mark- textField delegete methods
@@ -451,36 +680,74 @@
         addedCoursesToStableCourseItems = true;
     }
     
-    
-    if (textField.text.length == 0)
+    if(textField == chooseCourseTextField)
     {
-        [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
+        if (textField.text.length == 0)
+        {
+            [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
+            [self centerSubview:submitButton withX:40 Y:1640 height:60];
+        }
+        else
+        {
+            [self hideCourseTableView:NO AndSetYOfMyCoursesBlock:360];
+            [self centerSubview:submitButton withX:40 Y:1740 height:60];
+            
+            
+            NSString *inputString = [textField.text uppercaseString];
+            NSMutableArray *discardItems = [[NSMutableArray alloc] init];
+            
+            // Filter out classes based on user input
+            for (NSString *currentString in courseItems)
+            {
+                if(![self string:currentString containsString:inputString])
+                    [discardItems addObject:currentString];
+            }
+            [courseItems removeObjectsInArray:discardItems];
+            
+            // Add classes back when user delete characters
+            for (NSString *currentString in stableCourseItems)
+            {
+                if([self string:currentString containsString:inputString])
+                    if(![courseItems containsObject:currentString])
+                    {
+                        [courseItems addObject:currentString];
+                    }
+            }
+            [courseTableView reloadData];
+        }
     }
-    else
+    else if(textField == ACourseTextField)
     {
-        [self hideCourseTableView:NO AndSetYOfMyCoursesBlock:360];
-        
-        NSString *inputString = [textField.text uppercaseString];
-        NSMutableArray *discardItems = [[NSMutableArray alloc] init];
-        
-        // Filter out classes based on user input
-        for (NSString *currentString in courseItems)
+        if (textField.text.length == 0)
         {
-            if(![self string:currentString containsString:inputString])
-                [discardItems addObject:currentString];
+            [self hideACourseTableView:true AndSetYOfSubmitButton:1350];
         }
-        [courseItems removeObjectsInArray:discardItems];
-        
-        // Add classes back when user delete characters
-        for (NSString *currentString in stableCourseItems)
+        else
         {
-            if([self string:currentString containsString:inputString])
-                if(![courseItems containsObject:currentString])
-                {
-                    [courseItems addObject:currentString];
-                }
+            [self hideACourseTableView:false AndSetYOfSubmitButton:1550];
+            
+            NSString *inputString = [textField.text uppercaseString];
+            NSMutableArray *discardItems = [[NSMutableArray alloc] init];
+            
+            // Filter out classes based on user input
+            for (NSString *currentString in courseItems)
+            {
+                if(![self string:currentString containsString:inputString])
+                    [discardItems addObject:currentString];
+            }
+            [courseItems removeObjectsInArray:discardItems];
+            
+            // Add classes back when user delete characters
+            for (NSString *currentString in stableCourseItems)
+            {
+                if([self string:currentString containsString:inputString])
+                    if(![courseItems containsObject:currentString])
+                    {
+                        [courseItems addObject:currentString];
+                    }
+            }
+            [ACourseTableView reloadData];
         }
-        [courseTableView reloadData];
     }
 }
 
@@ -502,7 +769,6 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             [array addObjectsFromArray:[objects valueForKey:@"courseName"]];
-            [array insertObject:@"" atIndex:0];
             [array sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
         }
     }];
@@ -551,6 +817,48 @@
     [addedCourses removeObject:courseName];
 }
 
+-(void)pressADelete1
+{
+    [acourseLabel1 setHidden:true];
+    [adeleteCourseButton1 setHidden:true];
+    
+    NSString *courseName = [acourseLabel1.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [ACourses removeObject:courseName];
+    
+}
+
+-(void)pressADelete2
+{
+    [acourseLabel2 setHidden:true];
+    [adeleteCourseButton2 setHidden:true];
+    NSString *courseName = [acourseLabel2.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [ACourses removeObject:courseName];
+}
+
+-(void)pressADelete3
+{
+    [acourseLabel3 setHidden:true];
+    [adeleteCourseButton3 setHidden:true];
+    NSString *courseName = [acourseLabel3.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [ACourses removeObject:courseName];
+}
+
+-(void)pressADelete4
+{
+    [acourseLabel4 setHidden:true];
+    [adeleteCourseButton4 setHidden:true];
+    NSString *courseName = [acourseLabel4.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [ACourses removeObject:courseName];
+}
+
+-(void)pressADelete5
+{
+    [acourseLabel5 setHidden:true];
+    [adeleteCourseButton5 setHidden:true];
+    NSString *courseName = [acourseLabel5.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [ACourses removeObject:courseName];
+}
+
 -(void)submitButtonPressed
 {
     [availableDays removeAllObjects];
@@ -573,26 +881,42 @@
     
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *tutor, NSError *error)
      {
+         NSLog(@"in submit press qurey");
          if(!error)
          {
-             [tutor setObject:addedCourses forKey:@"courses"];
-             [tutor setObject:availableDays forKey:@"availableDays"];
-             [tutor setObject:descriptionTextView.text forKey:@"selfAd"];
-             [tutor saveInBackground];
+             NSLog(@"in submit press before !error");
              
-             [self.hud hide:YES];
+             PFQuery *theQuery = [PFQuery queryWithClassName:@"Department"];
+             [theQuery whereKey:@"department" equalTo:departmentTextField.text];
+             [theQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                 PFObject *departmentPointer = [PFObject objectWithoutDataWithClassName:@"Department" objectId:object.objectId];
+                 
+                 [tutor setObject:addedCourses forKey:@"courses"];
+                 [tutor setObject:availableDays forKey:@"availableDays"];
+                 [tutor setObject:descriptionTextView.text forKey:@"selfAd"];
+                 [tutor setObject:ACourses forKey:@"AClasses"];
+                 [tutor setObject:departmentPointer forKey:@"departmentId"];
+                 [tutor saveInBackground];
+                 
+                 [self.hud hide:YES];
+                 
+                 // successfully updated tutor information
+                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notice"
+                                                                 message:@"You have successfully updated your tutor information"
+                                                                delegate:nil
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil];
+                 [alert show];
+                 NSLog(@"in submit press !error");
+                 
+                 return;
+             }];
              
-             // successfully updated tutor information
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notice"
-                                                             message:@"You have successfully updated your tutor information"
-                                                            delegate:nil
-                                                   cancelButtonTitle:@"OK"
-                                                   otherButtonTitles:nil];
-             [alert show];
-             return;
          }
          else
          {
+             NSLog(@"in submit press have before error");
+             
              [self.hud hide:YES];
              
              // Not found the tutor information in the database
@@ -602,14 +926,17 @@
                                                    cancelButtonTitle:@"OK"
                                                    otherButtonTitles:nil];
              [alert show];
+             NSLog(@"in submit press have error");
              return;
          }
      }];
+    
+    NSLog(@"in submit press");
 }
 
 #pragma mark - add picker helper method
 // Helper method to add the picker
--(void)addHelpPicker
+-(void)addDepartmentPicker
 {
     pickerDepartmentArray = [[NSMutableArray alloc] init];
     
@@ -617,7 +944,7 @@
     departmentPicker.delegate = self;
     departmentPicker.dataSource = self;
     [departmentPicker setShowsSelectionIndicator:YES];
-    majorTextField.inputView = departmentPicker;
+    departmentTextField.inputView = departmentPicker;
     
     // Create done button in UIPickerView
     UIToolbar*  mypickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
@@ -631,12 +958,12 @@
     [barItems addObject:doneBtn];
     
     [mypickerToolbar setItems:barItems animated:YES];
-    majorTextField.inputAccessoryView = mypickerToolbar;
+    departmentTextField.inputAccessoryView = mypickerToolbar;
 }
 
 -(void)pickerDoneClicked
 {
-    [majorTextField resignFirstResponder];
+    [departmentTextField resignFirstResponder];
 }
 
 /*************************************************************************************/
@@ -661,7 +988,7 @@
       didSelectRow:(NSInteger)row
        inComponent:(NSInteger)component
 {
-    majorTextField.text = [NSString stringWithFormat:@"%@", [pickerDepartmentArray objectAtIndex:row]];
+    departmentTextField.text = [NSString stringWithFormat:@"%@", [pickerDepartmentArray objectAtIndex:row]];
 }
 
 
@@ -682,6 +1009,12 @@
     courseLabel4 = [[UILabel alloc] init];
     courseLabel5 = [[UILabel alloc] init];
     
+    acourseLabel1 = [[UILabel alloc] init];
+    acourseLabel2 = [[UILabel alloc] init];
+    acourseLabel3 = [[UILabel alloc] init];
+    acourseLabel4 = [[UILabel alloc] init];
+    acourseLabel5 = [[UILabel alloc] init];
+    
     mondayLabel = [[UILabel alloc] init];
     tuesdayLabel = [[UILabel alloc] init];
     wednesdayLabel = [[UILabel alloc] init];
@@ -693,14 +1026,18 @@
     
     myDescriptionLabel = [[UILabel alloc] init];
     
-    myMajorLabel = [[UILabel alloc] init];
+    myDepartmentLabel = [[UILabel alloc] init];
+    
+    myACourseLabel = [[UILabel alloc] init];
     
     // TextField
     chooseCourseTextField = [[UITextField alloc] init];
-    majorTextField = [[UITextField alloc] init];
+    departmentTextField = [[UITextField alloc] init];
+    ACourseTextField = [[UITextField alloc] init];
     
     // TableView
     courseTableView = [[UITableView alloc] init];
+    ACourseTableView = [[UITableView alloc] init];
     
     // Button
     deleteCourseButton1 = [[UIButton alloc] init];
@@ -708,6 +1045,12 @@
     deleteCourseButton3 = [[UIButton alloc] init];
     deleteCourseButton4 = [[UIButton alloc] init];
     deleteCourseButton5 = [[UIButton alloc] init];
+    
+    adeleteCourseButton1 = [[UIButton alloc] init];
+    adeleteCourseButton2 = [[UIButton alloc] init];
+    adeleteCourseButton3 = [[UIButton alloc] init];
+    adeleteCourseButton4 = [[UIButton alloc] init];
+    adeleteCourseButton5 = [[UIButton alloc] init];
     
     submitButton = [[UIButton alloc] init];
     
@@ -738,6 +1081,12 @@
     [scrollView addSubview:courseLabel4];
     [scrollView addSubview:courseLabel5];
     
+    [scrollView addSubview:acourseLabel1];
+    [scrollView addSubview:acourseLabel2];
+    [scrollView addSubview:acourseLabel3];
+    [scrollView addSubview:acourseLabel4];
+    [scrollView addSubview:acourseLabel5];
+    
     [scrollView addSubview:mondayLabel];
     [scrollView addSubview:tuesdayLabel];
     [scrollView addSubview:wednesdayLabel];
@@ -749,14 +1098,20 @@
     
     [scrollView addSubview:myDescriptionLabel];
     
-    [scrollView addSubview:myMajorLabel];
+    [scrollView addSubview:myDepartmentLabel];
+    
+    [scrollView addSubview:myACourseLabel];
+    
     
     // TextField
     [scrollView addSubview:chooseCourseTextField];
-    [scrollView addSubview:majorTextField];
+    [scrollView addSubview:departmentTextField];
+    [scrollView addSubview:ACourseTextField];
     
     // TableView
     [scrollView addSubview:courseTableView];
+    [scrollView addSubview:ACourseTableView];
+    
     
     // Button
     [scrollView addSubview:deleteCourseButton1];
@@ -764,6 +1119,12 @@
     [scrollView addSubview:deleteCourseButton3];
     [scrollView addSubview:deleteCourseButton4];
     [scrollView addSubview:deleteCourseButton5];
+    
+    [scrollView addSubview:adeleteCourseButton1];
+    [scrollView addSubview:adeleteCourseButton2];
+    [scrollView addSubview:adeleteCourseButton3];
+    [scrollView addSubview:adeleteCourseButton4];
+    [scrollView addSubview:adeleteCourseButton5];
     
     [scrollView addSubview:submitButton];
     
@@ -778,9 +1139,6 @@
     
     // TextView
     [scrollView addSubview:descriptionTextView];
-    
-    // UIPickerView
-    [scrollView addSubview:departmentPicker];
 }
 
 -(void)centerSubview:(UIView *)subView withX:(CGFloat)xCoordinate Y:(CGFloat)yCoordinate height:(CGFloat)height
@@ -884,7 +1242,7 @@
     
 }
 
--(void)layoutMyDescriptionAndMajorBlock:(CGFloat)yCoordinate
+-(void)layoutMyDescriptionAndDepartmentBlock:(CGFloat)yCoordinate
 {
     [self centerSubview:myDescriptionLabel withX:0 Y:yCoordinate height:35];
     [myDescriptionLabel setText:@"  My Description"];
@@ -894,15 +1252,80 @@
     [self centerSubview:descriptionTextView withX:10 Y:yCoordinate + 45 height:200];
     descriptionTextView.layer.borderWidth = 1;
     descriptionTextView.layer.borderColor = [[UIColor blackColor] CGColor];
+    [descriptionTextView setReturnKeyType:UIReturnKeyDone];
+    descriptionTextView.delegate = self;
     
-    [self centerSubview:myMajorLabel withX:0 Y:yCoordinate + 260 height:35];
-    [myMajorLabel setText:@"  My Major"];
-    myMajorLabel.backgroundColor = [UIColor colorWithRed:50.0/255.0 green:120.0/255.0 blue:180.0 alpha:1];
-    myMajorLabel.textColor = [UIColor whiteColor];
     
-    [self centerSubview:majorTextField withX:10 Y:yCoordinate + 305 height:35];
-    majorTextField.layer.borderWidth = 1;
-    majorTextField.layer.borderColor = [[UIColor blackColor] CGColor];
+    [self centerSubview:myDepartmentLabel withX:0 Y:yCoordinate + 260 height:35];
+    [myDepartmentLabel setText:@"  My Department"];
+    myDepartmentLabel.backgroundColor = [UIColor colorWithRed:50.0/255.0 green:120.0/255.0 blue:180.0 alpha:1];
+    myDepartmentLabel.textColor = [UIColor whiteColor];
+    
+    [self centerSubview:departmentTextField withX:10 Y:yCoordinate + 305 height:35];
+    departmentTextField.layer.borderWidth = 1;
+    departmentTextField.layer.borderColor = [[UIColor blackColor] CGColor];
+}
+
+-(void)layoutACoursesBlocks:(CGFloat)yCoordinate
+{
+    [self centerSubview:myACourseLabel withX:0 Y:yCoordinate height:35];
+    [myACourseLabel setText:@"  A+/A/A- courses"];
+    myACourseLabel.backgroundColor = [UIColor colorWithRed:50.0/255.0 green:120.0/255.0 blue:180.0 alpha:1];
+    myACourseLabel.textColor = [UIColor whiteColor];
+    
+    [self centerSubview:ACourseTextField withX:10 Y:yCoordinate + 45 height:35];
+    ACourseTextField.layer.borderWidth = 1;
+    ACourseTextField.layer.borderColor = [[UIColor blackColor] CGColor];
+    [ACourseTextField setPlaceholder:@"input the course with grade > A-"];
+    
+    CGFloat firstCourseLabelYCoordinate = yCoordinate + 90;
+    
+    [self layoutACoursesAndButtons:firstCourseLabelYCoordinate];
+    
+}
+
+-(void)layoutACoursesAndButtons:(CGFloat)firstCourseLabelYCoordinate
+{
+    CGFloat courseLabelWidth = screenWidth * (2.0/3.0);
+    CGFloat deleteButtonWidth = screenWidth * (1.0/3.0);
+    CGFloat theHeight = 50;
+    
+    acourseLabel1.frame = CGRectMake(0, firstCourseLabelYCoordinate, courseLabelWidth, theHeight);
+    acourseLabel1.backgroundColor = [UIColor colorWithRed:102.0/255.0 green:178.0/255.0 blue:255.0 alpha:1];
+    acourseLabel1.textColor = [UIColor whiteColor];
+    
+    adeleteCourseButton1.frame = CGRectMake(courseLabelWidth, firstCourseLabelYCoordinate, deleteButtonWidth, theHeight);
+    adeleteCourseButton1.backgroundColor = [UIColor redColor];
+    
+    CGFloat LLDistance = 55;
+    
+    acourseLabel2.frame = CGRectMake(0, firstCourseLabelYCoordinate + LLDistance, courseLabelWidth, theHeight);
+    acourseLabel2.backgroundColor = [UIColor colorWithRed:102.0/255.0 green:178.0/255.0 blue:255.0 alpha:1];
+    acourseLabel2.textColor = [UIColor whiteColor];
+    
+    adeleteCourseButton2.frame = CGRectMake(courseLabelWidth, firstCourseLabelYCoordinate + LLDistance, deleteButtonWidth, theHeight);
+    adeleteCourseButton2.backgroundColor = [UIColor redColor];
+    
+    acourseLabel3.frame = CGRectMake(0, firstCourseLabelYCoordinate + 2*LLDistance, courseLabelWidth, theHeight);
+    acourseLabel3.backgroundColor = [UIColor colorWithRed:102.0/255.0 green:178.0/255.0 blue:255.0 alpha:1];
+    acourseLabel3.textColor = [UIColor whiteColor];
+    
+    adeleteCourseButton3.frame = CGRectMake(courseLabelWidth, firstCourseLabelYCoordinate + 2*LLDistance, deleteButtonWidth, theHeight);
+    adeleteCourseButton3.backgroundColor = [UIColor redColor];
+    
+    acourseLabel4.frame = CGRectMake(0, firstCourseLabelYCoordinate + 3*LLDistance, courseLabelWidth, theHeight);
+    acourseLabel4.backgroundColor = [UIColor colorWithRed:102.0/255.0 green:178.0/255.0 blue:255.0 alpha:1];
+    acourseLabel4.textColor = [UIColor whiteColor];
+    
+    adeleteCourseButton4.frame = CGRectMake(courseLabelWidth, firstCourseLabelYCoordinate + 3*LLDistance, deleteButtonWidth, theHeight);
+    adeleteCourseButton4.backgroundColor = [UIColor redColor];
+    
+    acourseLabel5.frame = CGRectMake(0, firstCourseLabelYCoordinate + 4*LLDistance, courseLabelWidth, theHeight);
+    acourseLabel5.backgroundColor = [UIColor colorWithRed:102.0/255.0 green:178.0/255.0 blue:255.0 alpha:1];
+    acourseLabel5.textColor = [UIColor whiteColor];
+    
+    adeleteCourseButton5.frame = CGRectMake(courseLabelWidth, firstCourseLabelYCoordinate + 4*LLDistance, deleteButtonWidth, theHeight);
+    adeleteCourseButton5.backgroundColor = [UIColor redColor];
 }
 
 -(void)layoutIfNeededAllBlocks
@@ -916,6 +1339,15 @@
     [deleteCourseButton2 layoutIfNeeded];
     [deleteCourseButton3 layoutIfNeeded];
     [deleteCourseButton4 layoutIfNeeded];
+    
+    [acourseLabel1 layoutIfNeeded];
+    [acourseLabel2 layoutIfNeeded];
+    [acourseLabel3 layoutIfNeeded];
+    [acourseLabel4 layoutIfNeeded];
+    [adeleteCourseButton1 layoutIfNeeded];
+    [adeleteCourseButton2 layoutIfNeeded];
+    [adeleteCourseButton3 layoutIfNeeded];
+    [adeleteCourseButton4 layoutIfNeeded];
     
     [mondayLabel layoutIfNeeded];
     [tuesdayLabel layoutIfNeeded];
@@ -936,9 +1368,10 @@
     [myDescriptionLabel layoutIfNeeded];
     [descriptionTextView layoutIfNeeded];
     
-    [myMajorLabel layoutIfNeeded];
-    [majorTextField layoutIfNeeded];
+    [myDepartmentLabel layoutIfNeeded];
+    [departmentTextField layoutIfNeeded];
 }
+
 
 -(void)hideCourseLabelAndButtonNumber:(int)number YorN:(BOOL)YN
 {
@@ -969,6 +1402,35 @@
     }
 }
 
+-(void)hideACourseLabelAndButtonNumber:(int)number YorN:(BOOL)YN
+{
+    if(number == 1)
+    {
+        [acourseLabel1 setHidden:YN];
+        [adeleteCourseButton1 setHidden:YN];
+    }
+    else if(number == 2)
+    {
+        [acourseLabel2 setHidden:YN];
+        [adeleteCourseButton2 setHidden:YN];
+    }
+    else if(number == 3)
+    {
+        [acourseLabel3 setHidden:YN];
+        [adeleteCourseButton3 setHidden:YN];
+    }
+    else if(number == 4)
+    {
+        [acourseLabel4 setHidden:YN];
+        [adeleteCourseButton4 setHidden:YN];
+    }
+    else
+    {
+        [acourseLabel5 setHidden:YN];
+        [adeleteCourseButton5 setHidden:YN];
+    }
+}
+
 -(void)setCourseLabelNumber:(int)number toString:(NSString *)string
 {
     NSString *theString = [@" " stringByAppendingString:string];
@@ -994,6 +1456,31 @@
     }
 }
 
+-(void)setACourseLabelNumber:(int)number toString:(NSString *)string
+{
+    NSString *theString = [@" " stringByAppendingString:string];
+    if(number == 1)
+    {
+        [acourseLabel1 setText:theString];
+    }
+    else if(number == 2)
+    {
+        [acourseLabel2 setText:theString];
+    }
+    else if(number == 3)
+    {
+        [acourseLabel3 setText:theString];
+    }
+    else if(number == 4)
+    {
+        [acourseLabel4 setText:theString];
+    }
+    else
+    {
+        [acourseLabel5 setText:theString];
+    }
+}
+
 -(void)hideCourseTableView:(BOOL)YN AndSetYOfMyCoursesBlock:(CGFloat)yCoordinate
 {
     [UIView beginAnimations: nil context: NULL];
@@ -1002,8 +1489,24 @@
     [courseTableView setHidden:YN];
     [self layoutMyCoursesBlock:yCoordinate];
     [self layoutWeekDaysBlock:yCoordinate + 340];
-    [self centerSubview:submitButton withX:40 Y:yCoordinate + 800 height:60];
-    [self layoutMyDescriptionAndMajorBlock:yCoordinate + 880];
+    [self layoutMyDescriptionAndDepartmentBlock:yCoordinate + 800];
+    [self layoutACoursesBlocks:yCoordinate + 1160];
+    [self layoutIfNeededAllBlocks];
+    [self centerSubview:submitButton withX:40 Y:yCoordinate + 880 height:60];
+    
+    
+    [UIView commitAnimations];
+}
+
+-(void)hideACourseTableView:(BOOL)YN AndSetYOfSubmitButton:(CGFloat)yCoordinate
+{
+    [UIView beginAnimations: nil context: NULL];
+    [UIView setAnimationDuration: 0.2];
+    
+    [ACourseTableView setHidden:YN];
+    
+    [self layoutACoursesAndButtons:yCoordinate + 5];
+    [self centerSubview:submitButton withX:40 Y:yCoordinate + 300 height:60];
     [self layoutIfNeededAllBlocks];
     
     [UIView commitAnimations];
