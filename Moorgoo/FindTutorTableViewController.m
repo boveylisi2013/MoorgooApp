@@ -269,6 +269,7 @@
                     [[user objectForKey:@"profilePicture"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                         tutor.profileImage = [UIImage imageWithData:data];
                         [allTutorFromParse addObject:tutor];
+                        tutorSource = allTutorFromParse;
                         [self.tableView reloadData];
                     }];
                     /**************************************************************************************/
