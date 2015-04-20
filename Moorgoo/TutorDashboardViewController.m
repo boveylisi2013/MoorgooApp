@@ -99,6 +99,8 @@
     UITextField *ACourseTextField;
     UITableView *ACourseTableView;
     
+    UILabel *myPriceLabel;
+    UITextField *priceTextField;
     
 }
 @end
@@ -116,11 +118,11 @@
     screenWidth = screenRect.size.width;
     screenHeight = screenRect.size.height;
     
-    [self allocInitAllSubviews];
+    [self allocInitAllSubviews];     /************************************************************************************************/
     
     // Set up the scrollView
     scrollView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
-    scrollView.contentSize = CGSizeMake(screenWidth, screenHeight + 1400);
+    scrollView.contentSize = CGSizeMake(screenWidth, screenHeight + 1550);
     [self.view addSubview:scrollView];
     
     [self centerSubview:chooseCourseLabel withX:10 Y:10 height:15];
@@ -158,10 +160,11 @@
     [self layoutMyCoursesBlock:100];
     [self layoutWeekDaysBlock:440];
     [self layoutMyDescriptionAndDepartmentBlock:900];
-    [self centerSubview:submitButton withX:40 Y:1750 height:60];
+    [self centerSubview:submitButton withX:40 Y:1860 height:60];
     [self layoutACoursesBlocks:1260 + 100];
+    [self layoutPriceBlock:1750];
     
-    [self addAllSubviews];
+    [self addAllSubviews];      /************************************************************************************************/
     
     /************************************************************************************************/
     [mondayLabel setText:@"  MONDAY"];
@@ -354,6 +357,9 @@
              PFObject *departmentPointer = [tutor objectForKey:@"departmentId"];
              departmentTextField.text = [departmentPointer objectForKey:@"department"];
              
+             NSString *price = (NSString *)[tutor objectForKey:@"price"];
+             priceTextField.text = price;
+             
              // Set the course labels
              if([addedCourses count] != 0)
              {
@@ -518,7 +524,7 @@
         }
         else
         {
-            [self hideACourseTableView:true AndSetYOfSubmitButton:1350];
+            [self hideACourseTableView:true AndSetYOfACoursesAndButtons:1350];
             ACourseTextField.text = @"";
             [self.view endEditing:YES];
         }
@@ -548,7 +554,7 @@
             [alert show];
             ACourseTextField.text = @"";
             [self.view endEditing:YES];
-            [self hideACourseTableView:true AndSetYOfSubmitButton:1350];
+            [self hideACourseTableView:true AndSetYOfACoursesAndButtons:1350];
         }
         else
         {
@@ -585,7 +591,7 @@
                     }
                 }
                 [self.view endEditing:YES];
-                [self hideACourseTableView:true AndSetYOfSubmitButton:1350];
+                [self hideACourseTableView:true AndSetYOfACoursesAndButtons:1350];
                 ACourseTextField.text = @"";
             }
         }
@@ -643,7 +649,7 @@
                 [self.view endEditing:YES];
                 [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
                 [self centerSubview:submitButton withX:40 Y:1750 height:60];
-                [self.view endEditing:YES];                
+                [self.view endEditing:YES];
                 chooseCourseTextField.text = @"";
             }
         }
@@ -685,12 +691,14 @@
         if (textField.text.length == 0)
         {
             [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
-            [self centerSubview:submitButton withX:40 Y:1640 height:60];
+            [self layoutPriceBlock:1660];
+            [self centerSubview:submitButton withX:40 Y:1760 height:60];
         }
         else
         {
             [self hideCourseTableView:NO AndSetYOfMyCoursesBlock:360];
-            [self centerSubview:submitButton withX:40 Y:1740 height:60];
+            [self layoutPriceBlock:1760];
+            [self centerSubview:submitButton withX:40 Y:1890 height:60];
             
             
             NSString *inputString = [textField.text uppercaseString];
@@ -720,11 +728,15 @@
     {
         if (textField.text.length == 0)
         {
-            [self hideACourseTableView:true AndSetYOfSubmitButton:1350];
+            [self hideACourseTableView:true AndSetYOfACoursesAndButtons:1350];
+            [self layoutPriceBlock:1660];
+            [self centerSubview:submitButton withX:40 Y:1760 height:60];
         }
         else
         {
-            [self hideACourseTableView:false AndSetYOfSubmitButton:1550];
+            [self hideACourseTableView:false AndSetYOfACoursesAndButtons:1550];
+            [self layoutPriceBlock:1760];
+            [self centerSubview:submitButton withX:40 Y:1890 height:60];
             
             NSString *inputString = [textField.text uppercaseString];
             NSMutableArray *discardItems = [[NSMutableArray alloc] init];
@@ -896,6 +908,7 @@
                  [tutor setObject:descriptionTextView.text forKey:@"selfAd"];
                  [tutor setObject:ACourses forKey:@"AClasses"];
                  [tutor setObject:departmentPointer forKey:@"departmentId"];
+                 [tutor setObject:priceTextField.text forKey:@"price"];
                  [tutor saveInBackground];
                  
                  [self.hud hide:YES];
@@ -1023,17 +1036,16 @@
     saturdayLabel = [[UILabel alloc] init];
     sundayLabel = [[UILabel alloc] init];
     myAvailableDaysLabel = [[UILabel alloc] init];
-    
     myDescriptionLabel = [[UILabel alloc] init];
-    
     myDepartmentLabel = [[UILabel alloc] init];
-    
     myACourseLabel = [[UILabel alloc] init];
+    myPriceLabel = [[UILabel alloc] init];
     
     // TextField
     chooseCourseTextField = [[UITextField alloc] init];
     departmentTextField = [[UITextField alloc] init];
     ACourseTextField = [[UITextField alloc] init];
+    priceTextField = [[UITextField alloc] init];
     
     // TableView
     courseTableView = [[UITableView alloc] init];
@@ -1095,18 +1107,16 @@
     [scrollView addSubview:saturdayLabel];
     [scrollView addSubview:sundayLabel];
     [scrollView addSubview:myAvailableDaysLabel];
-    
     [scrollView addSubview:myDescriptionLabel];
-    
     [scrollView addSubview:myDepartmentLabel];
-    
     [scrollView addSubview:myACourseLabel];
-    
+    [scrollView addSubview:myPriceLabel];
     
     // TextField
     [scrollView addSubview:chooseCourseTextField];
     [scrollView addSubview:departmentTextField];
     [scrollView addSubview:ACourseTextField];
+    [scrollView addSubview:priceTextField];
     
     // TableView
     [scrollView addSubview:courseTableView];
@@ -1145,6 +1155,22 @@
 {
     CGFloat width = screenWidth - 2*xCoordinate;
     subView.frame = CGRectMake(xCoordinate,yCoordinate,width,height);
+}
+
+-(void)layoutPriceBlock:(CGFloat)yCoordinate
+{
+    [self centerSubview:myPriceLabel withX:0 Y:yCoordinate height:30];
+    [myPriceLabel setText:@"  My Price"];
+    myPriceLabel.backgroundColor = [UIColor colorWithRed:50.0/255.0 green:120.0/255.0 blue:180.0 alpha:1];
+    myPriceLabel.textColor = [UIColor whiteColor];
+    
+    [self centerSubview:priceTextField withX:10 Y:yCoordinate + 40 height:35];
+    priceTextField.layer.borderWidth = 1;
+    priceTextField.layer.borderColor = [[UIColor blackColor] CGColor];
+    [priceTextField setReturnKeyType:UIReturnKeyDone];
+    [priceTextField setKeyboardType:UIKeyboardTypeNumberPad];
+    [priceTextField setPlaceholder:@"input your hourly rate"];
+    priceTextField.delegate = self;
 }
 
 -(void)layoutMyCoursesBlock:(CGFloat)yCoordinate
@@ -1492,13 +1518,12 @@
     [self layoutMyDescriptionAndDepartmentBlock:yCoordinate + 800];
     [self layoutACoursesBlocks:yCoordinate + 1160];
     [self layoutIfNeededAllBlocks];
-    [self centerSubview:submitButton withX:40 Y:yCoordinate + 880 height:60];
     
     
     [UIView commitAnimations];
 }
 
--(void)hideACourseTableView:(BOOL)YN AndSetYOfSubmitButton:(CGFloat)yCoordinate
+-(void)hideACourseTableView:(BOOL)YN AndSetYOfACoursesAndButtons:(CGFloat)yCoordinate
 {
     [UIView beginAnimations: nil context: NULL];
     [UIView setAnimationDuration: 0.2];
@@ -1506,11 +1531,14 @@
     [ACourseTableView setHidden:YN];
     
     [self layoutACoursesAndButtons:yCoordinate + 5];
-    [self centerSubview:submitButton withX:40 Y:yCoordinate + 300 height:60];
+    [self centerSubview:submitButton withX:40 Y:yCoordinate + 500 height:60];
     [self layoutIfNeededAllBlocks];
+    
     
     [UIView commitAnimations];
 }
+
+
 
 
 @end
