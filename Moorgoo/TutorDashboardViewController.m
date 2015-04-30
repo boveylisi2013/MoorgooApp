@@ -110,6 +110,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    chooseCourseTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    departmentTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    ACourseTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    priceTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    
     self.hud = [[MBProgressHUD alloc] init];
     [scrollView addSubview:self.hud];
     
@@ -122,14 +127,14 @@
     
     // Set up the scrollView
     scrollView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
-    scrollView.contentSize = CGSizeMake(screenWidth, screenHeight + 1550);
+    scrollView.contentSize = CGSizeMake(screenWidth, screenHeight + 1550 + 60);
     [self.view addSubview:scrollView];
     
-    [self centerSubview:chooseCourseLabel withX:10 Y:10 height:15];
+    [self centerSubview:chooseCourseLabel withX:10 Y:10 + 60 height:15];
     [chooseCourseLabel setText:@"Input the class that you want to teach"];
     [chooseCourseLabel setTextColor:[UIColor blackColor]];
     
-    [self centerSubview:chooseCourseTextField withX:10 Y:35 height:35];
+    [self centerSubview:chooseCourseTextField withX:10 Y:35 + 60 height:35];
     chooseCourseTextField.placeholder = @"type in the coursename";
     chooseCourseTextField.layer.borderWidth = 1;
     chooseCourseTextField.layer.borderColor = [[UIColor blackColor] CGColor];
@@ -140,8 +145,8 @@
     [ACourseTextField setReturnKeyType:UIReturnKeyDone];
     
     
-    [self centerSubview:courseTableView withX:10 Y:80 height:220];
-    [self centerSubview:ACourseTableView withX:10 Y:1350 height:205];
+    [self centerSubview:courseTableView withX:10 Y:80 + 60 height:220];
+    [self centerSubview:ACourseTableView withX:10 Y:1350 + 60 height:205];
     
     
     for(int i = 1; i < 6; i++)
@@ -157,12 +162,12 @@
     [submitButton setTitle:@"SAVE" forState:UIControlStateNormal];
     submitButton.backgroundColor = [UIColor purpleColor];
     
-    [self layoutMyCoursesBlock:100];
-    [self layoutWeekDaysBlock:440];
-    [self layoutMyDescriptionAndDepartmentBlock:900];
-    [self centerSubview:submitButton withX:40 Y:1860 height:60];
-    [self layoutACoursesBlocks:1260 + 100];
-    [self layoutPriceBlock:1750];
+    [self layoutMyCoursesBlock:100 + 60];
+    [self layoutWeekDaysBlock:440 + 60];
+    [self layoutMyDescriptionAndDepartmentBlock:900 + 60];
+    [self centerSubview:submitButton withX:40 Y:1860 + 60 height:60];
+    [self layoutACoursesBlocks:1260 + 100 + 60];
+    [self layoutPriceBlock:1750 + 60];
     
     [self addAllSubviews];      /************************************************************************************************/
     
@@ -488,6 +493,8 @@
         if(!noCourseFound)
         {
             choosenCourse = cell.textLabel.text;
+            
+            [self dismissKeyboard];
             NSString *alertMessage = [@"Do you wanna add " stringByAppendingString:choosenCourse];
             alertMessage = [alertMessage stringByAppendingString:@" to My Courses?"];
             
@@ -500,7 +507,7 @@
         }
         else
         {
-            [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
+            [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100 + 60];
             chooseCourseTextField.text = @"";
             [self.view endEditing:YES];
         }
@@ -512,6 +519,7 @@
         if(!noCourseFound)
         {
             choosenCourse = cell.textLabel.text;
+            [self dismissKeyboard];
             NSString *alertMessage = [@"Do you wanna add " stringByAppendingString:choosenCourse];
             alertMessage = [alertMessage stringByAppendingString:@" to My A+/A/A- Courses?"];
             
@@ -524,7 +532,7 @@
         }
         else
         {
-            [self hideACourseTableView:true AndSetYOfACoursesAndButtons:1350];
+            [self hideACourseTableView:true AndSetYOfACoursesAndButtons:1350 + 60];
             ACourseTextField.text = @"";
             [self.view endEditing:YES];
         }
@@ -546,28 +554,32 @@
     {
         if([ACourses count] == 5)
         {
+            ACourseTextField.text = @"";
+            [self dismissKeyboard];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                             message:@"You can add at most 5 courses"
-                                                           delegate:self
+                                                           delegate:nil
                                                   cancelButtonTitle:nil
                                                   otherButtonTitles:@"OK", nil];
+            [self dismissKeyboard];
             [alert show];
-            ACourseTextField.text = @"";
             [self.view endEditing:YES];
-            [self hideACourseTableView:true AndSetYOfACoursesAndButtons:1350];
+            [self hideACourseTableView:true AndSetYOfACoursesAndButtons:1350 + 60];
         }
         else
         {
             if([ACourses containsObject:choosenCourse])
             {
+                ACourseTextField.text = @"";
+                [self dismissKeyboard];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                 message:@"You have already added this course"
-                                                               delegate:self
+                                                               delegate:nil
                                                       cancelButtonTitle:nil
                                                       otherButtonTitles:@"OK", nil];
+                [self dismissKeyboard];
                 [alert show];
                 [self.view endEditing:YES];
-                ACourseTextField.text = @"";
             }
             else
             {
@@ -591,7 +603,7 @@
                     }
                 }
                 [self.view endEditing:YES];
-                [self hideACourseTableView:true AndSetYOfACoursesAndButtons:1350];
+                [self hideACourseTableView:true AndSetYOfACoursesAndButtons:1350 + 60];
                 ACourseTextField.text = @"";
             }
         }
@@ -601,29 +613,31 @@
     {
         if([addedCourses count] == 5)
         {
+            [self.view endEditing:YES];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                             message:@"You can add at most 5 courses"
-                                                           delegate:self
+                                                           delegate:nil
                                                   cancelButtonTitle:nil
                                                   otherButtonTitles:@"OK", nil];
             [alert show];
-            [self.view endEditing:YES];
             chooseCourseTextField.text = @"";
-            [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
-            [self centerSubview:submitButton withX:40 Y:1750 height:60];
+            [self.view endEditing:YES];
+            [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100 + 60];
+            [self centerSubview:submitButton withX:40 Y:1750 + 60 height:60];
         }
         else
         {
             if([addedCourses containsObject:choosenCourse])
             {
+                [self.view endEditing:YES];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                 message:@"You have already added this course"
-                                                               delegate:self
+                                                               delegate:nil
                                                       cancelButtonTitle:nil
                                                       otherButtonTitles:@"OK", nil];
                 [alert show];
-                [self.view endEditing:YES];
                 chooseCourseTextField.text = @"";
+                [self.view endEditing:YES];
             }
             else
             {
@@ -647,8 +661,8 @@
                     }
                 }
                 [self.view endEditing:YES];
-                [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
-                [self centerSubview:submitButton withX:40 Y:1750 height:60];
+                [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100 + 60];
+                [self centerSubview:submitButton withX:40 Y:1750 + 60 height:60];
                 [self.view endEditing:YES];
                 chooseCourseTextField.text = @"";
             }
@@ -690,15 +704,15 @@
     {
         if (textField.text.length == 0)
         {
-            [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100];
-            [self layoutPriceBlock:1660];
-            [self centerSubview:submitButton withX:40 Y:1760 height:60];
+            [self hideCourseTableView:YES AndSetYOfMyCoursesBlock:100 + 60];
+            [self layoutPriceBlock:1660 + 60];
+            [self centerSubview:submitButton withX:40 Y:1760 + 60 height:60];
         }
         else
         {
             [self hideCourseTableView:NO AndSetYOfMyCoursesBlock:360];
-            [self layoutPriceBlock:1760];
-            [self centerSubview:submitButton withX:40 Y:1890 height:60];
+            [self layoutPriceBlock:1760 + 60];
+            [self centerSubview:submitButton withX:40 Y:1890 + 60 height:60];
             
             
             NSString *inputString = [textField.text uppercaseString];
@@ -728,15 +742,15 @@
     {
         if (textField.text.length == 0)
         {
-            [self hideACourseTableView:true AndSetYOfACoursesAndButtons:1350];
-            [self layoutPriceBlock:1660];
-            [self centerSubview:submitButton withX:40 Y:1760 height:60];
+            [self hideACourseTableView:true AndSetYOfACoursesAndButtons:1350 + 60];
+            [self layoutPriceBlock:1660 + 60];
+            [self centerSubview:submitButton withX:40 Y:1760 + 60 height:60];
         }
         else
         {
             [self hideACourseTableView:false AndSetYOfACoursesAndButtons:1550];
-            [self layoutPriceBlock:1760];
-            [self centerSubview:submitButton withX:40 Y:1890 height:60];
+            [self layoutPriceBlock:1760 + 60];
+            [self centerSubview:submitButton withX:40 Y:1890 + 60 height:60];
             
             NSString *inputString = [textField.text uppercaseString];
             NSMutableArray *discardItems = [[NSMutableArray alloc] init];
@@ -914,6 +928,7 @@
                  [self.hud hide:YES];
                  
                  // successfully updated tutor information
+                [self dismissKeyboard];
                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notice"
                                                                  message:@"You have successfully updated your tutor information"
                                                                 delegate:nil

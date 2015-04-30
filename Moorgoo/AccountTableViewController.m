@@ -116,7 +116,22 @@
         [cell.textLabel setTextColor:[UIColor whiteColor]];
     }
     else if(indexPath.section == 2) {
-        cell.textLabel.text = @"Tutor";
+        PFObject *userPointer = [PFObject objectWithoutDataWithClassName:@"_User" objectId:([PFUser currentUser]).objectId];
+        PFQuery *query = [PFQuery queryWithClassName:@"CollegeClassTutor"];
+        [query whereKey:@"userId" equalTo:userPointer];
+        
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if(!error)
+            {
+                // If curent user is tutor
+                if([objects count] == 1)
+                    cell.textLabel.text = @"Tutor DashBoard";
+                // If current user is not tutor
+                else
+                    cell.textLabel.text = @"Apply to be a Moorgoo Tutor";
+            }
+        }];
+        
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     else if(indexPath.section == 3){

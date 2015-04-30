@@ -11,9 +11,7 @@
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>8DBA1EA4917773137A9654EA4C92502CBB19DD35</key>
-		<string>https://github.com/boveylisi2013/MoorgooApp.git</string>
-		<key>EABB5669ACBE13F041F6E59AAB9A849B2A4463B6</key>
-		<string>https://github.com/boveylisi2013/MoorgooTutoring.git</string>
+		<string>https://github.com/boveylisi2013/MoorgooApp</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Moorgoo.xcodeproj</string>
@@ -21,11 +19,9 @@
 	<dict>
 		<key>8DBA1EA4917773137A9654EA4C92502CBB19DD35</key>
 		<string>../..</string>
-		<key>EABB5669ACBE13F041F6E59AAB9A849B2A4463B6</key>
-		<string>../../../MoorgooTutoring</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/boveylisi2013/MoorgooApp.git</string>
+	<string>https://github.com/boveylisi2013/MoorgooApp</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
@@ -39,14 +35,6 @@
 			<string>8DBA1EA4917773137A9654EA4C92502CBB19DD35</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MoorgooApp</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>EABB5669ACBE13F041F6E59AAB9A849B2A4463B6</string>
-			<key>IDESourceControlWCCName</key>
-			<string>MoorgooTutoring</string>
 		</dict>
 	</array>
 </dict>

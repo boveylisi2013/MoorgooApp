@@ -10,4 +10,7 @@
 
 @interface TutorIntroductionViewController : UIViewController
 
+@property (nonatomic, strong) MBProgressHUD *hud;
+
+
 @end
