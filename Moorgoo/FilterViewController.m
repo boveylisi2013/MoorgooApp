@@ -150,7 +150,8 @@
         
         [self getCourses:flexibleClassArray];
         [self getCourses:stableClassArray];
-
+        NSLog(@"flexibleClassArray: %@", flexibleClassArray);
+        NSLog(@"stableClassArray: %@", stableClassArray);
     }
 }
 
@@ -199,25 +200,17 @@
 }
 /***********************************************************************************/
 
--(void)getCourses:(NSMutableArray *)targetArray{
-    [targetArray removeAllObjects];
-    [targetArray addObject:@""];
-    
-    for(CollegeClassTutor *tutor in tutorArray){
-        if([self.schoolTextField.text isEqualToString:tutor.school]) {
-//            NSLog(@"tutorschool: %@", tutor.school);
-            for(NSString *course in tutor.courses){
-                if(![targetArray containsObject:course]){
-//                    NSLog(@"coursname: %@", course);
-                    [targetArray addObject:course];
-                }
-            }
+// Method to query all the classes from parse
+-(void)getCourses:(NSMutableArray *)array
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Course"];
+    [query setLimit:1000];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            [array addObjectsFromArray:[objects valueForKey:@"courseName"]];
+            [array sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
         }
-    }
-    //sort the array according to character
-    [targetArray sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    
-//    NSLog(@"in getcourses");
+    }];
 }
 /*************************************************************************************/
 # pragma mark - table view delegate and datasource

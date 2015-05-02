@@ -31,7 +31,6 @@
     searchFilter.collegeClassTutorCourse = @"";
     searchFilter.collegeClassTutorPrice = @"";
     
-    NSLog(@"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     /**************************************************************************************/
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self
